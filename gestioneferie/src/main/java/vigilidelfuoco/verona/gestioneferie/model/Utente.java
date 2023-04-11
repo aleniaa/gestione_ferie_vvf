@@ -11,6 +11,10 @@ import jakarta.persistence.Id;
 @Entity 
 public class Utente implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false, updatable = false)
@@ -20,7 +24,12 @@ public class Utente implements Serializable {
 		private String telefono;
 		private String email;
 		private String ruolo;
+		@Column(nullable= false, updatable = false)
 		private String codiceUtente;
+		
+	public Utente() {
+		
+	}
 		
 	public Utente(Long id, String nome, String cognome, String telefono, String email, String ruolo,
 				String codiceUtente) {
