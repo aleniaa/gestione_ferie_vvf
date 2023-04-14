@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,20 +12,23 @@ import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	
-	private final UtenteRepo utenteRepo;
-
-
-    CustomUserDetailsService(UtenteRepo utenteRepo) {
-        this.utenteRepo = utenteRepo;
-    }
+//	private final UtenteRepo utenteRepo;
+	
+	@Autowired
+	private UtenteRepo utenteRepo;
+	
+//    CustomUserDetailsService(UtenteRepo utenteRepo) {
+//    	super();
+//        this.utenteRepo = utenteRepo;
+//    }
 
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 		
+		
 		Utente utente = utenteRepo.findByUsername(username);
 		if(utente==null) {
-			
 			throw new UsernameNotFoundException("Utente non trovato");
 		}
 		

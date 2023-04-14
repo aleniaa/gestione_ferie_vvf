@@ -33,6 +33,10 @@ public class WebSecurityConfiguration  {
 //		return provider;
 //		
 //	}
+	@Bean
+	BCryptPasswordEncoder bCryptPasswordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
 	
 	@Bean
 	AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) 

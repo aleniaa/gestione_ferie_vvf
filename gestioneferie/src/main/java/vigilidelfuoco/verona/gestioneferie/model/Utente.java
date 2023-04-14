@@ -29,9 +29,9 @@ public class Utente implements Serializable {
 		@Column(nullable= false, updatable = false)
 		private String codiceUtente;
 		
-	public Utente() {
-		
-	}
+		public Utente() {
+			
+		}
 	 
 
 	public Utente(Long id, String nome, String cognome, String telefono, String username, String email, String password,
