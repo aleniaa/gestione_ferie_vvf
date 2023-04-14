@@ -21,9 +21,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class WebSecurityConfiguration  {
 	
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
+	/*
+	 * @Autowired private UserDetailsService userDetailsService;
+	 */
 //	@Bean
 //	AuthenticationProvider authenticationProvider() {
 //		
@@ -54,7 +54,7 @@ public class WebSecurityConfiguration  {
                 .anyRequest().authenticated()
                 .and().httpBasic(withDefaults());
         
-        return http.build();
+        
 		
 //        .formLogin(formLogin ->
 //            formLogin
@@ -62,6 +62,8 @@ public class WebSecurityConfiguration  {
 //                .permitAll()
 //        )
 //        .rememberMe(withDefaults());
+        
+        return http.build();
 		}
 	
 	

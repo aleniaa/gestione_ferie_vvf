@@ -7,9 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Entity 
 public class Utente implements Serializable {
 
@@ -34,13 +32,24 @@ public class Utente implements Serializable {
 	public Utente() {
 		
 	}
-		
-	/*
-	 * public Utente(Long id, String nome, String cognome, String telefono, String
-	 * email, String ruolo, String codiceUtente) { super(); this.id = id; this.nome
-	 * = nome; this.cognome = cognome; this.telefono = telefono; this.email = email;
-	 * this.ruolo = ruolo; this.codiceUtente = codiceUtente; }
-	 */
+	 
+
+	public Utente(Long id, String nome, String cognome, String telefono, String username, String email, String password,
+			String ruolo, String codiceUtente) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.ruolo = ruolo;
+		this.codiceUtente = codiceUtente;
+	}
+
+
+
 
 	public String getCodiceUtente() {
 			return codiceUtente;
@@ -49,12 +58,8 @@ public class Utente implements Serializable {
 		public void setCodiceUtente(String codiceUtente) {
 			this.codiceUtente = codiceUtente;
 		}
-		/*
-		 * public Utente(Long id, String nome, String cognome, String telefono, String
-		 * email, String ruolo) { super(); this.id = id; this.nome = nome; this.cognome
-		 * = cognome; this.telefono = telefono; this.email = email; this.ruolo = ruolo;
-		 * }
-		 */
+		
+		 
 
 	public Long getId() {
 		return id;

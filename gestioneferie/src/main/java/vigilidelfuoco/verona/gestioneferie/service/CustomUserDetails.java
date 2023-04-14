@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 
+
 @Component
 public class CustomUserDetails implements UserDetails {
 
