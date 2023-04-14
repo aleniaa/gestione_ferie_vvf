@@ -3,7 +3,6 @@ package vigilidelfuoco.verona.gestioneferie.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
@@ -15,7 +14,7 @@ public class GestioneUtenti {
 
 	private final UtenteRepo utenteRepo;
 
-	@Autowired
+	
 	public GestioneUtenti(UtenteRepo utenteRepo) {
 		super();
 		this.utenteRepo = utenteRepo;

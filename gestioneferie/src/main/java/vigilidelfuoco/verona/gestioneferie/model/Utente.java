@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Entity 
 public class Utente implements Serializable {
 
@@ -22,7 +24,9 @@ public class Utente implements Serializable {
 		private String nome;
 		private String cognome;
 		private String telefono;
+		private String username;
 		private String email;
+		private String password;
 		private String ruolo;
 		@Column(nullable= false, updatable = false)
 		private String codiceUtente;
@@ -31,17 +35,12 @@ public class Utente implements Serializable {
 		
 	}
 		
-	public Utente(Long id, String nome, String cognome, String telefono, String email, String ruolo,
-				String codiceUtente) {
-			super();
-			this.id = id;
-			this.nome = nome;
-			this.cognome = cognome;
-			this.telefono = telefono;
-			this.email = email;
-			this.ruolo = ruolo;
-			this.codiceUtente = codiceUtente;
-		}
+	/*
+	 * public Utente(Long id, String nome, String cognome, String telefono, String
+	 * email, String ruolo, String codiceUtente) { super(); this.id = id; this.nome
+	 * = nome; this.cognome = cognome; this.telefono = telefono; this.email = email;
+	 * this.ruolo = ruolo; this.codiceUtente = codiceUtente; }
+	 */
 
 	public String getCodiceUtente() {
 			return codiceUtente;
@@ -50,16 +49,12 @@ public class Utente implements Serializable {
 		public void setCodiceUtente(String codiceUtente) {
 			this.codiceUtente = codiceUtente;
 		}
-
-	public Utente(Long id, String nome, String cognome, String telefono, String email, String ruolo) {
-			super();
-			this.id = id;
-			this.nome = nome;
-			this.cognome = cognome;
-			this.telefono = telefono;
-			this.email = email;
-			this.ruolo = ruolo;
-		}
+		/*
+		 * public Utente(Long id, String nome, String cognome, String telefono, String
+		 * email, String ruolo) { super(); this.id = id; this.nome = nome; this.cognome
+		 * = cognome; this.telefono = telefono; this.email = email; this.ruolo = ruolo;
+		 * }
+		 */
 
 	public Long getId() {
 		return id;
@@ -109,4 +104,21 @@ public class Utente implements Serializable {
 		this.ruolo = ruolo;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = nome + "." + cognome;
+	}
+
+	
 }
