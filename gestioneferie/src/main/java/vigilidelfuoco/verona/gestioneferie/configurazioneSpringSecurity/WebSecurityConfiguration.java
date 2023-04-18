@@ -1,11 +1,8 @@
 package vigilidelfuoco.verona.gestioneferie.configurazioneSpringSecurity;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,19 +17,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class WebSecurityConfiguration  {
-	
-	/*
-	 * @Autowired private UserDetailsService userDetailsService;
-	 */
-//	@Bean
-//	AuthenticationProvider authenticationProvider() {
-//		
-//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//		provider.setUserDetailsService(userDetailsService);
-//		provider.setPasswordEncoder(new BCryptPasswordEncoder());
-//		return provider;
-//		
-//	}
+
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
 	    return new BCryptPasswordEncoder();
@@ -51,23 +36,21 @@ public class WebSecurityConfiguration  {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+        		.csrf().disable()
+        		.formLogin(form -> form
+        				.loginPage("/login")
+        				.permitAll())
                 .authorizeHttpRequests()
-                .requestMatchers("/").permitAll()
+				/* .requestMatchers("/login").permitAll() */
+				.requestMatchers("/").permitAll() 
                 .requestMatchers("/utente/all").permitAll()
-                .requestMatchers("/login").permitAll()
+
                 .requestMatchers("/home").hasAuthority("UTENTE")
                 .requestMatchers("/admin").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
+				.anyRequest().authenticated() 
                 .and().httpBasic(withDefaults());
         
         
-		
-//        .formLogin(formLogin ->
-//            formLogin
-//                .loginPage("/login")
-//                .permitAll()
-//        )
-//        .rememberMe(withDefaults());
         
         return http.build();
 		}

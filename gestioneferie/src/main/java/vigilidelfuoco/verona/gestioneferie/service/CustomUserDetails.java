@@ -1,3 +1,4 @@
+
 package vigilidelfuoco.verona.gestioneferie.service;
 
 import java.util.Collection;
@@ -10,13 +11,12 @@ import org.springframework.stereotype.Component;
 
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 
-
 //@Component
 
 public class CustomUserDetails implements UserDetails {
 
 	private Utente utente;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public CustomUserDetails(Utente utente) {
@@ -25,45 +25,31 @@ public class CustomUserDetails implements UserDetails {
 		this.utente = utente;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return Collections.singleton(new SimpleGrantedAuthority(utente.getRuolo()));
-	}
+	@Override public Collection<? extends GrantedAuthority> getAuthorities() { //
+		return Collections.singleton(new SimpleGrantedAuthority(utente.getRuolo())); 
+		}
 
 	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
+	public String getPassword() { // TODO Auto-generated method stub
 		return utente.getPassword();
 	}
 
 	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
+	public String getUsername() { // TODO Auto-generated method stub
 		return utente.getUsername();
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	@Override public boolean isAccountNonExpired() { // TODO Auto-generated
+		return true; }
+
+	@Override public boolean isAccountNonLocked() { // TODO Auto-generated method
+		return true; }
+
+	@Override public boolean isCredentialsNonExpired() { // TODO Auto-generated
+		 return true; }
 
 	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
+	public boolean isEnabled() { // TODO Auto-generated method stub
 		return true;
 	}
 
