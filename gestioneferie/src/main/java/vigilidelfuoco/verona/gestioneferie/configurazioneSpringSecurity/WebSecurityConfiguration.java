@@ -53,7 +53,8 @@ public class WebSecurityConfiguration  {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/welcome").permitAll()
+                .requestMatchers("/utente/all").permitAll()
+                .requestMatchers("/login").permitAll()
                 .requestMatchers("/home").hasAuthority("UTENTE")
                 .requestMatchers("/admin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
