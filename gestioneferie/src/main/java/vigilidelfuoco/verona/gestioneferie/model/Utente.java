@@ -21,9 +21,10 @@ public class Utente implements Serializable {
 		private Long id;
 		private String nome;
 		private String cognome;
+		private String codiceFiscale;
 		private String telefono;
-		private String username;
-		private String email;
+		private String accountDipvvf;
+		private String emailVigilfuoco;
 		private String password;
 		private String ruolo;
 		@Column(nullable= false, updatable = false)
@@ -34,15 +35,16 @@ public class Utente implements Serializable {
 		}
 	 
 
-	public Utente(Long id, String nome, String cognome, String telefono, String username, String email, String password,
+	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String accountDipvvf, String emailVigilfuoco, String password,
 			String ruolo, String codiceUtente) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.codiceFiscale= codiceFiscale;
 		this.telefono = telefono;
-		this.username = username;
-		this.email = email;
+		this.accountDipvvf = accountDipvvf;
+		this.emailVigilfuoco = emailVigilfuoco;
 		this.password = password;
 		this.ruolo = ruolo;
 		this.codiceUtente = codiceUtente;
@@ -93,12 +95,12 @@ public class Utente implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailVigilfuoco() {
+		return emailVigilfuoco;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailVigilfuoco(String email) {
+		this.emailVigilfuoco = email;
 	}
 
 	public String getRuolo() {
@@ -117,12 +119,22 @@ public class Utente implements Serializable {
 		this.password = password;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getAccountDipvvf() {
+		return accountDipvvf;
 	}
 
-	public void setUsername(String username) {
-		this.username = nome + "." + cognome;
+	public void setAccountDipvvf(String username) {
+		this.accountDipvvf = username;
+	}
+
+
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
 	}
 
 	

@@ -40,8 +40,14 @@ public class UtenteController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Utente> aggiungiUtente(@RequestBody Utente utente){
-		Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
-		return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
+		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
+			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
+			
+			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
+		}else {
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		}
+		
 	}
 	
 	@PutMapping("/update")

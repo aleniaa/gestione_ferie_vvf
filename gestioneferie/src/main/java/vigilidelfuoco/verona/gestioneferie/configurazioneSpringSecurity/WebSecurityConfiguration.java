@@ -16,32 +16,29 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class WebSecurityConfiguration  {
+public class WebSecurityConfiguration {
 
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
-	    return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) 
-	  throws Exception {
-	    return http.getSharedObject(AuthenticationManagerBuilder.class)
-	      .userDetailsService(userDetailsService)
-	      .passwordEncoder(bCryptPasswordEncoder)
-	      .and()
-	      .build();
+	AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
+			UserDetailsService userDetailsService) throws Exception {
+		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
+				.passwordEncoder(bCryptPasswordEncoder).and().build();
 	}
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        .csrf().disable()
-				/*
+        		.csrf().disable();
+/*				
 				 * .formLogin(form -> form .loginPage("/login") .permitAll())
-				 */
+				 
                 .authorizeHttpRequests()
-				/* .requestMatchers("/login").permitAll() */
+				 .requestMatchers("/login").permitAll() 
 				.requestMatchers("/").permitAll() 
                 .requestMatchers("/utente/all").permitAll()
 
@@ -49,12 +46,12 @@ public class WebSecurityConfiguration  {
                 .requestMatchers("/admin").hasAuthority("ADMIN")
 				.anyRequest().authenticated() 
                 .and().httpBasic(withDefaults());
+                
+                */
         
         
         
         return http.build();
 		}
-	
-	
 
 }

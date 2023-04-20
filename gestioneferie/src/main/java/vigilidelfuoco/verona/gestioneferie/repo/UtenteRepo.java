@@ -9,7 +9,10 @@ import vigilidelfuoco.verona.gestioneferie.model.Utente;
 public interface UtenteRepo extends JpaRepository<Utente, Long>{
 
 	void deleteUtenteById(Long id);
-	Utente findByUsername(String username);
+	boolean findByemailVigilfuoco(String emailVigilfuoco);
+	Utente findByaccountDipvvf(String accountDipvvf);
 	Optional<Utente> findUtenteById(Long id);
+	boolean existsUtenteByemailVigilfuoco(String emailVigilfuoco);
+	
 
 }

@@ -36,7 +36,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() { // TODO Auto-generated method stub
-		return utente.getUsername();
+		return utente.getAccountDipvvf();
 	}
 
 	@Override public boolean isAccountNonExpired() { // TODO Auto-generated

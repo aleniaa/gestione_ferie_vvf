@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
+import vigilidelfuoco.verona.gestioneferie.exception.UserAlreadyExistsException;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
@@ -21,8 +22,11 @@ public class GestioneUtenti {
 	}
 	
 	public Utente aggiungiUtente(Utente utente){
+
 		utente.setCodiceUtente(UUID.randomUUID().toString());
 		return utenteRepo.save(utente);
+		
+		
 	}
 	
 	public List<Utente> trovaUtenti(){
@@ -40,6 +44,15 @@ public class GestioneUtenti {
 	
 	public void deleteUtenteById(Long id) {
 		utenteRepo.deleteUtenteById(id);
+	}
+	
+	public boolean checkUtenteIfExists(Utente utente) {
+		if(!utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco())) {
+			return true;
+		}else {
+			 new UserNotFoundException("Utente già presente");
+			 return false;
+		}
 	}
 	
 	
