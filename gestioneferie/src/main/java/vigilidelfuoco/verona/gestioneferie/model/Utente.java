@@ -24,7 +24,8 @@ public class Utente implements Serializable {
 		private String codiceFiscale;
 		private String telefono;
 		private String accountDipvvf;
-		private String emailVigilfuoco;
+		
+		@Column(unique = true) private String emailVigilfuoco;
 		private String password;
 		private String ruolo;
 		@Column(nullable= false, updatable = false)

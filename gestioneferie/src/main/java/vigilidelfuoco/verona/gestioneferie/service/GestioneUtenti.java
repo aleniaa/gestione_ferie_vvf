@@ -29,6 +29,16 @@ public class GestioneUtenti {
 		
 	}
 	
+//	public Utente aggiungiPiuUtenti(List<Utente> utente){
+//		for(int i=0; i<= utente.size();i++) {
+//			
+//		}
+//		utente.setCodiceUtente(UUID.randomUUID().toString());
+//		return utenteRepo.save(utente);
+//		
+//		
+//	}
+	
 	public List<Utente> trovaUtenti(){
 		return utenteRepo.findAll();
 	}

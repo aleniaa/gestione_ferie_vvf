@@ -50,6 +50,18 @@ public class UtenteController {
 		
 	}
 	
+//	@PostMapping("/addMore")
+//	public ResponseEntity<Utente> aggiungipiuUtenti(@RequestBody List<Utente> utente){
+//		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
+//			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
+//			
+//			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
+//		}else {
+//			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//		}
+//		
+//	}
+	
 	@PutMapping("/update")
 	public ResponseEntity<Utente> aggiornaUtente(@RequestBody Utente utente){
 		Utente utenteAggiornato = gestioneUtenti.aggiornaUtente(utente);
@@ -61,5 +73,7 @@ public class UtenteController {
 		gestioneUtenti.deleteUtenteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+
 	
 }
