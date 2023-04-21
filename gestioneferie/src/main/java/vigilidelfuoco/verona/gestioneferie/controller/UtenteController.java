@@ -41,11 +41,14 @@ public class UtenteController {
 	@PostMapping("/add")
 	public ResponseEntity<Utente> aggiungiUtente(@RequestBody Utente utente){
 		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
+			System.out.println("l'utente non esiste");
 			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
 			
 			
 			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
 		}else {
+			System.out.println("l'utente esiste già");
+
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		}
 		
