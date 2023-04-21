@@ -25,7 +25,6 @@ public class GestioneUtenti {
 
 		utente.setCodiceUtente(UUID.randomUUID().toString());
 		utente.setAccountDipvvf();
-		//utente.setEmailVigilfuoco();
 		return utenteRepo.save(utente);
 		
 		

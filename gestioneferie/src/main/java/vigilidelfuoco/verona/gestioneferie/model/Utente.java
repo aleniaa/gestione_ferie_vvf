@@ -103,6 +103,10 @@ public class Utente implements Serializable {
 	public void setEmailVigilfuoco() {
 		this.emailVigilfuoco = this.accountDipvvf+"vigilfuoco.it";
 	}
+	
+	public void setEmailVigilfuoco(String email) {
+		this.emailVigilfuoco = email;
+	}
 
 	public String getRuolo() {
 		return ruolo;
