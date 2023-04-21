@@ -42,6 +42,7 @@ public class UtenteController {
 	public ResponseEntity<Utente> aggiungiUtente(@RequestBody Utente utente){
 		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
 			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
+			newUtente.setAccountDipvvf();
 			
 			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
 		}else {

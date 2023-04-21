@@ -23,7 +23,7 @@ public class Utente implements Serializable {
 		private String cognome;
 		private String codiceFiscale;
 		private String telefono;
-		private String accountDipvvf;
+		private String accountDipvvf; //username
 		
 		@Column(unique = true) private String emailVigilfuoco;
 		private String password;
@@ -36,7 +36,7 @@ public class Utente implements Serializable {
 		}
 	 
 
-	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String accountDipvvf, String emailVigilfuoco, String password,
+	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String emailVigilfuoco, String password,
 			String ruolo, String codiceUtente) {
 		super();
 		this.id = id;
@@ -44,7 +44,7 @@ public class Utente implements Serializable {
 		this.cognome = cognome;
 		this.codiceFiscale= codiceFiscale;
 		this.telefono = telefono;
-		this.accountDipvvf = accountDipvvf;
+		this.accountDipvvf = nome +"."+ cognome;
 		this.emailVigilfuoco = emailVigilfuoco;
 		this.password = password;
 		this.ruolo = ruolo;
@@ -100,8 +100,8 @@ public class Utente implements Serializable {
 		return emailVigilfuoco;
 	}
 
-	public void setEmailVigilfuoco(String email) {
-		this.emailVigilfuoco = email;
+	public void setEmailVigilfuoco() {
+		this.emailVigilfuoco = this.accountDipvvf+"vigilfuoco.it";
 	}
 
 	public String getRuolo() {
@@ -124,11 +124,11 @@ public class Utente implements Serializable {
 		return accountDipvvf;
 	}
 
-	public void setAccountDipvvf(String username) {
-		this.accountDipvvf = username;
+	public void setAccountDipvvf() {
+		this.accountDipvvf = this.nome +"." + this.cognome;
 	}
 
-
+	
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
