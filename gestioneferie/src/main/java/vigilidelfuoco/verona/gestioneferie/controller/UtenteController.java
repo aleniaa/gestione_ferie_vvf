@@ -72,7 +72,7 @@ public class UtenteController {
 		return new ResponseEntity<>(utenteAggiornato, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> cancellaUtente(@PathVariable("id") Long id){
 		gestioneUtenti.deleteUtenteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
