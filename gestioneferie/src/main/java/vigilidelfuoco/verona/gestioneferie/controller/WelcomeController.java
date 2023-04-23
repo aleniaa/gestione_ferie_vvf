@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +16,14 @@ import vigilidelfuoco.verona.gestioneferie.model.UtenteLogin;
 public class WelcomeController {
 
 	@PostMapping
-	public ResponseEntity<String> login(@RequestBody UtenteLogin utente) {
-		System.out.println("si sta provamdo a loggare "+ utente.getUsername() + " " + utente.getPassword());
+	public ResponseEntity<String> login(@RequestBody Utente utente) {
+		System.out.println("si sta provamdo a loggare "+ utente.getAccountDipvvf() + " " + utente.getPassword());
 		
 		
-		return ResponseEntity.ok("loggato");
-		
+		//return ResponseEntity.ok("loggato");
+		return new ResponseEntity<String>("LOGGATO", HttpStatus.OK);
+		//return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 }
