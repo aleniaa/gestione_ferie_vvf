@@ -1,15 +1,29 @@
 package vigilidelfuoco.verona.gestioneferie.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity 
-public class Utente implements Serializable {
+//public class Utente implements UserDetails  {
+
+public class Utente  {
 
 	/**
 	 * 
@@ -24,6 +38,7 @@ public class Utente implements Serializable {
 		private String codiceFiscale;
 		private String telefono;
 		private String accountDipvvf; //username
+
 		
 		@Column(unique = true) private String emailVigilfuoco;
 		private String password;
@@ -141,6 +156,50 @@ public class Utente implements Serializable {
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
+
+//
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		
+//		SimpleGrantedAuthority authority =
+//				new SimpleGrantedAuthority(this.getRuolo());
+//		return null;
+//	}
+//
+//
+//	@Override
+//	public String getUsername() {
+//		// TODO Auto-generated method stub
+//		return accountDipvvf;
+//	}
+//
+//
+//	@Override
+//	public boolean isAccountNonExpired() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
+//
+//
+//	@Override
+//	public boolean isAccountNonLocked() {
+//		// TODO Auto-generated method stub
+//		return !locked;
+//	}
+//
+//
+//	@Override
+//	public boolean isCredentialsNonExpired() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
+//
+//
+//	@Override
+//	public boolean isEnabled() {
+//		// TODO Auto-generated method stub
+//		return enabled;
+//	}
 
 	
 }

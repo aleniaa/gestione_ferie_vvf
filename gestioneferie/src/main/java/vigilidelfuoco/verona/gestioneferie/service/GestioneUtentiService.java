@@ -3,28 +3,37 @@ package vigilidelfuoco.verona.gestioneferie.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.AllArgsConstructor;
 import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
 import vigilidelfuoco.verona.gestioneferie.exception.UserAlreadyExistsException;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
+@AllArgsConstructor
 @Service
 public class GestioneUtentiService {
 
 	private final UtenteRepo utenteRepo;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 	
 	public GestioneUtentiService(UtenteRepo utenteRepo) {
 		super();
 		this.utenteRepo = utenteRepo;
+		this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	}
+	
 	
 	public Utente aggiungiUtente(Utente utente){
 
 		utente.setCodiceUtente(UUID.randomUUID().toString());
+		String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
+		utente.setPassword(encoded_password);
 		utente.setAccountDipvvf();
 		return utenteRepo.save(utente);
 		

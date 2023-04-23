@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
@@ -10,10 +11,13 @@ public class LoginService {
 
 	private final UtenteRepo utenteRepo;
 	private boolean loginSuccess= false;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public LoginService(UtenteRepo utenteRepo) {
 		super();
 		this.utenteRepo = utenteRepo;
+		this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 	}
 	
 	public boolean validaLogin(Utente utenteLoggato) {
@@ -21,7 +25,9 @@ public class LoginService {
 		
 		Utente utenteInRepo = utenteRepo.findByaccountDipvvf(utenteLoggato.getAccountDipvvf());
 		if(utenteInRepo!= null) {
-			if(utenteLoggato.getPassword().equals(utenteInRepo.getPassword())) {
+			String encoded_password= bCryptPasswordEncoder.encode(utenteLoggato.getPassword());
+
+			if(encoded_password.equals(utenteInRepo.getPassword())) {
 				loginSuccess=true;
 			}else {
 				System.out.println("utente diverso da null ma non corrispondono pass e username");

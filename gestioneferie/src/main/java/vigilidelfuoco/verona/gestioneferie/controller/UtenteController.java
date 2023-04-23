@@ -50,7 +50,7 @@ public class UtenteController {
 		}else {
 			System.out.println("l'utente esiste già");
 
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 	}
