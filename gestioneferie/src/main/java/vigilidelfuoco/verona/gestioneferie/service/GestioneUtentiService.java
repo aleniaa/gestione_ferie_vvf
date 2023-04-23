@@ -12,12 +12,12 @@ import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
 @Service
-public class GestioneUtenti {
+public class GestioneUtentiService {
 
 	private final UtenteRepo utenteRepo;
 
 	
-	public GestioneUtenti(UtenteRepo utenteRepo) {
+	public GestioneUtentiService(UtenteRepo utenteRepo) {
 		super();
 		this.utenteRepo = utenteRepo;
 	}

@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
-import vigilidelfuoco.verona.gestioneferie.service.GestioneUtenti;
+import vigilidelfuoco.verona.gestioneferie.service.GestioneUtentiService;
 
 @RestController
 @RequestMapping("/utente")
 public class UtenteController {
-	private final GestioneUtenti gestioneUtenti;
+	
+	private final GestioneUtentiService gestioneUtenti;
 
-	public UtenteController(GestioneUtenti gestioneUtenti) {
+	public UtenteController(GestioneUtentiService gestioneUtenti) {
 		super();
 		this.gestioneUtenti = gestioneUtenti;
 	}
