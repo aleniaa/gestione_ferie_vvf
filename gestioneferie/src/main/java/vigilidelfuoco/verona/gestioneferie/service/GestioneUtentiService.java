@@ -55,6 +55,7 @@ public class GestioneUtentiService {
 	}
 	
 	public Utente aggiornaUtente(Utente utente) {
+		utente.setAccountDipvvf();
 		return utenteRepo.save(utente);
 	}
 	
