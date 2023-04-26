@@ -7,20 +7,26 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
+import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @Entity 
+@Table(name = "utente")
 //public class Utente implements UserDetails  {
 
 public class Utente  {
@@ -45,6 +51,9 @@ public class Utente  {
 		private String ruolo;
 		@Column(nullable= false, updatable = false)
 		private String codiceUtente;
+		
+		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		private List<Congedo> elencoCongedi = new ArrayList<>();
 		
 		public Utente() {
 			
