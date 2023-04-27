@@ -27,20 +27,20 @@ public class Congedo {
 	private int totGiorni;
 	
 	@ManyToOne
-    @JoinColumn(name = "utenteId")
+    @JoinColumn(name = "idUtente")
     private Utente utente;
 	
-	private Long idUtente;
+	
 	
 	public Congedo(){}
 	
-	public Congedo(Long id, LocalDate dataInizio, LocalDate dataFine, Long idUtente) {
+	public Congedo(Long id, LocalDate dataInizio, LocalDate dataFine) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
 		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
-		this.idUtente = idUtente;
+		
 	}
 
 	public Long getId() {
@@ -75,13 +75,11 @@ public class Congedo {
 		this.totGiorni = totGiorni;
 	}
 
-	public Long getIdUtente() {
-		return idUtente;
-	}
-
-	public void setIdUtente(Long idUtente) {
-		this.idUtente = idUtente;
-	}
+	/*
+	 * public Long getIdUtente() { return idUtente; }
+	 * 
+	 * public void setIdUtente(Long idUtente) { this.idUtente = idUtente; }
+	 */
 
 	
 	

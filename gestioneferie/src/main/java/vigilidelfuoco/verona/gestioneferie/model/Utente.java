@@ -53,7 +53,7 @@ public class Utente  {
 		private String codiceUtente;
 		
 		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-		private List<Congedo> elencoCongedi = new ArrayList<>();
+		private List<Congedo> elencoCongedi;
 		
 		public Utente() {
 			
@@ -165,6 +165,16 @@ public class Utente  {
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
+
+
+//	public List<Congedo> getElencoCongedi() {
+//		return elencoCongedi;
+//	}
+//
+//
+//	public void setElencoCongedi(List<Congedo> elencoCongedi) {
+//		this.elencoCongedi = elencoCongedi;
+//	}
 
 //
 //	@Override
