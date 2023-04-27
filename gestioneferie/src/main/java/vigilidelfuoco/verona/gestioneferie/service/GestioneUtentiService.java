@@ -4,6 +4,7 @@ package vigilidelfuoco.verona.gestioneferie.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class GestioneUtentiService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-	
+	@Autowired
 	public GestioneUtentiService(UtenteRepo utenteRepo) {
 		super();
 		this.utenteRepo = utenteRepo;
