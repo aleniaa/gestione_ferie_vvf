@@ -53,7 +53,7 @@ public class Utente  {
 		private String codiceUtente;
 		
 		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-		private List<Congedo> elencoCongedi;
+		private List<Permesso> elencoPermessi;
 		
 		public Utente() {
 			
@@ -167,13 +167,13 @@ public class Utente  {
 	}
 
 
-//	public List<Congedo> getElencoCongedi() {
-//		return elencoCongedi;
+//	public List<Permesso> getElencoPermessi() {
+//		return elencoPermessi;
 //	}
 //
 //
-//	public void setElencoCongedi(List<Congedo> elencoCongedi) {
-//		this.elencoCongedi = elencoCongedi;
+//	public void setElencoPermessi(List<Permesso> elencoPermessi) {
+//		this.elencoCongedi = elencoPermessi;
 //	}
 
 //
