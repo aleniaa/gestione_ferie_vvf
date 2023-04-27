@@ -57,7 +57,7 @@ public class Permesso {
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
-		this.totGiorni = totGiorni;
+		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
 		this.tipoPermesso = tipoPermesso;
 		this.idUtenteApprovazione = idUtenteApprovazione;
 		this.dalleOre = dalleOre;
@@ -96,6 +96,10 @@ public class Permesso {
 
 	public void setTotGiorni(int totGiorni) {
 		this.totGiorni = totGiorni;
+	}
+	
+	public void setTotGiorni() {
+		this.totGiorni = (int) ChronoUnit.DAYS.between(this.dataInizio, this.dataFine);
 	}
 
 	public String getTipoPermesso() {

@@ -125,7 +125,7 @@ public class Utente  {
 	}
 
 	public void setEmailVigilfuoco() {
-		this.emailVigilfuoco = this.accountDipvvf+"vigilfuoco.it";
+		this.emailVigilfuoco = this.accountDipvvf+"@vigilfuoco.it";
 	}
 	
 	public void setEmailVigilfuoco(String email) {
