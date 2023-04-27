@@ -12,7 +12,7 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	
 	void deletePermessoById(Long id);
 	Optional<Permesso> findPermessoById(Long id);
-	//Optional<List<Permesso>> findPermessoByIdUtente(Long idUtente);
+	//List<Permesso> findPermessoByIdUtente(Long idUtente);
 	
 	
 
