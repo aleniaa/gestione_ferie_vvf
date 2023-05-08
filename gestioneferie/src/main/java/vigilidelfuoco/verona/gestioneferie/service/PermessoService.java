@@ -28,6 +28,10 @@ public class PermessoService {
 		return permessoRepo.findAll();
 	}
 	
+	public List<Permesso> trovaTipoCongedo(){
+		return permessoRepo.findPermessoBytipoPermesso("congedo");
+	}
+	
 //	public List<Permesso> findPermessiByIdUtente(Long idUtente){
 //		return permessoRepo.findPermessoByIdUtente(idUtente);
 //	}

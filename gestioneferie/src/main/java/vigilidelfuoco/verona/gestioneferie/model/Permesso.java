@@ -34,6 +34,7 @@ public class Permesso {
 	private LocalTime alleOre;
 	private LocalDate delGiorno;
 	private int totOre;
+	private int status; //0 = in revisione, 1 = approvato, 2= respinto;
 	
 	@ManyToOne
     @JoinColumn(name = "idUtente")
@@ -65,6 +66,7 @@ public class Permesso {
 		this.alleOre = alleOre;
 		this.delGiorno = delGiorno;
 		this.utente = utente;
+		this.status= 0;
 	}
 
 	public Long getId() {
@@ -158,6 +160,18 @@ public class Permesso {
 	public void setTotOre() {
 		this.totOre = (int) ChronoUnit.HOURS.between(this.dalleOre, this.alleOre);
 	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	
+	
+	
 	
 	
 	

@@ -32,6 +32,12 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@GetMapping("/allCongedo")
+	public ResponseEntity<List<Permesso>> getAllCongedo(){
+		List<Permesso> permessi = permessoService.trovaTipoCongedo();
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
 	@PostMapping("/add")
 	public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
 		
