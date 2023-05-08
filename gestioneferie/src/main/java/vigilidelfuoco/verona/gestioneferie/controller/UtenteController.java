@@ -33,6 +33,26 @@ public class UtenteController {
 		return new ResponseEntity<>(utenti, HttpStatus.OK);
 	}
 	
+	@GetMapping("/ferie")
+	public ResponseEntity<List<Utente>> getUtentiFerie(){
+		List<Utente> utenti = gestioneUtenti.findUtenteByRuoloFerie();
+		return new ResponseEntity<>(utenti, HttpStatus.OK);
+	}
+
+	@GetMapping("/utenti")
+	public ResponseEntity<List<Utente>> getUtenti(){
+		List<Utente> utenti = gestioneUtenti.findUtenteByRuoloUtente();
+		return new ResponseEntity<>(utenti, HttpStatus.OK);
+	}
+	
+	@GetMapping("/admin")
+	public ResponseEntity<List<Utente>> getAdmin(){
+		List<Utente> utenti = gestioneUtenti.findUtenteByRuoloAdmin();
+		return new ResponseEntity<>(utenti, HttpStatus.OK);
+	}
+	
+	
+	
 	@GetMapping("/find/{id}")
 	public ResponseEntity<Utente> getUtentebyId(@PathVariable("id") Long id){
 		Utente utente = gestioneUtenti.findUtenteById(id);

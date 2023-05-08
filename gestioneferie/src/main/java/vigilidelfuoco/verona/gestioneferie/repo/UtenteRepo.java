@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ public interface UtenteRepo extends JpaRepository<Utente, Long>{
 	Utente findByaccountDipvvf(String accountDipvvf);
 	Optional<Utente> findUtenteById(Long id);
 	boolean existsUtenteByemailVigilfuoco(String emailVigilfuoco);
+	Optional<List<Utente>> findUtenteByRuolo(String ruolo);
 	
 
 }

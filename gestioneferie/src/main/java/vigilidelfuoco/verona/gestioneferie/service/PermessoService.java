@@ -34,8 +34,12 @@ public class PermessoService {
 	
 	
 	public Permesso aggiungiPermesso(Permesso permesso){
-
-		permesso.setTotGiorni();
+		if(permesso.getDalleOre()!=null) { // se ci sono delle ore di permesso e non dei giorni
+			permesso.setTotOre();
+		}else {
+			permesso.setTotGiorni();
+		}
+		
 		return permessoRepo.save(permesso);
 	
 	}

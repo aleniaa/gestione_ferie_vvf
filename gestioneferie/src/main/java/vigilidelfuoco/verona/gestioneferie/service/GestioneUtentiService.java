@@ -66,6 +66,21 @@ public class GestioneUtentiService {
 				.orElseThrow(() -> new UserNotFoundException("Utente con id "+id +" non trovato"));
 	}
 	
+	public List<Utente> findUtenteByRuoloFerie() {
+		return utenteRepo.findUtenteByRuolo("FERIE")
+				.orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+	}
+	
+	public List<Utente> findUtenteByRuoloAdmin() {
+		return utenteRepo.findUtenteByRuolo("ADMIN")
+				.orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+	}
+	
+	public List<Utente> findUtenteByRuoloUtente() {
+		return utenteRepo.findUtenteByRuolo("UTENTE")
+				.orElseThrow(() -> new UserNotFoundException("Utente non trovato"));
+	}
+	
 	@Transactional //con i delete si deve mettere altrimenti da errore
 	public void deleteUtenteById(Long id) {
 		utenteRepo.deleteUtenteById(id);

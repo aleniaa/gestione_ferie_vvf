@@ -33,6 +33,7 @@ public class Permesso {
 	private LocalTime dalleOre;
 	private LocalTime alleOre;
 	private LocalDate delGiorno;
+	private int totOre;
 	
 	@ManyToOne
     @JoinColumn(name = "idUtente")
@@ -149,6 +150,16 @@ public class Permesso {
 	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
+
+	public int getTotOre() {
+		return totOre;
+	}
+
+	public void setTotOre() {
+		this.totOre = (int) ChronoUnit.HOURS.between(this.dalleOre, this.alleOre);
+	}
+	
+	
 	
 	
 
