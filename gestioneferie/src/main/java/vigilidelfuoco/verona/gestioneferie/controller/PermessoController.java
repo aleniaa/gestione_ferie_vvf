@@ -38,6 +38,12 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@PostMapping("/search") //da modificare in caso la get in post
+	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestBody Permesso permesso){
+		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso);
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
 	@PostMapping("/add")
 	public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
 		

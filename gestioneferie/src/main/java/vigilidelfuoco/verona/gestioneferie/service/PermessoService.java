@@ -1,5 +1,5 @@
 package vigilidelfuoco.verona.gestioneferie.service;
-
+import java.util.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +36,23 @@ public class PermessoService {
 //		return permessoRepo.findPermessoByIdUtente(idUtente);
 //	}
 	
+	
+	public List<Permesso> getFilteredPermessi(Permesso permesso){
+		
+		List<Permesso> permessiTot= new ArrayList<Permesso>();
+		
+//		if(permesso.getUtente().getAccountDipvvf()!=null) {
+//			System.out.println("permesso utente = "+ permesso.getUtente());
+//		}
+		
+		if(permesso.getTipoPermesso()!= null) {
+			System.out.println("permesso tipoPermesso = "+ permesso.getTipoPermesso());
+			
+			permessiTot= permessoRepo.findPermessoBytipoPermesso(permesso.getTipoPermesso());
+		}
+		
+		return permessiTot;
+	} 
 	
 	public Permesso aggiungiPermesso(Permesso permesso){
 		if(permesso.getDalleOre()!=null) { // se ci sono delle ore di permesso e non dei giorni
