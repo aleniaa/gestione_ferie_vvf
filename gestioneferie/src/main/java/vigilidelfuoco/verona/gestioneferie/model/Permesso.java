@@ -40,6 +40,10 @@ public class Permesso {
     @JoinColumn(name = "idUtente")
     private Utente utente;
 	
+	@ManyToOne
+    @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)
+    private Utente utenteApprovazione;
+	
 	
 	
 	public Permesso(){}

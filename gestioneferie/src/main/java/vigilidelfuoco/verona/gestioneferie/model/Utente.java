@@ -55,6 +55,9 @@ public class Utente  {
 		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		private List<Permesso> elencoPermessi;
 		
+		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		private List<Permesso> elencoPermessiApprovati;
+		
 		public Utente() {
 			
 		}
