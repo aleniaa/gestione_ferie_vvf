@@ -16,11 +16,11 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	Optional<Permesso> findPermessoById(Long id);
 	//List<Permesso> findPermessoByIdUtente(Long idUtente);
 	List<Permesso> findPermessoBytipoPermesso(String tipoPermesso);
-	@Query(nativeQuery = true, value= "SELECT utente.* FROM permesso "
-			+ "INNER JOIN gestioneferie.utente "
-			+ "ON gestioneferie.permesso.id_utente_approvazione = gestioneferie.utente.id "
-			+ "WHERE gestioneferie.permesso.id_utente_approvazione = 852 AND gestioneferie.permesso.id = 611")
-	Utente findUtenteByIdUtenteApprovazione();
+//	@Query(nativeQuery = true, value= "SELECT utente.* FROM permesso "
+//			+ "INNER JOIN gestioneferie.utente "
+//			+ "ON gestioneferie.permesso.id_utente_approvazione = gestioneferie.utente.id "
+//			+ "WHERE gestioneferie.permesso.id_utente_approvazione = 852 AND gestioneferie.permesso.id = 611")
+//	Utente findUtenteByIdUtenteApprovazione();
 	//List<Utente> findUtenteByIdUtenteApprovazione(Long idUtenteApprovazione, Long idPermesso);
 	
 	

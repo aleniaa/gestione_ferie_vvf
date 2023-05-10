@@ -28,7 +28,7 @@ public interface UtenteRepo extends JpaRepository<Utente, Long>{
 //			+ "WHERE gestioneferie.permesso.id_utente_approvazione = 852 AND gestioneferie.permesso.id = 611")
 //	Utente findUtenteByIdUtenteApprovazione();
 	
-	@Query(nativeQuery = true, value = "SELECT * from utente WHERE nome= 'giovanni'")
+	@Query(nativeQuery = true, value = "SELECT * from utente WHERE nome= ?1")
 	Optional<Utente> findByNome(String nome);
 	
 	//List<Utente> findUtenteByIdUtenteApprovazione(Long idUtenteApprovazione, Long idPermesso);

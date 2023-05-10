@@ -32,9 +32,11 @@ public class Permesso {
 	private Long idUtenteApprovazione;
 	private LocalTime dalleOre;
 	private LocalTime alleOre;
-	private LocalDate delGiorno;
+	private LocalDate dataApprovazione;
 	private int totOre;
 	private int status; //0 = in revisione, 1 = approvato, 2= respinto;
+	private String note;
+	
 	
 	@ManyToOne
     @JoinColumn(name = "idUtente")
@@ -58,7 +60,7 @@ public class Permesso {
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
-			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate delGiorno, Utente utenteRichiedente) {
+			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -68,13 +70,13 @@ public class Permesso {
 		this.idUtenteApprovazione = idUtenteApprovazione;
 		this.dalleOre = dalleOre;
 		this.alleOre = alleOre;
-		this.delGiorno = delGiorno;
+		this.dataApprovazione = dataApprovazione;
 		this.utenteRichiedente = utenteRichiedente;
 		this.status= 0;
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
-			Utente utenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate delGiorno, Utente utenteRichiedente) {
+			Utente utenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -84,7 +86,7 @@ public class Permesso {
 		this.utenteApprovazione = utenteApprovazione;
 		this.dalleOre = dalleOre;
 		this.alleOre = alleOre;
-		this.delGiorno = delGiorno;
+		this.dataApprovazione = dataApprovazione;
 		this.utenteRichiedente = utenteRichiedente;
 		this.status= 0;
 	}
@@ -158,11 +160,11 @@ public class Permesso {
 	}
 
 	public LocalDate getDelGiorno() {
-		return delGiorno;
+		return dataApprovazione;
 	}
 
-	public void setDelGiorno(LocalDate delGiorno) {
-		this.delGiorno = delGiorno;
+	public void setDelGiorno(LocalDate dataApprovazione) {
+		this.dataApprovazione = dataApprovazione;
 	}
 
 	public Utente getutenteRichiedente() {
@@ -195,6 +197,14 @@ public class Permesso {
 
 	public void setUtenteApprovazione(Utente utenteApprovazione) {
 		this.utenteApprovazione = utenteApprovazione;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	
