@@ -12,7 +12,7 @@ import vigilidelfuoco.verona.gestioneferie.repo.PermessoRepo;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
-@AllArgsConstructor
+
 @Service
 public class PermessoService {
 	
@@ -33,6 +33,14 @@ public class PermessoService {
 	public List<Permesso> trovaTipoCongedo(){
 		return permessoRepo.findPermessoBytipoPermesso("congedo");
 	}
+	
+	public List<Permesso> findPermessoByStatus(int status){
+		return permessoRepo.findPermessoByStatus(status);
+	}
+	
+//	public List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(){
+//	return
+//}
 	
 //	public List<Permesso> findPermessiByIdUtente(Long idUtente){
 //		return permessoRepo.findPermessoByIdUtente(idUtente);

@@ -32,6 +32,12 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@GetMapping("/status/{status}")
+	public ResponseEntity<List<Permesso>> getPermessoByStatus(@PathVariable("status") int status){
+		List<Permesso> permessi = permessoService.findPermessoByStatus(status);
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
 	@GetMapping("/allCongedo")
 	public ResponseEntity<List<Permesso>> getAllCongedo(){
 		List<Permesso> permessi = permessoService.trovaTipoCongedo();
