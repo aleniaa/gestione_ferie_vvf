@@ -11,17 +11,19 @@ import lombok.AllArgsConstructor;
 import vigilidelfuoco.verona.gestioneferie.repo.PermessoRepo;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
-
+import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 @AllArgsConstructor
 @Service
 public class PermessoService {
 	
 	private final PermessoRepo permessoRepo;
+	private final UtenteRepo utenteRepo;
 
 	@Autowired
-	public PermessoService(PermessoRepo permessoRepo) {
+	public PermessoService(PermessoRepo permessoRepo, UtenteRepo utenteRepo) {
 		super();
 		this.permessoRepo = permessoRepo;
+		this.utenteRepo= utenteRepo;
 	}
 	
 	public List<Permesso> trovaPermessi(){
@@ -46,6 +48,16 @@ public class PermessoService {
 //		}
 		
 		if(permesso.getTipoPermesso()!= null) {
+			
+//			switch(permesso.getTipoPermesso()) {
+//			case "tutti i permessi":
+//				permessiTot.add(0, permesso); permessoRepo.findAll();
+//				break;
+//			case "congedo ordinario":
+//				
+//
+//			}
+			
 			System.out.println("permesso tipoPermesso = "+ permesso.getTipoPermesso());
 			
 			permessiTot= permessoRepo.findPermessoBytipoPermesso(permesso.getTipoPermesso());
@@ -60,6 +72,13 @@ public class PermessoService {
 		}else {
 			permesso.setTotGiorni();
 		}
+		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
+		Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
+		
+//		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
+//		System.out.println("account dipvvf utente approvazione = "+ utenteApprovazione.getAccountDipvvf());
+		permesso.setUtenteApprovazione(utenteApprovazione);
+		
 		
 		return permessoRepo.save(permesso);
 	

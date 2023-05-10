@@ -38,7 +38,7 @@ public class Permesso {
 	
 	@ManyToOne
     @JoinColumn(name = "idUtente")
-    private Utente utente;
+    private Utente utenteRichiedente;
 	
 	@ManyToOne
     @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)
@@ -58,7 +58,7 @@ public class Permesso {
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
-			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate delGiorno, Utente utente) {
+			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate delGiorno, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -69,7 +69,23 @@ public class Permesso {
 		this.dalleOre = dalleOre;
 		this.alleOre = alleOre;
 		this.delGiorno = delGiorno;
-		this.utente = utente;
+		this.utenteRichiedente = utenteRichiedente;
+		this.status= 0;
+	}
+	
+	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
+			Utente utenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate delGiorno, Utente utenteRichiedente) {
+		super();
+		this.id = id;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
+		this.tipoPermesso = tipoPermesso;
+		this.utenteApprovazione = utenteApprovazione;
+		this.dalleOre = dalleOre;
+		this.alleOre = alleOre;
+		this.delGiorno = delGiorno;
+		this.utenteRichiedente = utenteRichiedente;
 		this.status= 0;
 	}
 
@@ -149,12 +165,12 @@ public class Permesso {
 		this.delGiorno = delGiorno;
 	}
 
-	public Utente getUtente() {
-		return utente;
+	public Utente getutenteRichiedente() {
+		return utenteRichiedente;
 	}
 
-	public void setUtente(Utente utente) {
-		this.utente = utente;
+	public void setutenteRichiedente(Utente utenteRichiedente) {
+		this.utenteRichiedente = utenteRichiedente;
 	}
 
 	public int getTotOre() {
@@ -171,6 +187,14 @@ public class Permesso {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public Utente getUtenteApprovazione() {
+		return utenteApprovazione;
+	}
+
+	public void setUtenteApprovazione(Utente utenteApprovazione) {
+		this.utenteApprovazione = utenteApprovazione;
 	}
 
 	

@@ -52,10 +52,10 @@ public class Utente  {
 		@Column(nullable= false, updatable = false)
 		private String codiceUtente;
 		
-		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		@OneToMany(mappedBy = "utenteRichiedente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		private List<Permesso> elencoPermessi;
 		
-		@OneToMany(mappedBy = "utente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		@OneToMany(mappedBy = "utenteApprovazione",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		private List<Permesso> elencoPermessiApprovati;
 		
 		public Utente() {
