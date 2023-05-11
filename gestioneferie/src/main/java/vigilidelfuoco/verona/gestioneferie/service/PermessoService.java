@@ -67,14 +67,15 @@ public class PermessoService {
 		
 		filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
 		
-		if(permesso.getTipoPermesso().equals("")) {
+		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
 			
 			filtroPermesso.setTipoPermesso(null);
 		}
 		
 		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
 		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
-		
+		//filtroPermesso.setId(permesso.getId()); per l'id del richiedente
+
 		System.out.println(filtroPermesso.toString());
 		
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
