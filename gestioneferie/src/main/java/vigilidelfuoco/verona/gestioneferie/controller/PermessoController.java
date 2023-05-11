@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,13 +39,22 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@PutMapping("/updateStatus/{decisione}")
+	public ResponseEntity<Permesso> changeStatusPermesso(@PathVariable("decisione") String decisione, @RequestBody Permesso permesso ){
+		
+		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(decisione, permesso);
+
+		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
+	}
+	
+	
 	@GetMapping("/allCongedo")
 	public ResponseEntity<List<Permesso>> getAllCongedo(){
 		List<Permesso> permessi = permessoService.trovaTipoCongedo();
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
-	@PostMapping("/search") //da modificare in caso la get in post
+	@PostMapping("/search") 
 	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestBody Permesso permesso){
 		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso);
 		return new ResponseEntity<>(permessi, HttpStatus.OK);

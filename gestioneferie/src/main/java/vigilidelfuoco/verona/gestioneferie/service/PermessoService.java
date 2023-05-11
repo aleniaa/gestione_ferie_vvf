@@ -1,14 +1,18 @@
 package vigilidelfuoco.verona.gestioneferie.service;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vigilidelfuoco.verona.gestioneferie.repo.PermessoRepo;
+import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
@@ -38,6 +42,11 @@ public class PermessoService {
 		return permessoRepo.findPermessoByStatus(status);
 	}
 	
+	public Permesso findPermessoById(Long id) {
+		return permessoRepo.findPermessoById(id)
+				.orElseThrow(() -> new UserNotFoundException("Permesso con id "+id +" non trovato"));
+	}
+	
 //	public List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(){
 //	return
 //}
@@ -51,25 +60,27 @@ public class PermessoService {
 		
 		List<Permesso> permessiTot= new ArrayList<Permesso>();
 		
-//		if(permesso.getUtente().getAccountDipvvf()!=null) {
-//			System.out.println("permesso utente = "+ permesso.getUtente());
-//		}
+		Permesso filtroPermesso= new Permesso();
+		System.out.println("filtro permesso iniziale : "+filtroPermesso.toString());
+
 		
-		if(permesso.getTipoPermesso()!= null) {
+		
+		filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+		
+		if(permesso.getTipoPermesso().equals("")) {
 			
-//			switch(permesso.getTipoPermesso()) {
-//			case "tutti i permessi":
-//				permessiTot.add(0, permesso); permessoRepo.findAll();
-//				break;
-//			case "congedo ordinario":
-//				
-//
-//			}
-			
-			System.out.println("permesso tipoPermesso = "+ permesso.getTipoPermesso());
-			
-			permessiTot= permessoRepo.findPermessoBytipoPermesso(permesso.getTipoPermesso());
+			filtroPermesso.setTipoPermesso(null);
 		}
+		
+		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
+		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
+		
+		System.out.println(filtroPermesso.toString());
+		
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+		Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
+		
+		permessiTot= permessoRepo.findAll(permessoExample);
 		
 		return permessiTot;
 	} 
@@ -86,11 +97,30 @@ public class PermessoService {
 //		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
 //		System.out.println("account dipvvf utente approvazione = "+ utenteApprovazione.getAccountDipvvf());
 		permesso.setUtenteApprovazione(utenteApprovazione);
-		
+		permesso.setStatus(0);
 		
 		return permessoRepo.save(permesso);
 	
 	}
+	
+	public Permesso aggiornaStatusPermesso(String decisione, Permesso permesso) {
+		
+		System.out.println("sono dentro aggiornastatuspermesso service : "+ decisione);
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		
+		LocalDate dataApprovazione = LocalDate.now();
+		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+		if(decisione.equals("approva")) {
+			permessoDaAggiornare.setStatus(1);
+			System.out.println(" SONO DENTRO APPROVA : "+ decisione);
+
+		}else {
+			permessoDaAggiornare.setStatus(2);
+		}
+		return permessoRepo.save(permessoDaAggiornare);
+	}
+	
+	
 	
 	@Transactional //con i delete si deve mettere altrimenti da errore
 	public void deletePermessoById(Long id) {

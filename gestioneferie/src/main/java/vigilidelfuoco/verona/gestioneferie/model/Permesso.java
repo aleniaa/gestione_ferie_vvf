@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,14 +30,14 @@ public class Permesso {
 	private Long id;
 	private LocalDate dataInizio;
 	private LocalDate dataFine;
-	private int totGiorni;
+	private Integer totGiorni;
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
 	private LocalTime dalleOre;
 	private LocalTime alleOre;
 	private LocalDate dataApprovazione;
-	private int totOre;
-	private int status; //0 = in revisione, 1 = approvato, 2= respinto;
+	private Integer totOre;
+	private Integer status; //0 = in revisione, 1 = approvato, 2= respinto;
 	private String note;
 	
 	
@@ -44,51 +47,54 @@ public class Permesso {
 	
 	@ManyToOne
     @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Utente utenteApprovazione;
 	
 	
 	
-	public Permesso(){}
+	public Permesso(){
+		//this.totGiorni= null;
+	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
-		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
+		
 		
 	}
 	
-	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
+	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine,  String tipoPermesso,
 			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
-		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
+		
 		this.tipoPermesso = tipoPermesso;
 		this.idUtenteApprovazione = idUtenteApprovazione;
 		this.dalleOre = dalleOre;
 		this.alleOre = alleOre;
 		this.dataApprovazione = dataApprovazione;
 		this.utenteRichiedente = utenteRichiedente;
-		this.status= 0;
+		
 	}
 	
-	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, int totGiorni, String tipoPermesso,
+	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
 			Utente utenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
-		this.totGiorni = (int) ChronoUnit.DAYS.between(dataInizio, dataFine);
+		
 		this.tipoPermesso = tipoPermesso;
 		this.utenteApprovazione = utenteApprovazione;
 		this.dalleOre = dalleOre;
 		this.alleOre = alleOre;
 		this.dataApprovazione = dataApprovazione;
 		this.utenteRichiedente = utenteRichiedente;
-		this.status= 0;
+		
 	}
 
 	public Long getId() {
@@ -115,7 +121,7 @@ public class Permesso {
 		this.dataFine = dataFine;
 	}
 
-	public int getTotGiorni() {
+	public Integer getTotGiorni() {
 		return totGiorni;
 	}
 
@@ -159,11 +165,11 @@ public class Permesso {
 		this.alleOre = alleOre;
 	}
 
-	public LocalDate getDelGiorno() {
+	public LocalDate getDataApprovazione() {
 		return dataApprovazione;
 	}
 
-	public void setDelGiorno(LocalDate dataApprovazione) {
+	public void setDataApprovazione(LocalDate dataApprovazione) {
 		this.dataApprovazione = dataApprovazione;
 	}
 
@@ -175,15 +181,19 @@ public class Permesso {
 		this.utenteRichiedente = utenteRichiedente;
 	}
 
-	public int getTotOre() {
+	public Integer getTotOre() {
 		return totOre;
 	}
 
+	public void setTotOre(int totOre) {
+		this.totOre= totOre;
+	}
+	
 	public void setTotOre() {
 		this.totOre = (int) ChronoUnit.HOURS.between(this.dalleOre, this.alleOre);
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -205,6 +215,15 @@ public class Permesso {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	@Override
+	public String toString() {
+		return "Permesso [id=" + id + ", dataInizio=" + dataInizio + ", dataFine=" + dataFine + ", totGiorni="
+				+ totGiorni + ", tipoPermesso=" + tipoPermesso + ", idUtenteApprovazione=" + idUtenteApprovazione
+				+ ", dalleOre=" + dalleOre + ", alleOre=" + alleOre + ", dataApprovazione=" + dataApprovazione
+				+ ", totOre=" + totOre + ", status=" + status + ", note=" + note + ", utenteRichiedente="
+				+ utenteRichiedente + ", utenteApprovazione=" + utenteApprovazione + "]";
 	}
 
 	
