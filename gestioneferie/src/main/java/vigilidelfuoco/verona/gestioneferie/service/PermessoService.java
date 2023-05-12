@@ -62,26 +62,37 @@ public class PermessoService {
 		
 		Permesso filtroPermesso= new Permesso();
 		System.out.println("filtro permesso iniziale : "+filtroPermesso.toString());
-
 		
+		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
+		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
+		//filtroPermesso.setId(permesso.getId()); per l'id del richiedente
 		
-		filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+ 
 		
 		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
 			
 			filtroPermesso.setTipoPermesso(null);
 		}
 		
-		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
-		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
-		//filtroPermesso.setId(permesso.getId()); per l'id del richiedente
+		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("Altri permessi")) {
+			
+			filtroPermesso.setTipoPermesso(null);
+			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
+			permessiTot= permessoRepo.findAltriPermessi(permessoExample);
+			
+		}else { // se il permesso è congedo o recupero ore o permeso breve
+
+			filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
+			permessiTot= permessoRepo.findAll(permessoExample);
+		}
+		
+
 
 		System.out.println(filtroPermesso.toString());
-		
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-		Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-		
-		permessiTot= permessoRepo.findAll(permessoExample);
+
 		
 		return permessiTot;
 	} 

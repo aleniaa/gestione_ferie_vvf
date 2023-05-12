@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,12 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	@Query(nativeQuery = true, value= "SELECT * FROM gestioneferie.permesso "
 			+ "WHERE permesso.id =?1")
 	Permesso findPermessoByIdsenzaoptional(Long id);
+	
+	@Query(nativeQuery = true, value= "SELECT * FROM gestioneferie.permesso "
+			+ "WHERE permesso.tipo_permesso != \"recupero ore eccedenti\" "
+			+ "and permesso.tipo_permesso != \"congedo ordinario\" "
+			+ "and permesso.tipo_permesso != \"permesso breve\"")
+	List<Permesso> findAltriPermessi(Example<Permesso> permesso);
 	
 	List<Permesso> findPermessoByDataApprovazione(LocalDate dataAprovazione);
 	List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(int status, Long idUtenteApprovazione);
