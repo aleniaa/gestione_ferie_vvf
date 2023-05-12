@@ -70,11 +70,13 @@ public class PermessoService {
  
 		
 		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
-			
+			System.out.println("tipo permesso uguale stringa vuota");
 			filtroPermesso.setTipoPermesso(null);
-		}
-		
-		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("Altri permessi")) {
+			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
+			permessiTot= permessoRepo.findAll(permessoExample);
+			
+		}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("Altri permessi")) {
 			
 			filtroPermesso.setTipoPermesso(null);
 			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
