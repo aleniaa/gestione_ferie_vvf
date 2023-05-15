@@ -20,29 +20,30 @@ public class LoginService {
 
 	}
 	
-	public boolean validaLogin(Utente utenteLoggato) {
+	public Utente validaLogin(Utente utenteLoggato) {
 		
 		
 		Utente utenteInRepo = utenteRepo.findByaccountDipvvf(utenteLoggato.getAccountDipvvf());
 		if(utenteInRepo!= null) {
-			//String encoded_password= bCryptPasswordEncoder.encode(utenteLoggato.getPassword());
-			//encoded_password.equals(utenteInRepo.getPassword())
-			
-			
 			if(bCryptPasswordEncoder.matches(utenteLoggato.getPassword(), utenteInRepo.getPassword())) {
 				loginSuccess=true;
+				return utenteInRepo;
 			}else {
 				System.out.println("utente diverso da null ma non corrispondono pass e username");
 				System.out.println("utente loggato paasword:"+ utenteLoggato.getPassword());
 				System.out.println("utente in repo:"+ utenteInRepo.getPassword() );
 
 				loginSuccess= false;
+				return null;
 			}
 			
 			
 		}else {
 			System.out.println("utente non presente nel db");
+			return null;
 		}
-		return loginSuccess;
+		
 	}
+	
+
 }

@@ -106,6 +106,7 @@ public class PermessoService {
 			permesso.setTotGiorni();
 		}
 		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
+		//System.out.println("id utente approvazione = "+ permesso.getI);
 		Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
 		
 //		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
