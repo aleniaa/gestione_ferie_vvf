@@ -33,6 +33,7 @@ public class Permesso {
 	private Integer totGiorni;
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
+	private Long idUtenteRichiedente;
 	private LocalTime dalleOre;
 	private LocalTime alleOre;
 	private LocalDate dataApprovazione;
@@ -42,7 +43,7 @@ public class Permesso {
 	
 	
 	@ManyToOne
-    @JoinColumn(name = "idUtente")
+    @JoinColumn(name = "idUtenteRichiedente", insertable=false, updatable=false)
     private Utente utenteRichiedente;
 	
 	@ManyToOne
@@ -173,13 +174,6 @@ public class Permesso {
 		this.dataApprovazione = dataApprovazione;
 	}
 
-	public Utente getutenteRichiedente() {
-		return utenteRichiedente;
-	}
-
-	public void setutenteRichiedente(Utente utenteRichiedente) {
-		this.utenteRichiedente = utenteRichiedente;
-	}
 
 	public Integer getTotOre() {
 		return totOre;
@@ -215,6 +209,22 @@ public class Permesso {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public Long getIdUtenteRichiedente() {
+		return idUtenteRichiedente;
+	}
+
+	public void setIdUtenteRichiedente(Long idUtenteRichiedente) {
+		this.idUtenteRichiedente = idUtenteRichiedente;
+	}
+
+	public Utente getUtenteRichiedente() {
+		return utenteRichiedente;
+	}
+
+	public void setUtenteRichiedente(Utente utenteRichiedente) {
+		this.utenteRichiedente = utenteRichiedente;
 	}
 
 	@Override

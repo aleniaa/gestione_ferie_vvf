@@ -106,11 +106,15 @@ public class PermessoService {
 			permesso.setTotGiorni();
 		}
 		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
-		//System.out.println("id utente approvazione = "+ permesso.getI);
+		System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
 		Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
-		
+		Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteRichiedente());
 //		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
-//		System.out.println("account dipvvf utente approvazione = "+ utenteApprovazione.getAccountDipvvf());
+		
+		System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
+		
+		
+		permesso.setUtenteRichiedente(utenteRichiedente);
 		permesso.setUtenteApprovazione(utenteApprovazione);
 		permesso.setStatus(0);
 		
