@@ -47,10 +47,17 @@ public class PermessoService {
 		return permessoRepo.findPermessoByStatusAndIdUtenteRichiedente(status, idUtente);
 	}
 	
+	public List<Permesso> findPermessoApprovatoreByStatus(int status, Long idUtente){
+		System.out.println("l'id dell'approvatore dentro permessoService è "+ idUtente);
+		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazione(status, idUtente);
+	}
+	
 	public Permesso findPermessoById(Long id) {
 		return permessoRepo.findPermessoById(id)
 				.orElseThrow(() -> new UserNotFoundException("Permesso con id "+id +" non trovato"));
 	}
+	
+	
 	
 //	public List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(){
 //	return
