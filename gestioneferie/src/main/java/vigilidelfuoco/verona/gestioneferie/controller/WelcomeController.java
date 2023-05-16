@@ -28,7 +28,7 @@ public class WelcomeController {
 	
 	public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
-		System.out.println("si sta provamdo a loggare "+ utente.getAccountDipvvf() + " " + utente.getPassword());
+		System.out.println("si sta provamdo a loggare "+ utente.getAccountDipvvf() + " con password:  " + utente.getPassword());
 		Utente utenteLoggato = loginService.validaLogin(utente);
 		
 

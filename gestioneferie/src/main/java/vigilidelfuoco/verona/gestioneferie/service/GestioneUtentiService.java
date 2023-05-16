@@ -57,6 +57,15 @@ public class GestioneUtentiService {
 	}
 	
 	public Utente aggiornaUtente(Utente utente) {
+		Utente utenteDaModificare =  utenteRepo.findByaccountDipvvf(utente.getAccountDipvvf());
+		String passUtenteDaModificare = utenteDaModificare.getPassword();
+		if(!utente.getPassword().equals(passUtenteDaModificare)) { //se la pass è stata modificata
+			String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
+			utente.setPassword(encoded_password);
+			System.out.println("Password modificata");
+		}
+		
+		
 		utente.setAccountDipvvf();
 		return utenteRepo.save(utente);
 	}

@@ -25,11 +25,15 @@ public class LoginService {
 		
 		Utente utenteInRepo = utenteRepo.findByaccountDipvvf(utenteLoggato.getAccountDipvvf());
 		if(utenteInRepo!= null) {
+//			System.out.println("La password in chiaro è: "+utenteLoggato.getPassword() );
+//			System.out.println("La password codificata è: "+ bCryptPasswordEncoder.encode(utenteLoggato.getPassword() ));
+//			System.out.println("La password codificata nel database è: "+ utenteInRepo.getPassword());
+//			
 			if(bCryptPasswordEncoder.matches(utenteLoggato.getPassword(), utenteInRepo.getPassword())) {
 				loginSuccess=true;
 				return utenteInRepo;
 			}else {
-				System.out.println("utente diverso da null ma non corrispondono pass e username");
+				System.out.println("Login service: utente diverso da null ma non corrispondono pass e username");
 				System.out.println("utente loggato paasword:"+ utenteLoggato.getPassword());
 				System.out.println("utente in repo:"+ utenteInRepo.getPassword() );
 
