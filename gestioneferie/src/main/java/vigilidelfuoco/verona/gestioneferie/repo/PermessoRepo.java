@@ -31,6 +31,8 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	
 	List<Permesso> findPermessoByDataApprovazione(LocalDate dataAprovazione);
 	List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(int status, Long idUtenteApprovazione);
+	List<Permesso> findPermessoByStatusAndIdUtenteRichiedente(int status, Long idUtente);
+
 	List<Permesso> findPermessoByStatus(int status);
 	List<Permesso> findPermessoBytipoPermesso(String tipoPermesso);
 	

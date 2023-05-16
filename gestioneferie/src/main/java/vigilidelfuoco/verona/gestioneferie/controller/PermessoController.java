@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
@@ -36,6 +37,14 @@ public class PermessoController {
 	@GetMapping("/status/{status}")
 	public ResponseEntity<List<Permesso>> getPermessoByStatus(@PathVariable("status") int status){
 		List<Permesso> permessi = permessoService.findPermessoByStatus(status);
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
+	@GetMapping("/statusRichiedente/{status}")
+	public ResponseEntity<List<Permesso>> getPermessoRichiedenteByStatus(@PathVariable("status") int status, @RequestParam("idRichiedente") Long idRichiedente ){
+		System.out.println("l'id del richiedente dentro permesso controller è "+ idRichiedente);
+
+		List<Permesso> permessi = permessoService.findPermessoRichiedenteByStatus(status, idRichiedente);
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
