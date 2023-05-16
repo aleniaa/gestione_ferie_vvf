@@ -44,7 +44,8 @@ public class Permesso {
 	
 	@ManyToOne
     @JoinColumn(name = "idUtenteRichiedente", insertable=false, updatable=false)
-    private Utente utenteRichiedente;
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private Utente utenteRichiedente;
 	
 	@ManyToOne
     @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)

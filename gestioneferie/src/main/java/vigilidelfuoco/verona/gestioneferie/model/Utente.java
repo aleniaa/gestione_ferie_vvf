@@ -55,7 +55,7 @@ public class Utente  {
 		private String codiceUtente;
 		
 		@OneToMany(mappedBy = "utenteRichiedente",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-		
+		@JsonIgnore
 		private List<Permesso> elencoPermessi;
 		
 		@OneToMany(mappedBy = "utenteApprovazione",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
