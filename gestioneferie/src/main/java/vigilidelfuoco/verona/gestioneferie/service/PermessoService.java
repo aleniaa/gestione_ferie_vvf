@@ -77,7 +77,7 @@ public class PermessoService {
 		
 		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
 		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
-		//filtroPermesso.setId(permesso.getId()); per l'id del richiedente
+		filtroPermesso.setIdUtenteRichiedente(permesso.getIdUtenteRichiedente()); //per l'id del richiedente
 		
  
 		
@@ -136,7 +136,7 @@ public class PermessoService {
 	
 	public Permesso aggiornaStatusPermesso(String decisione, Permesso permesso) {
 		
-		System.out.println("sono dentro aggiornastatuspermesso service : "+ decisione);
+		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ permesso.getNote());
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
 		LocalDate dataApprovazione = LocalDate.now();

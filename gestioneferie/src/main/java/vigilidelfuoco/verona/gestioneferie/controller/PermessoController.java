@@ -59,7 +59,8 @@ public class PermessoController {
 	@PutMapping("/updateStatus/{decisione}")
 	public ResponseEntity<Permesso> changeStatusPermesso(@PathVariable("decisione") String decisione, @RequestBody Permesso permesso ){
 		
-		
+		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
+
 		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(decisione, permesso);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
