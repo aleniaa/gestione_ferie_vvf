@@ -60,6 +60,8 @@ public class PermessoController {
 	public ResponseEntity<Permesso> changeStatusPermesso(@PathVariable("decisione") String decisione, @RequestBody Permesso permesso ){
 		
 		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
+		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
+		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
 		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(decisione, permesso);
 

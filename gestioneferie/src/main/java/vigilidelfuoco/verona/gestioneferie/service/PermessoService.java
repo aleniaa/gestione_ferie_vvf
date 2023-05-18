@@ -146,6 +146,7 @@ public class PermessoService {
 			System.out.println(" SONO DENTRO APPROVA : "+ decisione);
 
 		}else {
+			permessoDaAggiornare.setNote(permesso.getNote());
 			permessoDaAggiornare.setStatus(2);
 		}
 		return permessoRepo.save(permessoDaAggiornare);
