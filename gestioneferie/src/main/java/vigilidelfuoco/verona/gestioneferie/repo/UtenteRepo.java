@@ -12,6 +12,7 @@ public interface UtenteRepo extends JpaRepository<Utente, Long>{
 
 	void deleteUtenteById(Long id);
 	boolean findByemailVigilfuoco(String emailVigilfuoco);
+	boolean findByAccountDipvvf(String accountDipvvf);
 	Utente findUtenteByemailVigilfuoco(String emailVigilfuoco);
 	Utente findByaccountDipvvf(String accountDipvvf);
 	Optional<Utente> findUtenteById(Long id);

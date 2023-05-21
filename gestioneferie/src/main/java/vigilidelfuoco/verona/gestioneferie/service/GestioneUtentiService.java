@@ -32,11 +32,12 @@ public class GestioneUtentiService {
 	
 	
 	public Utente aggiungiUtente(Utente utente){
-
+		
 		utente.setCodiceUtente(UUID.randomUUID().toString());
 		String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
 		utente.setPassword(encoded_password);
-		utente.setAccountDipvvf();
+		
+		//utente.setAccountDipvvf();
 		return utenteRepo.save(utente);
 		
 		
