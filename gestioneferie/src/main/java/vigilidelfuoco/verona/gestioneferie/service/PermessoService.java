@@ -43,13 +43,11 @@ public class PermessoService {
 	}
 	
 	public List<Permesso> findPermessoRichiedenteByStatus(int status, Long idUtente){
-		System.out.println("l'id del richiedente dentro permessoService è "+ idUtente);
-		return permessoRepo.findPermessoByStatusAndIdUtenteRichiedente(status, idUtente);
+		return permessoRepo.findPermessoByStatusAndIdUtenteRichiedenteOrderByDataApprovazioneDesc(status, idUtente);
 	}
 	
 	public List<Permesso> findPermessoApprovatoreByStatus(int status, Long idUtente){
-		System.out.println("l'id dell'approvatore dentro permessoService è "+ idUtente);
-		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazione(status, idUtente);
+		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(status, idUtente);
 	}
 	
 	public Permesso findPermessoById(Long id) {
@@ -88,7 +86,10 @@ public class PermessoService {
 			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
 			permessiTot= permessoRepo.findAll(permessoExample);
 			
-		}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("Altri permessi")) {
+			//permessiTot= permessoRepo.findAllByOrderByDataApprovazioneDesc();
+
+			
+		}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("altri permessi")) {
 			
 			filtroPermesso.setTipoPermesso(null);
 			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
@@ -96,11 +97,18 @@ public class PermessoService {
 			permessiTot= permessoRepo.findAltriPermessi(permessoExample);
 			
 		}else { // se il permesso è congedo o recupero ore o permeso breve
+			if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")) {
+				filtroPermesso.setTipoPermesso(null);
 
-			filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+			}else {
+				filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+
+			}
+			
 			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
 			permessiTot= permessoRepo.findAll(permessoExample);
+
 		}
 		
 

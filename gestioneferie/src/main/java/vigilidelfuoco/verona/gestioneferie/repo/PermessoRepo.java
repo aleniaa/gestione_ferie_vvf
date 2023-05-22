@@ -26,12 +26,18 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	@Query(nativeQuery = true, value= "SELECT * FROM gestioneferie.permesso "
 			+ "WHERE permesso.tipo_permesso != \"recupero ore eccedenti\" "
 			+ "and permesso.tipo_permesso != \"congedo ordinario\" "
-			+ "and permesso.tipo_permesso != \"permesso breve\"")
+			+ "and permesso.tipo_permesso != \"permesso breve\""
+			+ "and permesso.status=1")
 	List<Permesso> findAltriPermessi(Example<Permesso> permesso);
+		
+	List<Permesso> findAllByOrderByDataApprovazioneDesc();
+
 	
 	List<Permesso> findPermessoByDataApprovazione(LocalDate dataAprovazione);
-	List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(int status, Long idUtenteApprovazione);
-	List<Permesso> findPermessoByStatusAndIdUtenteRichiedente(int status, Long idUtente);
+	
+	List<Permesso> findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(int status, Long idUtenteApprovazione);
+	
+	List<Permesso> findPermessoByStatusAndIdUtenteRichiedenteOrderByDataApprovazioneDesc(int status, Long idUtente);
 
 	List<Permesso> findPermessoByStatus(int status);
 	List<Permesso> findPermessoBytipoPermesso(String tipoPermesso);
