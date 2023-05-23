@@ -102,14 +102,12 @@ public class UtenteController {
 	
 	@PutMapping("/changePass")
 	public ResponseEntity<String> changePass(
-			//@RequestParam("idUtenteLoggato") Long idUtenteLoggato, 
-			@RequestParam("oldPass") String oldPass 
-			//@RequestParam("newPass") String newPass 
+			@RequestParam("idUtenteLoggato") Long idUtenteLoggato, 
+			@RequestParam("oldPass") String oldPass, 
+			@RequestParam("newPass") String newPass 
 			)
 	{
-		
-		Long idUtenteLoggato = (long) 5 ;
-		String newPass = "bu";
+
 		boolean matchingPass = gestioneUtenti.changePass(oldPass, newPass, idUtenteLoggato);
 		if(matchingPass) {
 			return new ResponseEntity<>("password aggiornata", HttpStatus.OK);
