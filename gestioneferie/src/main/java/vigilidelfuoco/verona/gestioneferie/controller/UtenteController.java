@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
@@ -97,6 +98,25 @@ public class UtenteController {
 	public ResponseEntity<Utente> aggiornaUtente(@RequestBody Utente utente){
 		Utente utenteAggiornato = gestioneUtenti.aggiornaUtente(utente);
 		return new ResponseEntity<>(utenteAggiornato, HttpStatus.OK);
+	}
+	
+	@PutMapping("/changePass")
+	public ResponseEntity<String> changePass(
+			//@RequestParam("idUtenteLoggato") Long idUtenteLoggato, 
+			@RequestParam("oldPass") String oldPass 
+			//@RequestParam("newPass") String newPass 
+			)
+	{
+		
+		Long idUtenteLoggato = (long) 5 ;
+		String newPass = "bu";
+		boolean matchingPass = gestioneUtenti.changePass(oldPass, newPass, idUtenteLoggato);
+		if(matchingPass) {
+			return new ResponseEntity<>("password aggiornata", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("Le password non corrispondono", HttpStatus.NOT_ACCEPTABLE);
+		}
+		
 	}
 	
 	@DeleteMapping("/delete/{id}")
