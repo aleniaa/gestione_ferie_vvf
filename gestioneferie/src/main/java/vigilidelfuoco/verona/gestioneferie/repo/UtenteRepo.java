@@ -22,6 +22,8 @@ public interface UtenteRepo extends JpaRepository<Utente, Long>{
 	
 	boolean existsUtenteByemailVigilfuoco(String emailVigilfuoco);
 	boolean existsUtenteByAccountDipvvf(String accountDipvvf);
+	boolean existsUtenteById(Long id);
+
 	Optional<List<Utente>> findUtenteByRuolo(String ruolo);
 	
 //	@Query("SELECT utente.nome, utente.cognome FROM gestioneferie.permesso "

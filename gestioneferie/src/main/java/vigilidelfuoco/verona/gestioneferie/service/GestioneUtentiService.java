@@ -109,7 +109,10 @@ public class GestioneUtentiService {
 		
 		boolean matchingPass= false;
 		Utente utenteLoggato= utenteRepo.findUtenteByIdsenzaoptional(idUtenteLoggato);
+		System.out.println(utenteLoggato.toString());
 		if(utenteLoggato!=null) {
+			System.out.println("l'utente è diverso da null");
+
 			if(bCryptPasswordEncoder.matches(oldPass, utenteLoggato.getPassword())) {
 				String encoded_password= bCryptPasswordEncoder.encode(newPass);
 				utenteLoggato.setPassword(encoded_password);
@@ -118,10 +121,8 @@ public class GestioneUtentiService {
 				System.out.println("le password non corrisponono");
 				
 			}
-		}else {
-			System.out.println("l'utente non esiste");
 		}
-		
+		utenteRepo.save(utenteLoggato);
 		return matchingPass;
 	}
 	

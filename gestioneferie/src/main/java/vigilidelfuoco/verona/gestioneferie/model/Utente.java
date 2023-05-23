@@ -176,6 +176,17 @@ public class Utente  {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Utente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale
+				+ ", telefono=" + telefono + ", accountDipvvf=" + accountDipvvf + ", emailVigilfuoco=" + emailVigilfuoco
+				+ ", password=" + password + ", ruolo=" + ruolo + ", codiceUtente=" + codiceUtente + "]";
+	}
+
+
+
+
+
 //	public List<Permesso> getElencoPermessi() {
 //		return elencoPermessi;
 //	}

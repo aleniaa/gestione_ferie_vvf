@@ -101,7 +101,7 @@ public class UtenteController {
 	}
 	
 	@PutMapping("/changePass")
-	public ResponseEntity<String> changePass(
+	public ResponseEntity<?> changePass(
 			@RequestParam("idUtenteLoggato") Long idUtenteLoggato, 
 			@RequestParam("oldPass") String oldPass, 
 			@RequestParam("newPass") String newPass 
@@ -110,9 +110,11 @@ public class UtenteController {
 
 		boolean matchingPass = gestioneUtenti.changePass(oldPass, newPass, idUtenteLoggato);
 		if(matchingPass) {
-			return new ResponseEntity<>("password aggiornata", HttpStatus.OK);
+			System.out.println("sono dentro utentecontroller responsenetyty OK");
+
+			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>("Le password non corrispondono", HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 	}
