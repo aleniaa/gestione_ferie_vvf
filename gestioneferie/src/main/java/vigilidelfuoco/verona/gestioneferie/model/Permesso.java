@@ -38,7 +38,7 @@ public class Permesso {
 	private String dalleOre;
 	private String alleOre;
 	private LocalDate dataApprovazione;
-	private Integer totOre;
+	private String totOre;
 	private Integer status; //0 = in revisione, 1 = approvato, 2= respinto;
 	private String note;
 	
@@ -85,7 +85,7 @@ public class Permesso {
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
-			Utente utenteApprovazione, String dalleOre, String alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
+			Utente utenteApprovazione, String dalleOre, String alleOre, LocalDate dataApprovazione, Utente utenteRichiedente, String totOre) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -97,9 +97,12 @@ public class Permesso {
 		this.alleOre = alleOre;
 		this.dataApprovazione = dataApprovazione;
 		this.utenteRichiedente = utenteRichiedente;
+		this.totOre= totOre;
 		
 	}
 
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -185,21 +188,14 @@ public class Permesso {
 	}
 
 
-	public Integer getTotOre() {
+	public String getTotOre() {
 		return totOre;
 	}
 
-	public void setTotOre(int totOre) {
+	public void setTotOre(String totOre) {
 		this.totOre= totOre;
 	}
 	
-	public void setTotOre() {
-		DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
-		LocalTime dalleOre = LocalTime.parse(this.dalleOre, parser);
-		LocalTime alleOre = LocalTime.parse(this.alleOre, parser);
-
-		this.totOre = (int) ChronoUnit.HOURS.between(dalleOre, alleOre);
-	}
 
 	public Integer getStatus() {
 		return status;

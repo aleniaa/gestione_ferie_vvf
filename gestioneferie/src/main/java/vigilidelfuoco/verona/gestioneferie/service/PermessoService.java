@@ -122,11 +122,11 @@ public class PermessoService {
 	public Permesso aggiungiPermesso(Permesso permesso){
 		//System.out.println("get dalle ore è: " + permesso.getDalleOre().toString());
 
-		if(permesso.getDalleOre()!=null && permesso.getAlleOre()!= null ) { // se ci sono delle ore di permesso e non dei giorni
-			System.out.println("sono dentro permesso service getdalleore");
-			
-			permesso.setTotOre();
-		}
+//		if(permesso.getDalleOre()!=null && permesso.getAlleOre()!= null ) { // se ci sono delle ore di permesso e non dei giorni
+//			System.out.println("sono dentro permesso service getdalleore");
+//			
+//			permesso.setTotOre();
+//		}
 		
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
 			System.out.println("sono dentro permesso service setTotGiorni");
