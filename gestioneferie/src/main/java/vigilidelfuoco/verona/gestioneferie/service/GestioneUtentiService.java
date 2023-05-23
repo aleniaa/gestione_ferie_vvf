@@ -97,10 +97,10 @@ public class GestioneUtentiService {
 	}
 	
 	public boolean checkUtenteIfExists(Utente utente) {
-		if(!utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco())) {
+		if(!utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco()) && !utenteRepo.existsUtenteByAccountDipvvf(utente.getAccountDipvvf())) {
 			return true;
 		}else {
-			 new UserNotFoundException("Utente già presente");
+			 new UserNotFoundException("Email vigilfuoco o account Dipvvf già presenti");
 			 return false;
 		}
 	}

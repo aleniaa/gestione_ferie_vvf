@@ -61,16 +61,22 @@ public class UtenteController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Utente> aggiungiUtente(@RequestBody Utente utente){
+	//public ResponseEntity<String> aggiungiUtente(@RequestBody Utente utente){
+	
 		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
 			System.out.println("l'utente non esiste");
 			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
 			
 			
 			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
+			//return new ResponseEntity<>("Utente creato correttamente", HttpStatus.CREATED);
+
 		}else {
 			System.out.println("l'utente esiste già");
 
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			//return new ResponseEntity<>("La mail Vigilfuoco o l'account Dipvvf sono già registrati", HttpStatus.NOT_ACCEPTABLE);
+
 		}
 		
 	}

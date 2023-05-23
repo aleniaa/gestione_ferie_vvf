@@ -94,10 +94,6 @@ public class PermessoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-//	@GetMapping("/find/{idUtente}")
-//	public ResponseEntity<List<Permesso>> findPermessiByIdUtente(@PathVariable("idUtente") Long id){
-//		List<Permesso> permessi = permessoService.findPermessiByIdUtente(id);
-//		return new ResponseEntity<>(permessi, HttpStatus.OK);
-//	}
+
 	
 }

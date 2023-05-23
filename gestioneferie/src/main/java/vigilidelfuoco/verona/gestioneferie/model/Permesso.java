@@ -3,6 +3,7 @@ package vigilidelfuoco.verona.gestioneferie.model;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,8 +35,8 @@ public class Permesso {
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
 	private Long idUtenteRichiedente;
-	private LocalTime dalleOre;
-	private LocalTime alleOre;
+	private String dalleOre;
+	private String alleOre;
 	private LocalDate dataApprovazione;
 	private Integer totOre;
 	private Integer status; //0 = in revisione, 1 = approvato, 2= respinto;
@@ -68,7 +69,7 @@ public class Permesso {
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine,  String tipoPermesso,
-			Long idUtenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
+			Long idUtenteApprovazione, String dalleOre, String alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -84,7 +85,7 @@ public class Permesso {
 	}
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
-			Utente utenteApprovazione, LocalTime dalleOre, LocalTime alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
+			Utente utenteApprovazione, String dalleOre, String alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
@@ -151,19 +152,27 @@ public class Permesso {
 		this.idUtenteApprovazione = idUtenteApprovazione;
 	}
 
-	public LocalTime getDalleOre() {
+	public String getDalleOre() {
 		return dalleOre;
 	}
 
-	public void setDalleOre(LocalTime dalleOre) {
+	//public void setDalleOre(LocalTime dalleOre) {
+	public void setDalleOre(String dalleOre) {
+//		DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
+//		LocalTime localTime = LocalTime.parse(dalleOre, parser);
 		this.dalleOre = dalleOre;
 	}
 
-	public LocalTime getAlleOre() {
+	public String getAlleOre() {
 		return alleOre;
 	}
 
-	public void setAlleOre(LocalTime alleOre) {
+//	public void setAlleOre(LocalTime alleOre) {
+	public void setAlleOre(String alleOre) {
+
+//		DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
+//		LocalTime localTime = LocalTime.parse(alleOre, parser);
+		//this.alleOre = localTime;
 		this.alleOre = alleOre;
 	}
 
@@ -185,7 +194,11 @@ public class Permesso {
 	}
 	
 	public void setTotOre() {
-		this.totOre = (int) ChronoUnit.HOURS.between(this.dalleOre, this.alleOre);
+		DateTimeFormatter parser = DateTimeFormatter.ofPattern("HH:mm");
+		LocalTime dalleOre = LocalTime.parse(this.dalleOre, parser);
+		LocalTime alleOre = LocalTime.parse(this.alleOre, parser);
+
+		this.totOre = (int) ChronoUnit.HOURS.between(dalleOre, alleOre);
 	}
 
 	public Integer getStatus() {

@@ -124,6 +124,7 @@ public class PermessoService {
 
 		if(permesso.getDalleOre()!=null && permesso.getAlleOre()!= null ) { // se ci sono delle ore di permesso e non dei giorni
 			System.out.println("sono dentro permesso service getdalleore");
+			
 			permesso.setTotOre();
 		}
 		

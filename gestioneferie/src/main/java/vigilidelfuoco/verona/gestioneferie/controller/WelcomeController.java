@@ -24,9 +24,9 @@ public class WelcomeController {
 	}
 	
 	@PostMapping
-	//public ResponseEntity<?> login(@RequestBody Utente utente) {
+	public ResponseEntity<?> login(@RequestBody Utente utente) {
 	
-	public ResponseEntity<Utente> login(@RequestBody Utente utente) {
+	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
 		System.out.println("si sta provamdo a loggare "+ utente.getAccountDipvvf() + " con password:  " + utente.getPassword());
 		Utente utenteLoggato = loginService.validaLogin(utente);
@@ -35,7 +35,8 @@ public class WelcomeController {
 		if(utenteLoggato!=null) {
 			System.out.println("login success true");
 			
-			
+			return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
+
 			//return ResponseEntity.ok("loggato");
 			//return new ResponseEntity<>(HttpStatus.OK);
 //		}else {
@@ -47,10 +48,12 @@ public class WelcomeController {
 			
 	}else {
 		System.out.println("login success false");
-		utenteLoggato= null;
+		return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
+		
+		//utenteLoggato= null;
 	}
 		
-		return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
+		//return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
 		
 }
 }
