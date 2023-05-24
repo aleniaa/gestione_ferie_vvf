@@ -82,17 +82,26 @@ public class UtenteController {
 		
 	}
 	
-//	@PostMapping("/addMore")
-//	public ResponseEntity<Utente> aggiungipiuUtenti(@RequestBody List<Utente> utente){
-//		if(gestioneUtenti.checkUtenteIfExists(utente)) { //se non esiste
-//			Utente newUtente = gestioneUtenti.aggiungiUtente(utente);
-//			
-//			return new ResponseEntity<>(newUtente, HttpStatus.CREATED);
-//		}else {
-//			return new ResponseEntity<>(HttpStatus.ACCEPTED);
-//		}
-//		
-//	}
+	@PostMapping("/addMore")
+	public ResponseEntity<String> addMoreUtenti(@RequestBody List<Utente> utenti){
+	
+	    boolean newUserAdded = false;
+
+	    for (Utente utente : utenti) {
+	        if (gestioneUtenti.checkUtenteIfExists(utente)) {
+	            gestioneUtenti.aggiungiUtente(utente);
+	            newUserAdded = true;
+	        }
+	    }
+
+	    if (newUserAdded) {
+	        return ResponseEntity.status(HttpStatus.CREATED).body("Utenti added successfully");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No new users were added");
+	    }
+	}
+		
+	
 	
 	@PutMapping("/update")
 	public ResponseEntity<Utente> aggiornaUtente(@RequestBody Utente utente){

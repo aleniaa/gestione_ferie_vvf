@@ -97,12 +97,15 @@ public class GestioneUtentiService {
 	}
 	
 	public boolean checkUtenteIfExists(Utente utente) {
-		if(!utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco()) && !utenteRepo.existsUtenteByAccountDipvvf(utente.getAccountDipvvf())) {
-			return true;
+		
+		if(utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco()) || utenteRepo.existsUtenteByAccountDipvvf(utente.getAccountDipvvf())) {
+			return false;
 		}else {
-			 new UserNotFoundException("Email vigilfuoco o account Dipvvf già presenti");
-			 return false;
+			 System.out.println("L'utente non esiste");
+			 return true;
 		}
+		
+		
 	}
 	
 	public boolean changePass(String oldPass, String newPass, Long idUtenteLoggato) {
