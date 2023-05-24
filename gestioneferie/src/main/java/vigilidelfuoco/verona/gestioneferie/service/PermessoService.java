@@ -10,6 +10,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -127,6 +129,25 @@ public class PermessoService {
 		
 		return permessiTot;
 	} 
+	
+	
+	public void uploadfileToPermesso(MultipartFile file, Permesso permesso) {
+		
+		String upload_dir ="/src/main/java/uploadedfile";
+	    try {
+	        // Generate a unique filename
+	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+	        // Save the file to the upload directory
+	        Path filePath = Paths.get(upload_dir + filename);
+	        Files.copy(file.getInputStream(), filePath);
+	        // Save the file reference in the database
+	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
+	        fileRepo.save(fileEntity);
+
+	    } catch (Exception e) {
+	        // Handle any exceptions that occur during file upload
+	    }
+	}
 	
 	public void aggiungiPermesso(Permesso permesso){
 		

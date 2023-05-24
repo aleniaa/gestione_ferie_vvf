@@ -1,6 +1,10 @@
 package vigilidelfuoco.verona.gestioneferie.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.service.FileStorageService;
 import vigilidelfuoco.verona.gestioneferie.service.PermessoService;
+import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
+
 
 @RestController
 @RequestMapping("/permesso")
@@ -101,6 +108,35 @@ public class PermessoController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Permesso aggiunto correttamente!");
 
 	}
+	
+	@PostMapping("/uploadFile")
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("permesso") Permesso permesso ) {
+	   System.out.println(permesso);
+		permessoService.uploadfileToPermesso(file, permesso);
+		
+		// Perform validation checks on the file
+//		String upload_dir ="/path/to/uploaded/files";
+//	    try {
+//	        // Generate a unique filename
+//	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+//	        // Save the file to the upload directory
+//	        Path filePath = Paths.get(upload_dir + filename);
+//	        Files.copy(file.getInputStream(), filePath);
+//	        // Save the file reference in the database
+//	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
+//	        fileRepository.save(fileEntity);
+//
+//	        return ResponseEntity.ok("File uploaded successfully");
+//	    } catch (Exception e) {
+//	        // Handle any exceptions that occur during file upload
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
+//	    }
+		
+		
+		return ResponseEntity.ok("File uploaded successfully");
+	}
+
+	
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> cancellaPermesso(@PathVariable("id") Long id){
