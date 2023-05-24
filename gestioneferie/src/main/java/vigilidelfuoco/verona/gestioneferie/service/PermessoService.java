@@ -1,4 +1,7 @@
 package vigilidelfuoco.verona.gestioneferie.service;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
@@ -9,25 +12,31 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
+import vigilidelfuoco.verona.gestioneferie.repo.FileRepo;
 import vigilidelfuoco.verona.gestioneferie.repo.PermessoRepo;
 import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
+import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
+
 
 @Service
 public class PermessoService {
 	
 	private final PermessoRepo permessoRepo;
 	private final UtenteRepo utenteRepo;
+	private final  FileRepo fileRepo;
 
 	@Autowired
-	public PermessoService(PermessoRepo permessoRepo, UtenteRepo utenteRepo) {
+	public PermessoService(PermessoRepo permessoRepo, UtenteRepo utenteRepo, FileRepo fileRepo) {
 		super();
 		this.permessoRepo = permessoRepo;
 		this.utenteRepo= utenteRepo;
+		this.fileRepo= fileRepo;
 	}
 	
 	public List<Permesso> trovaPermessi(){
@@ -120,14 +129,18 @@ public class PermessoService {
 	} 
 	
 	public void aggiungiPermesso(Permesso permesso){
-		//System.out.println("get dalle ore è: " + permesso.getDalleOre().toString());
-
-//		if(permesso.getDalleOre()!=null && permesso.getAlleOre()!= null ) { // se ci sono delle ore di permesso e non dei giorni
-//			System.out.println("sono dentro permesso service getdalleore");
-//			
-//			permesso.setTotOre();
-//		}
 		
+//		MultipartFile file= permesso.getElencoFile().get(0);
+//		String upload_dir = "/path/to/uploaded/files";
+//		// Generate a unique filename
+//        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+//        // Save the file to the upload directory
+//        Path filePath = Paths.get(upload_dir + filename);
+//        Files.copy(file.getInputStream(), filePath);
+//        // Save the file reference in the database
+//        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
+//        fileRepo.save(fileEntity);
+//		
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
 			System.out.println("sono dentro permesso service setTotGiorni");
 

@@ -2,6 +2,7 @@ package vigilidelfuoco.verona.gestioneferie.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
+import vigilidelfuoco.verona.gestioneferie.service.FileStorageService;
 import vigilidelfuoco.verona.gestioneferie.service.PermessoService;
 
 @RestController
@@ -23,9 +25,14 @@ import vigilidelfuoco.verona.gestioneferie.service.PermessoService;
 public class PermessoController {
 
 	private final PermessoService permessoService;
-	public PermessoController(PermessoService permessoService) {
+	
+	  @Autowired
+	  private FileStorageService storageService;
+	  
+	public PermessoController(PermessoService permessoService, FileStorageService storageService ) {
 		super();
 		this.permessoService = permessoService;
+		this.storageService= storageService;
 	}
 	
 	@GetMapping("/all")
@@ -86,6 +93,7 @@ public class PermessoController {
 		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso){
 
 		
+		//storageService.store(file);
 		//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 		permessoService.aggiungiPermesso(permesso);
 

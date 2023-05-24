@@ -5,11 +5,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -52,6 +56,10 @@ public class Permesso {
     @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Utente utenteApprovazione;
+	
+	@OneToMany(mappedBy = "permessoAssociato",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<FileEntity> elencoFile;
 	
 	
 	
@@ -235,6 +243,16 @@ public class Permesso {
 
 	public void setUtenteRichiedente(Utente utenteRichiedente) {
 		this.utenteRichiedente = utenteRichiedente;
+	}
+
+	
+	
+	public List<FileEntity> getElencoFile() {
+		return elencoFile;
+	}
+
+	public void setElencoFile(List<FileEntity> elencoFile) {
+		this.elencoFile = elencoFile;
 	}
 
 	@Override
