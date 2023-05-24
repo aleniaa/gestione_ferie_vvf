@@ -82,10 +82,16 @@ public class PermessoController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
+	//public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
+		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso){
+
 		
-		Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
-		return new ResponseEntity<>(newPermesso, HttpStatus.CREATED);
+		//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
+		permessoService.aggiungiPermesso(permesso);
+
+		//return new ResponseEntity<>(newPermesso, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Permesso aggiunto correttamente!");
+
 	}
 	
 	@DeleteMapping("/delete/{id}")

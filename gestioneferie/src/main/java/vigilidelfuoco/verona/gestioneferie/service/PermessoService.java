@@ -119,7 +119,7 @@ public class PermessoService {
 		return permessiTot;
 	} 
 	
-	public Permesso aggiungiPermesso(Permesso permesso){
+	public void aggiungiPermesso(Permesso permesso){
 		//System.out.println("get dalle ore è: " + permesso.getDalleOre().toString());
 
 //		if(permesso.getDalleOre()!=null && permesso.getAlleOre()!= null ) { // se ci sono delle ore di permesso e non dei giorni
@@ -146,7 +146,8 @@ public class PermessoService {
 		permesso.setUtenteApprovazione(utenteApprovazione);
 		permesso.setStatus(0);
 		
-		return permessoRepo.save(permesso);
+		permessoRepo.save(permesso);
+		//return permessoRepo.save(permesso);
 	
 	}
 	
