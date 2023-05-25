@@ -2,6 +2,7 @@ package vigilidelfuoco.verona.gestioneferie.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,19 +23,24 @@ import org.springframework.core.io.UrlResource;
 import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.repo.FileRepo;
+import static java.nio.file.Files.copy;
+import static java.nio.file.Paths.get;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @Service
 public class FileStorageService {
 
 	private final  FileRepo fileRepo;
 	private String upload_dir;
+	private Path tempPath;
 	
 	
 public FileStorageService(FileRepo fileRepo) {
 		super();
-		this.fileRepo = fileRepo;
-		this.upload_dir = "C:/Users/ilenia.mannino/git/gestione_ferie_vvf/gestioneferie/uploadedFile/";
-
+		this.fileRepo = fileRepo; 
+		this.upload_dir = "C:/Users/milen/git/gestione_ferie_vvf/gestioneferie/uploadedFile/";
+		this.tempPath= null;
 	}
 
 
@@ -60,30 +66,51 @@ public FileStorageService(FileRepo fileRepo) {
 //		  }
 
 
-	public void uploadfileToPermesso(MultipartFile file, Permesso permesso) {
-	//public void uploadfileToPermesso(MultipartFile file) {
+//	public void uploadfileToPermesso(MultipartFile file, Permesso permesso) {
+//	//public void uploadfileToPermesso(MultipartFile file) {
+//	
+//		System.out.println("son odentro fielstorageservice");
+//
+//	    try {
+//	        // Generate a unique filename
+//	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+//	        // Save the file to the upload directory
+//	        Path filePath = Paths.get(upload_dir + filename);
+//	        Files.copy(file.getInputStream(), filePath);
+//	        // Save the file reference in the database
+//	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso.getId(), permesso);
+//	        //FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString());
+//
+//	        System.out.println(fileEntity.toString());
+//	        fileRepo.save(fileEntity);
+//
+//	    } catch (Exception e) {
+//	        // Handle any exceptions that occur during file upload
+//	    	e.printStackTrace();
+//	    }
+//	}
 	
-		System.out.println("son odentro fielstorageservice");
+public List<String> uploadfileToPermesso(List<MultipartFile> multipartFiles, Permesso permesso) throws IOException {
+//public void uploadfileToPermesso(MultipartFile file) {
 
-	    try {
-	        // Generate a unique filename
-	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-	        // Save the file to the upload directory
-	        Path filePath = Paths.get(upload_dir + filename);
-	        Files.copy(file.getInputStream(), filePath);
-	        // Save the file reference in the database
-	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso.getId(), permesso);
-	        //FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString());
+	System.out.println("son odentro fielstorageservice");
 
-	        System.out.println(fileEntity.toString());
-	        fileRepo.save(fileEntity);
+	 List<String> filenames = new ArrayList<>();
 
-	    } catch (Exception e) {
-	        // Handle any exceptions that occur during file upload
-	    	e.printStackTrace();
-	    }
-	}
-	
+	for(MultipartFile file : multipartFiles) {
+        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(upload_dir + filename);
+        copy(file.getInputStream(), filePath);
+        filenames.add(filename);
+        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso.getId(), permesso);
+        fileRepo.save(fileEntity);
+
+    }
+	return filenames;
+
+}
+
+
 //	public Resource getFilePermesso(Long idPermesso) {
 //	    System.out.println("Sono dentro getFile in FileService");
 //
@@ -165,6 +192,35 @@ public FileStorageService(FileRepo fileRepo) {
 		
 		
 
+	}
+
+
+
+	public Resource downloadFilePermesso(Long idPermesso, String fileName) throws MalformedURLException {
+
+		Optional<FileEntity> fileTrovato = fileRepo.findByIdPermessoAssociato(idPermesso);
+		Resource resourceTrovata = null;
+		if(fileTrovato.isPresent()) {
+	    	System.out.println("sono dentro download in file storage service e ho trovato il file:" + fileTrovato.get().toString());
+
+			Path filePath = Paths.get(upload_dir + fileName);
+			setPath(filePath);
+	        Resource resource = new UrlResource(filePath.toUri());
+	        if (resource.exists()) {
+	        	resourceTrovata = resource;
+	        }
+
+		}
+		
+		return resourceTrovata;
+	}
+	
+	public void setPath(Path path) {
+		this.tempPath= path;
+	}
+	
+	public Path getPath() {
+		return tempPath;
 	}
 
 
