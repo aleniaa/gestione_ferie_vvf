@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
-
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -83,50 +84,88 @@ public FileStorageService(FileRepo fileRepo) {
 	    }
 	}
 	
-	public Resource getFilePermesso(Long idPermesso) {
+//	public Resource getFilePermesso(Long idPermesso) {
+//	    System.out.println("Sono dentro getFile in FileService");
+//
+//		Optional<FileEntity> fileTrovato = fileRepo.findByIdPermessoAssociato(idPermesso);
+//		Resource resourceTrovata = null;
+//		
+//		if(fileTrovato.isPresent()) {
+//			
+//		    System.out.println("Qualche risorsa è presente");
+//
+//			
+//		    try {
+//		    	
+//		    	
+//		        Path filePath = Paths.get(upload_dir + fileTrovato.get().getFilename());
+//		        Resource resource = new UrlResource(filePath.toUri());
+//
+//		        if (resource.exists()) {
+////		            return ResponseEntity.ok()
+////		                    .contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
+////		                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+////		                    .body(resource);
+//		        	resourceTrovata=resource;
+//		        	System.out.println("Trovato file");
+//		        } else {
+//		        	System.out.println("Niente file");
+//
+////		            return ResponseEntity.notFound().build();
+//		        }
+//		        
+//				
+//
+//		    } catch (IOException e) {
+//		        // Handle any exceptions that occur during file retrieval
+////		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		    }
+//		}
+//		
+//		return resourceTrovata;
+//		
+//
+//	}
+	
+	
+
+	public List<File> getFilePermesso(Long idPermesso) {
 	    System.out.println("Sono dentro getFile in FileService");
-
-		Optional<FileEntity> fileTrovato = fileRepo.findByIdPermessoAssociato(idPermesso);
-		Resource resourceTrovata = null;
-		
-		if(fileTrovato.isPresent()) {
-			
-		    System.out.println("Qualche risorsa è presente");
-
-			
-		    try {
-		    	
-		    	
-		        Path filePath = Paths.get(upload_dir + fileTrovato.get().getFilename());
-		        Resource resource = new UrlResource(filePath.toUri());
-
-		        if (resource.exists()) {
-//		            return ResponseEntity.ok()
-//		                    .contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-//		                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//		                    .body(resource);
-		        	resourceTrovata=resource;
-		        	System.out.println("Trovato file");
-		        } else {
-		        	System.out.println("Niente file");
-
-//		            return ResponseEntity.notFound().build();
-		        }
+	    
+	    Optional<FileEntity> fileTrovato = fileRepo.findByIdPermessoAssociato(idPermesso);
+	    List<File> imageFiles = new ArrayList<>();
+	    
+	    if(fileTrovato.isPresent()) {
+			 
 		        
-				
+		        File directory = new File(upload_dir);
+		        
+		        if (directory.exists() && directory.isDirectory()) {
+		            File[] files = directory.listFiles();
+		            
+		            if (files != null) {
+		                for (File file : files) {
+		                    if (file.getName().equals(fileTrovato.get().getFilename())) {
+		                    	System.out.println("nome del file nella cartella: " + file.getName());
+		                        
+		                    	System.out.println("nome del file nel database: " + fileTrovato.get().getFilename());
 
-		    } catch (IOException e) {
-		        // Handle any exceptions that occur during file retrieval
-//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		    }
-		}
+		                    	imageFiles.add(file);
+		                    }
+		                }
+		            }
+		        }
+	    }
+
+	    
+		        
+		return imageFiles;
+		    
+	    
 		
-		return resourceTrovata;
 		
 
 	}
-
-
 
 
 

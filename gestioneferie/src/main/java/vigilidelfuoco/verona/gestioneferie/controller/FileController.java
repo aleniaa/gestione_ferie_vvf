@@ -1,5 +1,8 @@
 package vigilidelfuoco.verona.gestioneferie.controller;
 
+import java.io.File;
+import java.util.List;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -69,16 +72,31 @@ public class FileController {
 		return ResponseEntity.ok("File uploaded successfully");
 	}
 	
+//	@GetMapping("/getFile")
+//	public ResponseEntity<Resource> getFile(@RequestParam("idPermesso") Long idPermesso ) {
+//		
+//	    System.out.println("Sono dentro getFile in controller");
+//
+//		Resource resource = storageService.getFilePermesso(idPermesso);
+//		return new ResponseEntity<>(resource, HttpStatus.OK);
+//		
+//
+//	}
+	
 	@GetMapping("/getFile")
-	public ResponseEntity<Resource> getFile(@RequestParam("idPermesso") Long idPermesso ) {
+	public ResponseEntity<List<File>> getFile(@RequestParam("idPermesso") Long idPermesso ) {
 		
 	    System.out.println("Sono dentro getFile in controller");
 
-		Resource resource = storageService.getFilePermesso(idPermesso);
+	    List<File> resource = storageService.getFilePermesso(idPermesso);
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 		
 
 	}
+	
+	
+	
+	
 
 
 }
