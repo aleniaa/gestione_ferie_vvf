@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,11 @@ import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.service.FileStorageService;
 import vigilidelfuoco.verona.gestioneferie.service.PermessoService;
 import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 @RestController
@@ -110,10 +115,39 @@ public class PermessoController {
 	}
 	
 	@PostMapping("/uploadFile")
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("permesso") Permesso permesso ) {
-	   System.out.println(permesso);
-		permessoService.uploadfileToPermesso(file, permesso);
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("permesso") String permessoJson ) {
+
+	//public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+
+		JSONObject jsonObject = new JSONObject(permessoJson);
+        jsonObject.remove("utenteRichiedente");
+        jsonObject.remove("utenteApprovazione");
+
+        String updatedPermessoJson = jsonObject.toString();
 		
+		System.out.println(updatedPermessoJson);
+		// Deserialize the permessoJson to a Permesso object
+	    ObjectMapper objectMapper = JsonMapper.builder()
+	    	    .addModule(new JavaTimeModule())
+	    	    .build();
+	    Permesso permesso;
+	    
+	    try {
+	        permesso = objectMapper.readValue(updatedPermessoJson, Permesso.class);
+	    	System.out.println("il permesso è:" + permesso.toString());
+
+	    } catch (JsonProcessingException e) {
+	        // Handle deserialization error
+	    	 System.out.println("non ha funzionato");
+	    	 e.printStackTrace();
+	        return ResponseEntity.badRequest().body("Invalid permesso JSON");
+	    }
+	    
+	    System.out.println("son dentro permesso controller");
+		//System.out.println("son odentro permesso controller"+permesso.toString());
+		permessoService.uploadfileToPermesso(file, permesso);
+		//permessoService.uploadfileToPermesso(file);
+
 		// Perform validation checks on the file
 //		String upload_dir ="/path/to/uploaded/files";
 //	    try {

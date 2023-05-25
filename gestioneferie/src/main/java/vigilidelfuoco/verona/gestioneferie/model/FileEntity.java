@@ -25,7 +25,7 @@ public class FileEntity {
 	private String filename;
 	private String fileType;
 	private String fileUrl;
-	//private Long idPermessoAssociato; //al fine della creazione della colonna nel db e dell'avvio dell'applicazione non è necessario avere questa variabile.
+	private Long idPermessoAssociato; //al fine della creazione della colonna nel db e dell'avvio dell'applicazione non è necessario avere questa variabile.
 	
 	@ManyToOne
     @JoinColumn(name = "idPermessoAssociato", insertable=false, updatable=false)
@@ -40,6 +40,43 @@ public class FileEntity {
 	public FileEntity() {
 		super();
 	}
+
+	
+	
+	public FileEntity(String filename, String fileType, String fileUrl) {
+		super();
+		this.filename = filename;
+		this.fileType = fileType;
+		this.fileUrl = fileUrl;
+	}
+
+	
+
+
+	public FileEntity(String filename, String fileType, String fileUrl, Long idPermessoAssociato,
+			Permesso permessoAssociato) {
+		super();
+		this.filename = filename;
+		this.fileType = fileType;
+		this.fileUrl = fileUrl;
+		this.idPermessoAssociato = idPermessoAssociato;
+		this.permessoAssociato = permessoAssociato;
+	}
+
+
+
+	public FileEntity(Long id, String filename, String fileType, String fileUrl, Long idPermessoAssociato,
+			Permesso permessoAssociato) {
+		super();
+		this.id = id;
+		this.filename = filename;
+		this.fileType = fileType;
+		this.fileUrl = fileUrl;
+		this.idPermessoAssociato = idPermessoAssociato;
+		this.permessoAssociato = permessoAssociato;
+	}
+
+
 
 	public FileEntity( String filename, String fileType, String fileUrl, Permesso permessoAssociato,
 			byte[] data) {
@@ -116,6 +153,22 @@ public class FileEntity {
 
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+	
+	
+
+	public Long getIdPermessoAssociato() {
+		return idPermessoAssociato;
+	}
+
+	public void setIdPermessoAssociato(Long idPermessoAssociato) {
+		this.idPermessoAssociato = idPermessoAssociato;
+	}
+
+	@Override
+	public String toString() {
+		return "FileEntity [id=" + id + ", filename=" + filename + ", fileType=" + fileType + ", fileUrl=" + fileUrl
+				+ ", permessoAssociato=" + permessoAssociato + "]";
 	}
 
 

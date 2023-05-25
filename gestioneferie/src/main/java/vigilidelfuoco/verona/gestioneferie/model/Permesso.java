@@ -35,7 +35,7 @@ public class Permesso {
 	private Long id;
 	private LocalDate dataInizio;
 	private LocalDate dataFine;
-	private Integer totGiorni;
+	private Integer totGiorni; // settato a Integer perchè integer può essere null
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
 	private Long idUtenteRichiedente;
@@ -43,7 +43,7 @@ public class Permesso {
 	private String alleOre;
 	private LocalDate dataApprovazione;
 	private String totOre;
-	private Integer status; //0 = in revisione, 1 = approvato, 2= respinto;
+	private int status; //0 = in revisione, 1 = approvato, 2= respinto;
 	private String note;
 	
 	
@@ -75,6 +75,8 @@ public class Permesso {
 		
 		
 	}
+	
+	
 	
 	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine,  String tipoPermesso,
 			Long idUtenteApprovazione, String dalleOre, String alleOre, LocalDate dataApprovazione, Utente utenteRichiedente) {
@@ -108,9 +110,53 @@ public class Permesso {
 		this.totOre= totOre;
 		
 	}
+	
 
 	
 	
+	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
+			Long idUtenteApprovazione, Long idUtenteRichiedente, String dalleOre, String alleOre,
+			LocalDate dataApprovazione, String totOre, int status, String note) {
+		super();
+		this.id = id;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.totGiorni = totGiorni;
+		this.tipoPermesso = tipoPermesso;
+		this.idUtenteApprovazione = idUtenteApprovazione;
+		this.idUtenteRichiedente = idUtenteRichiedente;
+		this.dalleOre = dalleOre;
+		this.alleOre = alleOre;
+		this.dataApprovazione = dataApprovazione;
+		this.totOre = totOre;
+		this.status = status;
+		this.note = note;
+	}
+
+
+
+	public Permesso(Long id, LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
+			Long idUtenteApprovazione, Long idUtenteRichiedente, String dalleOre, String alleOre,
+			LocalDate dataApprovazione, String totOre, Integer status, String note, Utente utenteRichiedente,
+			Utente utenteApprovazione) {
+		super();
+		this.id = id;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.totGiorni = totGiorni;
+		this.tipoPermesso = tipoPermesso;
+		this.idUtenteApprovazione = idUtenteApprovazione;
+		this.idUtenteRichiedente = idUtenteRichiedente;
+		this.dalleOre = dalleOre;
+		this.alleOre = alleOre;
+		this.dataApprovazione = dataApprovazione;
+		this.totOre = totOre;
+		this.status = status;
+		this.note = note;
+		this.utenteRichiedente = utenteRichiedente;
+		this.utenteApprovazione = utenteApprovazione;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -139,7 +185,7 @@ public class Permesso {
 		return totGiorni;
 	}
 
-	public void setTotGiorni(int totGiorni) {
+	public void setTotGiorni(Integer totGiorni) {
 		this.totGiorni = totGiorni;
 	}
 	
@@ -245,8 +291,7 @@ public class Permesso {
 		this.utenteRichiedente = utenteRichiedente;
 	}
 
-	
-	
+
 	public List<FileEntity> getElencoFile() {
 		return elencoFile;
 	}
@@ -254,6 +299,8 @@ public class Permesso {
 	public void setElencoFile(List<FileEntity> elencoFile) {
 		this.elencoFile = elencoFile;
 	}
+	
+	
 
 	@Override
 	public String toString() {

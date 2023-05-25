@@ -132,8 +132,11 @@ public class PermessoService {
 	
 	
 	public void uploadfileToPermesso(MultipartFile file, Permesso permesso) {
-		
-		String upload_dir ="/src/main/java/uploadedfile";
+	//public void uploadfileToPermesso(MultipartFile file) {
+	
+		System.out.println("son odentro permesso service");
+
+		String upload_dir ="C:/Users/ilenia.mannino/git/gestione_ferie_vvf/gestioneferie/uploadedFile/";
 	    try {
 	        // Generate a unique filename
 	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -141,11 +144,15 @@ public class PermessoService {
 	        Path filePath = Paths.get(upload_dir + filename);
 	        Files.copy(file.getInputStream(), filePath);
 	        // Save the file reference in the database
-	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
+	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso.getId(), permesso);
+	        //FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString());
+
+	        System.out.println(fileEntity.toString());
 	        fileRepo.save(fileEntity);
 
 	    } catch (Exception e) {
 	        // Handle any exceptions that occur during file upload
+	    	e.printStackTrace();
 	    }
 	}
 	
