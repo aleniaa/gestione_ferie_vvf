@@ -1,6 +1,5 @@
 package vigilidelfuoco.verona.gestioneferie.controller;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -114,62 +113,7 @@ public class PermessoController {
 
 	}
 	
-	@PostMapping("/uploadFile")
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("permesso") String permessoJson ) {
-
-	//public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-
-		JSONObject jsonObject = new JSONObject(permessoJson);
-        jsonObject.remove("utenteRichiedente");
-        jsonObject.remove("utenteApprovazione");
-
-        String updatedPermessoJson = jsonObject.toString();
-		
-		System.out.println(updatedPermessoJson);
-		// Deserialize the permessoJson to a Permesso object
-	    ObjectMapper objectMapper = JsonMapper.builder()
-	    	    .addModule(new JavaTimeModule())
-	    	    .build();
-	    Permesso permesso;
-	    
-	    try {
-	        permesso = objectMapper.readValue(updatedPermessoJson, Permesso.class);
-	    	System.out.println("il permesso è:" + permesso.toString());
-
-	    } catch (JsonProcessingException e) {
-	        // Handle deserialization error
-	    	 System.out.println("non ha funzionato");
-	    	 e.printStackTrace();
-	        return ResponseEntity.badRequest().body("Invalid permesso JSON");
-	    }
-	    
-	    System.out.println("son dentro permesso controller");
-		//System.out.println("son odentro permesso controller"+permesso.toString());
-		permessoService.uploadfileToPermesso(file, permesso);
-		//permessoService.uploadfileToPermesso(file);
-
-		// Perform validation checks on the file
-//		String upload_dir ="/path/to/uploaded/files";
-//	    try {
-//	        // Generate a unique filename
-//	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-//	        // Save the file to the upload directory
-//	        Path filePath = Paths.get(upload_dir + filename);
-//	        Files.copy(file.getInputStream(), filePath);
-//	        // Save the file reference in the database
-//	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
-//	        fileRepository.save(fileEntity);
-//
-//	        return ResponseEntity.ok("File uploaded successfully");
-//	    } catch (Exception e) {
-//	        // Handle any exceptions that occur during file upload
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
-//	    }
-		
-		
-		return ResponseEntity.ok("File uploaded successfully");
-	}
-
+	
 	
 	
 	@DeleteMapping("/delete/{id}")

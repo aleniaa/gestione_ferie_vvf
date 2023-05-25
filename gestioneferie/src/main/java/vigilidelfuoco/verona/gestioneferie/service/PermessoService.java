@@ -68,15 +68,6 @@ public class PermessoService {
 	
 	
 	
-//	public List<Permesso> findPermessoByStatusAndIdUtenteApprovazione(){
-//	return
-//}
-	
-//	public List<Permesso> findPermessiByIdUtente(Long idUtente){
-//		return permessoRepo.findPermessoByIdUtente(idUtente);
-//	}
-	
-	
 	public List<Permesso> getFilteredPermessi(Permesso permesso){
 		
 		List<Permesso> permessiTot= new ArrayList<Permesso>();
@@ -130,45 +121,11 @@ public class PermessoService {
 		return permessiTot;
 	} 
 	
-	
-	public void uploadfileToPermesso(MultipartFile file, Permesso permesso) {
-	//public void uploadfileToPermesso(MultipartFile file) {
-	
-		System.out.println("son odentro permesso service");
 
-		String upload_dir ="C:/Users/ilenia.mannino/git/gestione_ferie_vvf/gestioneferie/uploadedFile/";
-	    try {
-	        // Generate a unique filename
-	        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-	        // Save the file to the upload directory
-	        Path filePath = Paths.get(upload_dir + filename);
-	        Files.copy(file.getInputStream(), filePath);
-	        // Save the file reference in the database
-	        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso.getId(), permesso);
-	        //FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString());
-
-	        System.out.println(fileEntity.toString());
-	        fileRepo.save(fileEntity);
-
-	    } catch (Exception e) {
-	        // Handle any exceptions that occur during file upload
-	    	e.printStackTrace();
-	    }
-	}
 	
 	public void aggiungiPermesso(Permesso permesso){
 		
-//		MultipartFile file= permesso.getElencoFile().get(0);
-//		String upload_dir = "/path/to/uploaded/files";
-//		// Generate a unique filename
-//        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-//        // Save the file to the upload directory
-//        Path filePath = Paths.get(upload_dir + filename);
-//        Files.copy(file.getInputStream(), filePath);
-//        // Save the file reference in the database
-//        FileEntity fileEntity = new FileEntity(filename, file.getContentType(), filePath.toString(), permesso);
-//        fileRepo.save(fileEntity);
-//		
+	
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
 			System.out.println("sono dentro permesso service setTotGiorni");
 
