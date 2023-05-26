@@ -19,6 +19,7 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	
 	void deletePermessoById(Long id);
 	Optional<Permesso> findPermessoById(Long id);
+	
 	@Query(nativeQuery = true, value= "SELECT * FROM gestioneferie.permesso "
 			+ "WHERE permesso.id =?1")
 	Permesso findPermessoByIdsenzaoptional(Long id);

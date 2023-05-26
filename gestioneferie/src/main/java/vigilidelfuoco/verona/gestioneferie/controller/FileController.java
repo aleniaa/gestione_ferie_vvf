@@ -76,16 +76,19 @@ public class FileController {
 		return ResponseEntity.ok().body(filenames);
 	}
 	
-//	@GetMapping("/getFile")
-//	public ResponseEntity<Resource> getFile(@RequestParam("idPermesso") Long idPermesso ) {
-//		
-//	    System.out.println("Sono dentro getFile in controller");
-//
-//		Resource resource = storageService.getFilePermesso(idPermesso);
-//		return new ResponseEntity<>(resource, HttpStatus.OK);
-//		
-//
-//	}
+	@GetMapping("/getFile")
+	public ResponseEntity<List<String>> getFile(@RequestParam("idPermesso") Long idPermesso ) {
+		
+	    System.out.println("Sono dentro getFile in controller");
+	    
+	    List<String> filenames = new ArrayList<>();
+	    filenames = storageService.getFilePermesso(idPermesso);
+
+		
+		return ResponseEntity.ok().body(filenames);
+		
+
+	}
 	
 //	@GetMapping("/getFile")
 //	public ResponseEntity<List<File>> getFile(@RequestParam("idPermesso") Long idPermesso ) {
@@ -102,12 +105,14 @@ public class FileController {
     @GetMapping("download/{filename}")
     public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
         
-    	System.out.println("sono dentro download e l'id permesso è:" + idPermesso.toString());
+    	System.out.println("sono dentro download e il filename è:" + filename);
     	Resource resource = storageService.downloadFilePermesso(idPermesso, filename);
     	Path filePath = storageService.getPath();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("File-Name", filename);
-        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
+        httpHeaders.add("filename", filename);
+        System.out.println("L'header filename è " +httpHeaders.get("filename"));
+        httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+        httpHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
                 .headers(httpHeaders).body(resource);
     }
