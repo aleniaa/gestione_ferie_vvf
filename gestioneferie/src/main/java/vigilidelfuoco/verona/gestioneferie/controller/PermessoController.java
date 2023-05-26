@@ -104,12 +104,11 @@ public class PermessoController {
 		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso){
 
 		
-		//storageService.store(file);
 		//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 		permessoService.aggiungiPermesso(permesso);
 
 		//return new ResponseEntity<>(newPermesso, HttpStatus.CREATED);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Permesso aggiunto correttamente!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Richiesta di permesso inviata correttamente!");
 
 	}
 	

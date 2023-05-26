@@ -48,6 +48,11 @@ public class LoginService {
 		}
 		
 	}
+
+	public boolean checkPass(String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }
