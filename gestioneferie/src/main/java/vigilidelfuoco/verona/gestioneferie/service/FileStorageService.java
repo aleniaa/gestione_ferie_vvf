@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -25,6 +26,7 @@ import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.repo.FileRepo;
 import static java.nio.file.Files.copy;
+import static java.nio.file.Files.delete;
 import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
@@ -58,7 +60,7 @@ public List<String> uploadfileToPermesso(List<MultipartFile> multipartFiles, Per
 	 List<String> filenames = new ArrayList<>();
 
 	for(MultipartFile file : multipartFiles) {
-        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename(); //necessita l'estensione del file per funzioanre tutto
         Path filePath = Paths.get(upload_dir + filename);
         copy(file.getInputStream(), filePath);
         filenames.add(filename);
@@ -126,7 +128,30 @@ public List<String> uploadfileToPermesso(List<MultipartFile> multipartFiles, Per
 	}
 
 
+	@Transactional //con i delete si deve mettere altrimenti da errore
+	public void deleteAllFile(Long idPermessoAssociato) throws IOException {
+		
+		List<String> filenames = this.getFilePermesso(idPermessoAssociato);
+		Path filePath;
+		
+		for(String filename : filenames) {
 
+			filePath = Paths.get(upload_dir + filename);
+			Files.delete(filePath);
+	    }
+		
+		
+		fileRepo.deleteByIdPermessoAssociato(idPermessoAssociato);
+	}
+	
+	@Transactional //con i delete si deve mettere altrimenti da errore
+	public void deleteFile(Long idPermessoAssociato, String filename) throws IOException {
+		
+		Path filePath = Paths.get(upload_dir + filename);
+		
+		Files.delete(filePath);
+		fileRepo.deleteByIdPermessoAssociatoAndFilename(idPermessoAssociato, filename);
+	}
 
 
 

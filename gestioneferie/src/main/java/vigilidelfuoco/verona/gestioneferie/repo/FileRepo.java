@@ -17,6 +17,10 @@ public interface FileRepo extends JpaRepository<FileEntity, Long> {
 	@Query(nativeQuery = true, value= "SELECT filename FROM gestioneferie.uploaded_file "
 			+ "WHERE uploaded_file.id_Permesso_Associato =?1")
 	List<String> findFileNameByIdPermessoAssociato(Long idPermessoAssociato);
+	
+	void deleteById(Long id);
+	void deleteByIdPermessoAssociato(Long idPermessoAssociato);
 
+	void deleteByIdPermessoAssociatoAndFilename(Long idPermessoAssociato, String filename);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,31 +91,41 @@ public class FileController {
 
 	}
 	
-//	@GetMapping("/getFile")
-//	public ResponseEntity<List<File>> getFile(@RequestParam("idPermesso") Long idPermesso ) {
-//		
-//	    System.out.println("Sono dentro getFile in controller");
-//
-//	    List<File> resource = storageService.getFilePermesso(idPermesso);
-//		return new ResponseEntity<>(resource, HttpStatus.OK);
-//		
-//
-//	}
 	
 	
     @GetMapping("download/{filename}")
     public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
         
-    	System.out.println("sono dentro download e il filename è:" + filename);
     	Resource resource = storageService.downloadFilePermesso(idPermesso, filename);
     	Path filePath = storageService.getPath();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("filename", filename);
-        System.out.println("L'header filename è " +httpHeaders.get("filename"));
         httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
         httpHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
                 .headers(httpHeaders).body(resource);
+    }
+    
+    @DeleteMapping("deleteAllFile/{filename}")
+    public ResponseEntity<?> deleteAllFile(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
+
+    	storageService.deleteAllFile(idPermesso);
+    	
+		return new ResponseEntity<>(HttpStatus.OK);
+
+    	
+    }
+    
+    @DeleteMapping("deleteFile/{filename}")
+    public ResponseEntity<?> deleteFile(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
+        System.out.println("Il file da eliminare è: "+ filename);
+        System.out.println("l'id del permesso associato al file da eliminare è: "+ idPermesso.toString());
+
+    	storageService.deleteFile(idPermesso, filename);
+    	
+		return new ResponseEntity<>(HttpStatus.OK);
+
+    	
     }
 	
 
