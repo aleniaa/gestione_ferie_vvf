@@ -119,6 +119,7 @@ public class GestioneUtentiService {
 			if(bCryptPasswordEncoder.matches(oldPass, utenteLoggato.getPassword())) {
 				String encoded_password= bCryptPasswordEncoder.encode(newPass);
 				utenteLoggato.setPassword(encoded_password);
+				utenteLoggato.setPasswordChanged(1);
 				matchingPass= true;
 			}else {
 				System.out.println("le password non corrisponono");
@@ -127,6 +128,26 @@ public class GestioneUtentiService {
 		}
 		utenteRepo.save(utenteLoggato);
 		return matchingPass;
+	}
+	
+	public boolean checkPasswordFirstAccess(Long idUtenteLoggato) {
+		
+		boolean isDefaultPassw= false;
+		
+		Utente utenteLoggato= utenteRepo.findUtenteByIdsenzaoptional(idUtenteLoggato);
+		System.out.println(utenteLoggato.toString());
+		if(utenteLoggato!=null) {
+			System.out.println("l'utente è diverso da null");
+			System.out.println("password changed è = "+ utenteLoggato.getPasswordChanged());
+			if(utenteLoggato.getPasswordChanged()==0) {
+				isDefaultPassw= true;
+			}else {
+				System.out.println("la password non è quella di default");
+				
+			}
+		}
+		
+		return isDefaultPassw;
 	}
 	
 	

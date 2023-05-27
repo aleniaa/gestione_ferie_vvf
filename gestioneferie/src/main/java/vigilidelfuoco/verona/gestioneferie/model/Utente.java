@@ -46,8 +46,8 @@ public class Utente  {
 		private String codiceFiscale;
 		private String telefono;
 		private String accountDipvvf; //username
-		
-		//private int passwordChanged; //0 se la password non è stata cambiata, 1 altrimenti
+		private int passwordChanged=0; //0 se la password non è stata cambiata, 1 altrimenti
+
 		
 		@Column(unique = true) private String emailVigilfuoco;
 		private String password;
@@ -69,7 +69,7 @@ public class Utente  {
 	 
 
 	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String emailVigilfuoco, String password,
-			String ruolo, String codiceUtente) {
+			String ruolo, String codiceUtente, int passwordChanged ) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -81,11 +81,18 @@ public class Utente  {
 		this.password = password;
 		this.ruolo = ruolo;
 		this.codiceUtente = codiceUtente;
+		this.passwordChanged = passwordChanged;
 	}
 	
 	
+	public int getPasswordChanged() {
+		return passwordChanged;
+	}
 
-
+	public void setPasswordChanged(int passwordChanged) {
+		this.passwordChanged = passwordChanged;
+	}
+	
 
 
 	public String getCodiceUtente() {

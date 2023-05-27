@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
+import vigilidelfuoco.verona.gestioneferie.service.GestioneUtentiService;
 import vigilidelfuoco.verona.gestioneferie.service.LoginService;
 
 
@@ -20,10 +21,14 @@ import vigilidelfuoco.verona.gestioneferie.service.LoginService;
 public class WelcomeController {
 
 	private final LoginService loginService;
+	private final GestioneUtentiService utenteService;
+
 	
-	public WelcomeController(LoginService loginService) {
+	public WelcomeController(LoginService loginService, GestioneUtentiService utenteService) {
 		super();
 		this.loginService = loginService;
+		this.utenteService = utenteService;
+		
 	}
 	
 	@PostMapping
@@ -61,12 +66,22 @@ public class WelcomeController {
 	}
 	
 	@PutMapping("/checkPass")
-		public ResponseEntity<String> aggiungiPermesso(@RequestParam("password") String password){
+		public ResponseEntity<String> checkPasswordFirstAccess(@RequestParam("password") String password, @RequestParam("idUtenteLoggato") Long idUtenteLoggato){
 
 		
-		//boolean isDefaultPass = loginService.checkPass(password);
+		boolean isDefaultPass = utenteService.checkPasswordFirstAccess(idUtenteLoggato);
 
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Password da cambiare");
+
+        if (isDefaultPass) {
+        	System.out.println("la password è quella di default");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("{\"message\": \"Password da cambiare\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("{\"message\": \"Password ok\"}");
+        }
+		
+		
 
 	}
 }
