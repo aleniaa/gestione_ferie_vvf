@@ -149,21 +149,27 @@ public class PermessoService {
 	
 	}
 	
-	public Permesso aggiornaStatusPermesso(String decisione, Permesso permesso) {
+	public Permesso aggiornaStatusPermesso(Permesso permesso) {
 		
 		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ permesso.getNote());
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-		if(decisione.equals("approva")) {
-			permessoDaAggiornare.setStatus(1);
-			System.out.println(" SONO DENTRO APPROVA : "+ decisione);
+		permessoDaAggiornare.setStatus(1);
 
-		}else {
-			permessoDaAggiornare.setNote(permesso.getNote());
-			permessoDaAggiornare.setStatus(2);
-		}
+		return permessoRepo.save(permessoDaAggiornare);
+	}
+	
+	public Permesso respingiPermesso(String note, Permesso permesso) {
+		
+		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ note);
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		
+		LocalDate dataApprovazione = LocalDate.now();
+		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+		permessoDaAggiornare.setStatus(2);
+		permessoDaAggiornare.setNote(note);
 		return permessoRepo.save(permessoDaAggiornare);
 	}
 	

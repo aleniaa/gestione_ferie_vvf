@@ -74,14 +74,26 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
-	@PutMapping("/updateStatus/{decisione}")
-	public ResponseEntity<Permesso> changeStatusPermesso(@PathVariable("decisione") String decisione, @RequestBody Permesso permesso ){
+	@PutMapping("/approvaPermesso")
+	public ResponseEntity<Permesso> changeStatusPermesso(@RequestBody Permesso permesso ){
 		
 		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
 		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
-		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(decisione, permesso);
+		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso);
+
+		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
+	}
+	
+	@PutMapping("/respingiPermesso")
+	public ResponseEntity<Permesso> respingiPermesso(@RequestParam("note") String note, @RequestBody Permesso permesso ){
+		
+		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
+		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
+		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
+
+		Permesso permessoAggiornato = permessoService.respingiPermesso(note, permesso);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
