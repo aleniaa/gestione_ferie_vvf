@@ -16,7 +16,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -46,6 +48,7 @@ public class Utente  {
 		private String codiceFiscale;
 		private String telefono;
 		private String accountDipvvf; //username
+		private Long id_qualifica;
 		private int passwordChanged=0; //0 se la password non è stata cambiata, 1 altrimenti
 
 		
@@ -62,6 +65,11 @@ public class Utente  {
 		@OneToMany(mappedBy = "utenteApprovazione",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		@JsonIgnore
 		private List<Permesso> elencoPermessiApprovati;
+		
+	    @OneToOne(cascade = CascadeType.ALL)
+	    @JoinColumn(name = "id_qualifica", referencedColumnName = "id", insertable=false, updatable=false)
+	    private Qualifica qualifica;
+		
 		
 		public Utente() {
 			
@@ -182,6 +190,8 @@ public class Utente  {
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
+	
+	
 
 
 	@Override

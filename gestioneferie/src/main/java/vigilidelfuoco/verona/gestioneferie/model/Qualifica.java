@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +26,14 @@ public class Qualifica {
 	@Column(nullable = false, updatable = false)
 	private Long id;
 	
+	@Column(nullable = false, unique = true)
 	private String nome;
+	
+	@Column(nullable = false, unique = true)
 	private String descrizione;
+	
+    @OneToOne(mappedBy = "qualifica")
+    private Utente utente;
 	
 	public Qualifica() {
 		super();
