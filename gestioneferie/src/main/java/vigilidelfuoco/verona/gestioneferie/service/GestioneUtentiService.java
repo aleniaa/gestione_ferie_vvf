@@ -32,7 +32,9 @@ public class GestioneUtentiService {
 	
 	
 	public Utente aggiungiUtente(Utente utente){
-		
+		System.out.println("sono dentro agiungi utente");
+		//System.out.println("sono dentro agiungi utente e la qualifica è: "+utente.getQualifica().getNome());
+		utente.setId_qualifica(utente.getId_qualifica());
 		utente.setCodiceUtente(UUID.randomUUID().toString());
 		String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
 		utente.setPassword(encoded_password);

@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class QualificaService {
 		return qualificaRepo.save(qualifica);
 		
 		
+	}
+	
+	public List<Qualifica> getAllQualifiche(){
+		return qualificaRepo.findAll();
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,9 +18,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +31,16 @@ import java.util.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @EqualsAndHashCode
 @Entity 
 @Table(name = "utente")
 //public class Utente implements UserDetails  {
 
 public class Utente  {
+
+
+
 
 	/**
 	 * 
@@ -66,10 +73,14 @@ public class Utente  {
 		@JsonIgnore
 		private List<Permesso> elencoPermessiApprovati;
 		
-	    @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "id_qualifica", referencedColumnName = "id", insertable=false, updatable=false)
-	    private Qualifica qualifica;
+//	    @OneToOne(cascade = CascadeType.ALL)
+//	    @JoinColumn(name = "id_qualifica", referencedColumnName = "id", insertable=false, updatable=false)
+//	    private Qualifica qualifica;
 		
+		@ManyToOne
+	    @JoinColumn(name = "id_qualifica", insertable=false, updatable=false)
+		@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+		private Qualifica qualifica;
 		
 		public Utente() {
 			
@@ -91,6 +102,46 @@ public class Utente  {
 		this.codiceUtente = codiceUtente;
 		this.passwordChanged = passwordChanged;
 	}
+	
+	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String emailVigilfuoco, String password,
+			String ruolo, String codiceUtente, int passwordChanged, Qualifica qualifica ) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale= codiceFiscale;
+		this.telefono = telefono;
+		this.accountDipvvf = nome +"."+ cognome;
+		this.emailVigilfuoco = emailVigilfuoco;
+		this.password = password;
+		this.ruolo = ruolo;
+		this.codiceUtente = codiceUtente;
+		this.passwordChanged = passwordChanged;
+		this.qualifica= qualifica;
+	}
+	
+	public Utente(Long id, String nome, String cognome, String codiceFiscale, String telefono, String accountDipvvf,
+			Long id_qualifica, int passwordChanged, String emailVigilfuoco, String password, String ruolo,
+			String codiceUtente, Qualifica qualifica) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale = codiceFiscale;
+		this.telefono = telefono;
+		this.accountDipvvf = accountDipvvf;
+		this.id_qualifica = id_qualifica;
+		this.passwordChanged = passwordChanged;
+		this.emailVigilfuoco = emailVigilfuoco;
+		this.password = password;
+		this.ruolo = ruolo;
+		this.codiceUtente = codiceUtente;
+		this.qualifica = qualifica;
+	}
+	
+
+	
+	
 	
 	
 	public int getPasswordChanged() {
@@ -200,6 +251,11 @@ public class Utente  {
 				+ ", telefono=" + telefono + ", accountDipvvf=" + accountDipvvf + ", emailVigilfuoco=" + emailVigilfuoco
 				+ ", password=" + password + ", ruolo=" + ruolo + ", codiceUtente=" + codiceUtente + "]";
 	}
+
+
+
+
+
 
 
 
