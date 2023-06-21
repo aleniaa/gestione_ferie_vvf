@@ -73,6 +73,10 @@ public class Utente  {
 		@JsonIgnore
 		private List<Permesso> elencoPermessiApprovati;
 		
+		@OneToMany(mappedBy = "utenteApprovazioneDue",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		@JsonIgnore
+		private List<Permesso> elencoPermessiApprovatiDue;
+		
 //	    @OneToOne(cascade = CascadeType.ALL)
 //	    @JoinColumn(name = "id_qualifica", referencedColumnName = "id", insertable=false, updatable=false)
 //	    private Qualifica qualifica;
@@ -144,6 +148,16 @@ public class Utente  {
 	
 	
 	
+	public Qualifica getQualifica() {
+		return qualifica;
+	}
+
+
+	public void setQualifica(Qualifica qualifica) {
+		this.qualifica = qualifica;
+	}
+
+
 	public int getPasswordChanged() {
 		return passwordChanged;
 	}
@@ -243,6 +257,16 @@ public class Utente  {
 	}
 	
 	
+	
+
+	public Long getId_qualifica() {
+		return id_qualifica;
+	}
+
+
+	public void setId_qualifica(Long id_qualifica) {
+		this.id_qualifica = id_qualifica;
+	}
 
 
 	@Override

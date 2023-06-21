@@ -38,6 +38,8 @@ public class Permesso {
 	private Integer totGiorni; // settato a Integer perchè integer può essere null
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
+	private Long idUtenteApprovazioneDue;
+
 	private Long idUtenteRichiedente;
 	private String dalleOre;
 	private String alleOre;
@@ -56,6 +58,11 @@ public class Permesso {
     @JoinColumn(name = "idUtenteApprovazione", insertable=false, updatable=false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Utente utenteApprovazione;
+	
+	@ManyToOne
+    @JoinColumn(name = "idUtenteApprovazioneDue", insertable=false, updatable=false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Utente utenteApprovazioneDue;
 	
 	@OneToMany(mappedBy = "permessoAssociato",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -156,6 +163,35 @@ public class Permesso {
 		this.utenteRichiedente = utenteRichiedente;
 		this.utenteApprovazione = utenteApprovazione;
 	}
+	
+	
+
+	public Permesso(LocalDate dataInizio, LocalDate dataFine, Integer totGiorni, String tipoPermesso,
+			Long idUtenteApprovazione, Long idUtenteApprovazioneDue, Long idUtenteRichiedente, String dalleOre,
+			String alleOre, LocalDate dataApprovazione, String totOre, int status, String note,
+			Utente utenteRichiedente, Utente utenteApprovazione, Utente utenteApprovazioneDue,
+			List<FileEntity> elencoFile) {
+		super();
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.totGiorni = totGiorni;
+		this.tipoPermesso = tipoPermesso;
+		this.idUtenteApprovazione = idUtenteApprovazione;
+		this.idUtenteApprovazioneDue = idUtenteApprovazioneDue;
+		this.idUtenteRichiedente = idUtenteRichiedente;
+		this.dalleOre = dalleOre;
+		this.alleOre = alleOre;
+		this.dataApprovazione = dataApprovazione;
+		this.totOre = totOre;
+		this.status = status;
+		this.note = note;
+		this.utenteRichiedente = utenteRichiedente;
+		this.utenteApprovazione = utenteApprovazione;
+		this.utenteApprovazioneDue = utenteApprovazioneDue;
+		this.elencoFile = elencoFile;
+	}
+	
+	
 
 	public Long getId() {
 		return id;
@@ -302,14 +338,34 @@ public class Permesso {
 	
 	
 
+	public Long getIdUtenteApprovazioneDue() {
+		return idUtenteApprovazioneDue;
+	}
+
+	public void setIdUtenteApprovazioneDue(Long idUtenteApprovazioneDue) {
+		this.idUtenteApprovazioneDue = idUtenteApprovazioneDue;
+	}
+
+	public Utente getUtenteApprovazioneDue() {
+		return utenteApprovazioneDue;
+	}
+
+	public void setUtenteApprovazioneDue(Utente utenteApprovazioneDue) {
+		this.utenteApprovazioneDue = utenteApprovazioneDue;
+	}
+
 	@Override
 	public String toString() {
 		return "Permesso [id=" + id + ", dataInizio=" + dataInizio + ", dataFine=" + dataFine + ", totGiorni="
 				+ totGiorni + ", tipoPermesso=" + tipoPermesso + ", idUtenteApprovazione=" + idUtenteApprovazione
-				+ ", dalleOre=" + dalleOre + ", alleOre=" + alleOre + ", dataApprovazione=" + dataApprovazione
-				+ ", totOre=" + totOre + ", status=" + status + ", note=" + note + ", utenteRichiedente="
-				+ utenteRichiedente + ", utenteApprovazione=" + utenteApprovazione + "]";
+				+ ", idUtenteApprovazioneDue=" + idUtenteApprovazioneDue + ", idUtenteRichiedente="
+				+ idUtenteRichiedente + ", dalleOre=" + dalleOre + ", alleOre=" + alleOre + ", dataApprovazione="
+				+ dataApprovazione + ", totOre=" + totOre + ", status=" + status + ", note=" + note
+				+ ", utenteRichiedente=" + utenteRichiedente + ", utenteApprovazione=" + utenteApprovazione
+				+ ", utenteApprovazioneDue=" + utenteApprovazioneDue + ", elencoFile=" + elencoFile + "]";
 	}
+
+
 
 	
 	

@@ -132,8 +132,10 @@ public class PermessoService {
 			permesso.setTotGiorni();
 		}
 		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
+		System.out.println("id utente approvazione DUE = "+ permesso.getIdUtenteApprovazioneDue());
 		System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
 		Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
+		Utente utenteApprovazioneDue = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazioneDue());
 		Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteRichiedente());
 //		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
 		
@@ -142,6 +144,9 @@ public class PermessoService {
 		
 		permesso.setUtenteRichiedente(utenteRichiedente);
 		permesso.setUtenteApprovazione(utenteApprovazione);
+		
+		permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
+		System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
 		permesso.setStatus(0);
 		
 		permessoRepo.save(permesso);
