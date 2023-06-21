@@ -38,6 +38,10 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	
 	List<Permesso> findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(int status, Long idUtenteApprovazione);
 	
+	List<Permesso> findPermessoByStatusAndIdUtenteApprovazioneOrIdUtenteApprovazioneDueOrderByDataApprovazioneDesc(int status, Long idUtenteApprovazione, Long idUtenteApprovazioneDue);
+	
+	List<Permesso> findPermessoByStatusAndIdUtenteApprovazioneDueOrderByDataApprovazioneDesc(int status, Long idUtenteApprovazione);
+	
 	List<Permesso> findPermessoByStatusAndIdUtenteRichiedenteOrderByDataApprovazioneDesc(int status, Long idUtente);
 
 	List<Permesso> findPermessoByStatus(int status);

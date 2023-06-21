@@ -58,7 +58,9 @@ public class PermessoService {
 	}
 	
 	public List<Permesso> findPermessoApprovatoreByStatus(int status, Long idUtente){
-		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(status, idUtente);
+		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrIdUtenteApprovazioneDueOrderByDataApprovazioneDesc(status, idUtente, idUtente);
+
+		//return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(status, idUtente);
 	}
 	
 	public Permesso findPermessoById(Long id) {
@@ -159,9 +161,18 @@ public class PermessoService {
 		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ permesso.getNote());
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null || permessoDaAggiornare.getStatus()==1) {
+			permessoDaAggiornare.setStatus(2);
+		}else {
+			permessoDaAggiornare.setStatus(1);
+		}
+		
+		
+		
+		
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-		permessoDaAggiornare.setStatus(1);
+		
 
 		return permessoRepo.save(permessoDaAggiornare);
 	}

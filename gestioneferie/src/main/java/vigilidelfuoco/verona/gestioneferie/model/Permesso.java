@@ -45,7 +45,7 @@ public class Permesso {
 	private String alleOre;
 	private LocalDate dataApprovazione;
 	private String totOre;
-	private int status; //0 = in revisione, 1 = approvato, 2= respinto;
+	private int status; //0 = in revisione, 1 = approvato da un approvatore , 2= approvato da entrmabi e quindi approvato definitivamente, 3= respinto;
 	private String note;
 	
 	
