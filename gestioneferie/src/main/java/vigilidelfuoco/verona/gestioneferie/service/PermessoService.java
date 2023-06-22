@@ -170,30 +170,32 @@ public class PermessoService {
 		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null) { // se c'è solo l'approvatore uno che deve approvare: 
 			permessoDaAggiornare.setStatus(3); // approvato definitivamente
 		}
+		System.out.println("id approvatore loggato è"+ idApprovatore);
+		System.out.println("id approvatore due del permesso è"+ permessoDaAggiornare.getIdUtenteApprovazioneDue());
+		if(idApprovatore.equals(permessoDaAggiornare.getIdUtenteApprovazioneDue())) {
+			System.out.println("che cazzoooo è verooo");
+
+		}
 		
 		if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
 			switch(permessoDaAggiornare.getStatus()) {
 				case 0:
-					if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
+					if(idApprovatore.equals(permessoDaAggiornare.getIdUtenteApprovazioneDue())){ // se l'approvatore loggato è il 2:
 						permessoDaAggiornare.setStatus(2); //approvato da approvatore 2
+						System.out.println("sono dentro caso 0 e l'approvatore è il 2");
 					}else { //se è l'1
 						permessoDaAggiornare.setStatus(1); //approvato da approvatore 1
+						System.out.println("sono dentro caso 0 dentro l'else");
 					};
 					break;
+				case 1:
+					permessoDaAggiornare.setStatus(3);
+					break;
+				case 2:
+					permessoDaAggiornare.setStatus(3);
+					break;
+				default: System.out.println("qualce condizione dello status non va");
 			}
-			
-		}else if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null && permessoDaAggiornare.getStatus()==0) { //cioè se ci sono due approvatori e non è stato ancora approvato da nessuno dei due
-			if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
-				permessoDaAggiornare.setStatus(2); //approvato da approvatore 2
-			}else { //se è l'1
-				permessoDaAggiornare.setStatus(2); //approvato da approvatore 1
-			}
-			
-			
-		}else if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null && idApprovatore==permessoDaAggiornare.getIdUtenteApprovazione()) {
-			permessoDaAggiornare.setStatus(1); //approvato da approvatore 1
-		}else {
-			System.out.println("Qualcosa non va");
 		}
 		
 		
@@ -215,16 +217,19 @@ public class PermessoService {
 		}
 		
 		if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
-			if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
+			if(idApprovatore.equals(permessoDaAggiornare.getIdUtenteApprovazioneDue())){ // se l'approvatore loggato è il 2:
 				permessoDaAggiornare.setStatus(5); //respinto da approvatore 2
 			}else { //se è l'1
 				permessoDaAggiornare.setStatus(4); //respinto da approvatore 1
 			}
 		}
 		
+		Utente utenteCheHaRespinto= utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-		permessoDaAggiornare.setNote(note);
+		permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
+				utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
+				+ ".<br>Motivo: "+note);
 		return permessoRepo.save(permessoDaAggiornare);
 	}
 	
