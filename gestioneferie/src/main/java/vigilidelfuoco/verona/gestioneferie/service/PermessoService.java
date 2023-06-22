@@ -57,6 +57,10 @@ public class PermessoService {
 		return permessoRepo.findPermessoByStatusAndIdUtenteRichiedenteOrderByDataApprovazioneDesc(status, idUtente);
 	}
 	
+	public List<Permesso> findPermessoRichiedente(Long idUtente){
+		return permessoRepo.findPermessoByIdUtenteRichiedenteOrderByDataApprovazioneDesc(idUtente);
+	}
+	
 	public List<Permesso> findPermessoApprovatoreByStatus(int status, Long idUtente){
 		return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrIdUtenteApprovazioneDueOrderByDataApprovazioneDesc(status, idUtente, idUtente);
 

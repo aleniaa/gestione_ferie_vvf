@@ -73,6 +73,21 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@GetMapping("/permessiRichiedente") //restituisce i permessi dell'utente loggato
+	public ResponseEntity<List<Permesso>> getPermessoRichiedente(@RequestParam("idRichiedente") Long idRichiedente ){
+		System.out.println("l'id del richiedente dentro permesso controller è "+ idRichiedente);
+
+		List<Permesso> permessi = permessoService.findPermessoRichiedente(idRichiedente);
+		
+		if (!permessi.isEmpty()) {
+		   
+		    System.out.println(permessi.get(0).toString());
+		}
+		
+		
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
 	@GetMapping("/statusApprovatore/{status}") //restituisce i permessi relativi all'approvatore
 	public ResponseEntity<List<Permesso>> getPermessiApprovatoreByStatus(@PathVariable("status") int status, @RequestParam("idApprovatore") Long idApprovatore ){
 		System.out.println("l'id del richiedente dentro permesso controller è "+ idApprovatore);
