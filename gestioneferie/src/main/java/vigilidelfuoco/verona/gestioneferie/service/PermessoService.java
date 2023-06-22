@@ -63,6 +63,12 @@ public class PermessoService {
 		//return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(status, idUtente);
 	}
 	
+	public List<Permesso> findPermessoApprovatore(Long idUtente){
+		return permessoRepo.findPermessoByIdUtenteApprovazioneOrIdUtenteApprovazioneDueOrderByDataApprovazioneDesc(idUtente, idUtente);
+
+		//return permessoRepo.findPermessoByStatusAndIdUtenteApprovazioneOrderByDataApprovazioneDesc(status, idUtente);
+	}
+	
 	public Permesso findPermessoById(Long id) {
 		return permessoRepo.findPermessoById(id)
 				.orElseThrow(() -> new UserNotFoundException("Permesso con id "+id +" non trovato"));
@@ -156,17 +162,39 @@ public class PermessoService {
 	
 	}
 	
-	public Permesso aggiornaStatusPermesso(Permesso permesso) {
+	public Permesso aggiornaStatusPermesso(Permesso permesso, Long idApprovatore) {
 		
-		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ permesso.getNote());
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
-		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null || permessoDaAggiornare.getStatus()==1) {
-			permessoDaAggiornare.setStatus(2);
-		}else {
-			permessoDaAggiornare.setStatus(1);
+		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null) { // se c'è solo l'approvatore uno che deve approvare: 
+			permessoDaAggiornare.setStatus(3); // approvato definitivamente
 		}
 		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
+			switch(permessoDaAggiornare.getStatus()) {
+				case 0:
+					if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
+						permessoDaAggiornare.setStatus(2); //approvato da approvatore 2
+					}else { //se è l'1
+						permessoDaAggiornare.setStatus(1); //approvato da approvatore 1
+					};
+					break;
+			}
+			
+		}else if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null && permessoDaAggiornare.getStatus()==0) { //cioè se ci sono due approvatori e non è stato ancora approvato da nessuno dei due
+			if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
+				permessoDaAggiornare.setStatus(2); //approvato da approvatore 2
+			}else { //se è l'1
+				permessoDaAggiornare.setStatus(2); //approvato da approvatore 1
+			}
+			
+			
+		}else if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null && idApprovatore==permessoDaAggiornare.getIdUtenteApprovazione()) {
+			permessoDaAggiornare.setStatus(1); //approvato da approvatore 1
+		}else {
+			System.out.println("Qualcosa non va");
+		}
 		
 		
 		
@@ -177,14 +205,25 @@ public class PermessoService {
 		return permessoRepo.save(permessoDaAggiornare);
 	}
 	
-	public Permesso respingiPermesso(String note, Permesso permesso) {
+	public Permesso respingiPermesso(String note, Permesso permesso, Long idApprovatore) {
 		
 		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ note);
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null) { // se c'è solo l'approvatore uno che deve approvare: 
+			permessoDaAggiornare.setStatus(4); // respinto da approvatore 1
+		}
+		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
+			if(idApprovatore==permessoDaAggiornare.getIdUtenteApprovazioneDue()){ // se l'approvatore loggato è il 2:
+				permessoDaAggiornare.setStatus(5); //respinto da approvatore 2
+			}else { //se è l'1
+				permessoDaAggiornare.setStatus(4); //respinto da approvatore 1
+			}
+		}
+		
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-		permessoDaAggiornare.setStatus(2);
 		permessoDaAggiornare.setNote(note);
 		return permessoRepo.save(permessoDaAggiornare);
 	}

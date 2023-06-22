@@ -82,26 +82,35 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	@GetMapping("/permessiApprovatore") //restituisce i permessi relativi all'approvatore
+	public ResponseEntity<List<Permesso>> getPermessiApprovatore(@RequestParam("idApprovatore") Long idApprovatore ){
+		System.out.println("l'id del richiedente dentro permesso controller è "+ idApprovatore);
+
+		List<Permesso> permessi = permessoService.findPermessoApprovatore( idApprovatore);
+
+		return new ResponseEntity<>(permessi, HttpStatus.OK);
+	}
+	
 	@PutMapping("/approvaPermesso")
-	public ResponseEntity<Permesso> changeStatusPermesso(@RequestBody Permesso permesso ){
+	public ResponseEntity<Permesso> changeStatusPermesso(@RequestParam("idApprovatore") Long idApprovatore, @RequestBody Permesso permesso ){
 		
-		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
+		System.out.println("sono dentro changestatus permesso controller e l'id dell'approvatore è : "+ idApprovatore);
 		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
-		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso);
+		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso, idApprovatore);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
 	
 	@PutMapping("/respingiPermesso")
-	public ResponseEntity<Permesso> respingiPermesso(@RequestParam("note") String note, @RequestBody Permesso permesso ){
+	public ResponseEntity<Permesso> respingiPermesso(@RequestParam("idApprovatore") Long idApprovatore, @RequestParam("note") String note, @RequestBody Permesso permesso ){
 		
 		System.out.println("sono dentro changestatus permesso controller e le note sono : "+ permesso.getNote());
 		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
-		Permesso permessoAggiornato = permessoService.respingiPermesso(note, permesso);
+		Permesso permessoAggiornato = permessoService.respingiPermesso(note, permesso, idApprovatore);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
