@@ -241,6 +241,7 @@ public class PermessoService {
 	
 	@Transactional //con i delete si deve mettere altrimenti da errore
 	public void deletePermessoById(Long id) {
+		fileRepo.deleteByIdPermessoAssociato(id);
 		permessoRepo.deletePermessoById(id);
 	}
 

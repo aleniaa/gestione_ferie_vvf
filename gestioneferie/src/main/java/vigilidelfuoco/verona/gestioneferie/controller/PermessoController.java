@@ -78,13 +78,8 @@ public class PermessoController {
 		System.out.println("l'id del richiedente dentro permesso controller è "+ idRichiedente);
 
 		List<Permesso> permessi = permessoService.findPermessoRichiedente(idRichiedente);
-		
-		if (!permessi.isEmpty()) {
-		   
-		    System.out.println(permessi.get(0).toString());
-		}
-		
-		
+
+			
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
