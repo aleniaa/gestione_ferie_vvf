@@ -11,7 +11,7 @@ import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 
 public interface FileRepo extends JpaRepository<FileEntity, Long> {
 
-	Optional<FileEntity> findByIdPermessoAssociato(Long idPermessoAssociato);
+	List<FileEntity> findByIdPermessoAssociato(Long idPermessoAssociato);
 	Optional<FileEntity> findByIdPermessoAssociatoAndFilename(Long idPermessoAssociato, String filename);
 
 	@Query(nativeQuery = true, value= "SELECT filename FROM gestioneferie.uploaded_file "

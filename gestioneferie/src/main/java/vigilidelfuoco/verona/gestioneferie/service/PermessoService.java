@@ -1,4 +1,5 @@
 package vigilidelfuoco.verona.gestioneferie.service;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,13 +33,15 @@ public class PermessoService {
 	private final PermessoRepo permessoRepo;
 	private final UtenteRepo utenteRepo;
 	private final  FileRepo fileRepo;
-
+	private final FileStorageService fileService;
+	
 	@Autowired
-	public PermessoService(PermessoRepo permessoRepo, UtenteRepo utenteRepo, FileRepo fileRepo) {
+	public PermessoService(PermessoRepo permessoRepo, UtenteRepo utenteRepo, FileRepo fileRepo, FileStorageService fileService ) {
 		super();
 		this.permessoRepo = permessoRepo;
 		this.utenteRepo= utenteRepo;
 		this.fileRepo= fileRepo;
+		this.fileService= fileService;
 	}
 	
 	public List<Permesso> trovaPermessi(){
@@ -240,7 +243,20 @@ public class PermessoService {
 	
 	
 	@Transactional //con i delete si deve mettere altrimenti da errore
-	public void deletePermessoById(Long id) {
+	public void deletePermessoById(Long id) throws IOException {
+		
+		List<FileEntity> filePermesso= new ArrayList<FileEntity>();
+		
+		
+		filePermesso= fileRepo.findByIdPermessoAssociato(id);
+		
+		if(!filePermesso.isEmpty()) {
+			for (FileEntity file : filePermesso) {
+				fileService.deleteFile(id, file.getFilename());
+			}	
+		}
+
+		
 		fileRepo.deleteByIdPermessoAssociato(id);
 		permessoRepo.deletePermessoById(id);
 	}

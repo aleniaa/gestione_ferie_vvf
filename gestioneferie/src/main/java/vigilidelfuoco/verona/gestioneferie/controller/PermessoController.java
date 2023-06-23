@@ -1,5 +1,6 @@
 package vigilidelfuoco.verona.gestioneferie.controller;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -155,7 +156,7 @@ public class PermessoController {
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> cancellaPermesso(@PathVariable("id") Long id){
+	public ResponseEntity<?> cancellaPermesso(@PathVariable("id") Long id) throws IOException{
 		permessoService.deletePermessoById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
