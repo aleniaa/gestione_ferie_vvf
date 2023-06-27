@@ -28,7 +28,8 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 			+ "WHERE permesso.tipo_permesso != \"recupero ore eccedenti\" "
 			+ "and permesso.tipo_permesso != \"congedo ordinario\" "
 			+ "and permesso.tipo_permesso != \"permesso breve\""
-			+ "and permesso.status=1")
+			+ "and permesso.status=3")
+	
 	List<Permesso> findAltriPermessi(Example<Permesso> permesso);
 		
 	List<Permesso> findAllByOrderByDataApprovazioneDesc();
