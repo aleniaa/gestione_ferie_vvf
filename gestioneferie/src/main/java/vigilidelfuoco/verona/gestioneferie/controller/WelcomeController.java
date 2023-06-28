@@ -32,12 +32,12 @@ public class WelcomeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> login(@RequestBody Utente utente) {
+	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password) {
 	
 	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
-		System.out.println("si sta provamdo a loggare "+ utente.getAccountDipvvf() + " con password:  " + utente.getPassword());
-		Utente utenteLoggato = loginService.validaLogin(utente);
+		System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
+		Utente utenteLoggato = loginService.validaLogin(username, password);
 		
 
 		if(utenteLoggato!=null) {
