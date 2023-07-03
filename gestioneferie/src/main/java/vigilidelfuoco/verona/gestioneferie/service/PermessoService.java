@@ -254,6 +254,12 @@ public class PermessoService {
 
 			permesso.setTotGiorni();
 		}
+		
+		if(permesso.getTipoPermesso().contains("malattia")) { // non deve essere approvato
+			permesso.setStatus(3);
+		}else {
+			permesso.setStatus(0);
+		}
 		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
 		System.out.println("id utente approvazione DUE = "+ permesso.getIdUtenteApprovazioneDue());
 		System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
@@ -270,7 +276,7 @@ public class PermessoService {
 		
 		permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
 		System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
-		permesso.setStatus(0);
+		
 		
 		permessoRepo.save(permesso);
 		//return permessoRepo.save(permesso);
