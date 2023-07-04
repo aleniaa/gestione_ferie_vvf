@@ -32,6 +32,8 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 	
 	List<Permesso> findAltriPermessi(Example<Permesso> permesso);
 		
+	//List<Permesso> findByIdUtenteApprovazioneAndIdUtenteApprovazioneDueAnd... da vedere se funziona con i parametri anche null
+	
 	List<Permesso> findAllByOrderByDataApprovazioneDesc();
 
 	

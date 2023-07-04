@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 import java.util.UUID;
@@ -136,7 +137,7 @@ public class PermessoService {
 //		return permessiTot;
 //	} 
 	
-	public List<Permesso> getFilteredPermessi(Permesso permesso){
+	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza){
 		
 		System.out.println("l'id dell'utente approvatore due è:" + permesso.getIdUtenteApprovazioneDue());
 		List<Permesso> permessiTot= new ArrayList<Permesso>();
@@ -238,8 +239,22 @@ public class PermessoService {
 			permessiTot.addAll(permessiAppDue);
 		}
 
-		System.out.println(filtroPermesso.toString());
+		//System.out.println(filtroPermesso.toString());
+		if(!dataAssenza.equals("") && dataAssenza!=null) {
+			List<Permesso> toRemove = new ArrayList<>();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate dataRicercaAssenza = LocalDate.parse(dataAssenza, formatter);
+			System.out.println("sono dentro l'if e data assenza è:" + dataRicercaAssenza.toString() );
+			for(Permesso permessoUno : permessiTot) {
+				if(!(dataRicercaAssenza.isAfter(permessoUno.getDataInizio()) && dataRicercaAssenza.isBefore(permessoUno.getDataFine()))) {
+					toRemove.add(permessoUno);
+					System.out.println("Questo permesso va rimosso");
 
+				}
+			}
+			
+			permessiTot.removeAll(toRemove);
+		}
 		
 		return permessiTot;
 	} 

@@ -134,8 +134,8 @@ public class PermessoController {
 	}
 	
 	@PostMapping("/search") 
-	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestBody Permesso permesso){
-		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso);
+	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestBody Permesso permesso){
+		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza);
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
