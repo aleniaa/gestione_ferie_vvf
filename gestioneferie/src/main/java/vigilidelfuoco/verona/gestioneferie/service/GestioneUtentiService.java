@@ -31,7 +31,7 @@ public class GestioneUtentiService {
 	}
 	
 	
-	public Utente aggiungiUtente(Utente utente){
+	public void aggiungiUtente(Utente utente){
 		System.out.println("sono dentro agiungi utente");
 		//System.out.println("sono dentro agiungi utente e la qualifica è: "+utente.getQualifica().getNome());
 		utente.setId_qualifica(utente.getId_qualifica());
@@ -40,7 +40,7 @@ public class GestioneUtentiService {
 		utente.setPassword(encoded_password);
 		
 		//utente.setAccountDipvvf();
-		return utenteRepo.save(utente);
+		//return utenteRepo.save(utente);
 		
 		
 	}
