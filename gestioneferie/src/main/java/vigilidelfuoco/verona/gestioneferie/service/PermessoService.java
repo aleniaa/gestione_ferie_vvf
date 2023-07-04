@@ -215,7 +215,7 @@ public class PermessoService {
 				permessiAppDue= permessoRepo.findAltriPermessi(permessoExample);
 				
 			}else { // se il permesso è congedo o recupero ore o permeso breve
-				if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")) {
+				if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().equals("tutti i permessi") || permesso.getTipoPermesso().equals("Malattia") ) ) {
 					filtroPermesso.setTipoPermesso(null);
 
 				}else {
@@ -256,6 +256,9 @@ public class PermessoService {
 			permessiTot.removeAll(toRemove);
 		}
 		
+		
+		
+		
 		return permessiTot;
 	} 
 	
@@ -270,7 +273,7 @@ public class PermessoService {
 			permesso.setTotGiorni();
 		}
 		
-		if(permesso.getTipoPermesso().contains("malattia")) { // non deve essere approvato
+		if(permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("salvavita")) { // non deve essere approvato
 			permesso.setStatus(3);
 		}else {
 			permesso.setStatus(0);
