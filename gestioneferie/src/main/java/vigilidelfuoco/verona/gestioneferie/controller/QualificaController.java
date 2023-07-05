@@ -17,7 +17,7 @@ import vigilidelfuoco.verona.gestioneferie.service.QualificaService;
 @RestController
 @RequestMapping("/qualifica")
 public class QualificaController {
-
+	/*
 	private final QualificaService qualificaService;
 
 	public QualificaController(QualificaService qualificaService) {
@@ -51,6 +51,8 @@ public class QualificaController {
 		List<Qualifica> qualifiche = qualificaService.getAllQualifiche();
 		return new ResponseEntity<>(qualifiche, HttpStatus.OK);
 	}
+
+	 */
 	
 	
 }

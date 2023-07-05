@@ -12,10 +12,16 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "uploadedFile")
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class FileEntity {
 
 	@Id
@@ -34,144 +40,5 @@ public class FileEntity {
 	
 	@Lob
 	private byte[] data;
-	
-	
 
-	public FileEntity() {
-		super();
-	}
-
-	
-	
-	public FileEntity(String filename, String fileType, String fileUrl) {
-		super();
-		this.filename = filename;
-		this.fileType = fileType;
-		this.fileUrl = fileUrl;
-	}
-
-	
-
-
-	public FileEntity(String filename, String fileType, String fileUrl, Long idPermessoAssociato,
-			Permesso permessoAssociato) {
-		super();
-		this.filename = filename;
-		this.fileType = fileType;
-		this.fileUrl = fileUrl;
-		this.idPermessoAssociato = idPermessoAssociato;
-		this.permessoAssociato = permessoAssociato;
-	}
-
-
-
-	public FileEntity(Long id, String filename, String fileType, String fileUrl, Long idPermessoAssociato,
-			Permesso permessoAssociato) {
-		super();
-		this.id = id;
-		this.filename = filename;
-		this.fileType = fileType;
-		this.fileUrl = fileUrl;
-		this.idPermessoAssociato = idPermessoAssociato;
-		this.permessoAssociato = permessoAssociato;
-	}
-
-
-
-	public FileEntity( String filename, String fileType, String fileUrl, Permesso permessoAssociato,
-			byte[] data) {
-		super();
-		this.filename = filename;
-		this.fileType = fileType;
-		this.fileUrl = fileUrl;
-		this.permessoAssociato = permessoAssociato;
-		this.data = data;
-	}
-	
-	
-	
-	
-
-	public FileEntity(String filename, String fileType, String fileUrl, Permesso permessoAssociato) {
-		super();
-		this.filename = filename;
-		this.fileType = fileType;
-		this.fileUrl = fileUrl;
-		this.permessoAssociato = permessoAssociato;
-	}
-
-	public FileEntity(String filename, String fileType, byte[] data) {
-		super();
-		this.filename = filename;
-		this.fileType = fileType;
-		this.data = data;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
-	public String getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
-
-	public String getFileUrl() {
-		return fileUrl;
-	}
-
-	public void setFileUrl(String fileUrl) {
-		this.fileUrl = fileUrl;
-	}
-
-	public Permesso getPermessoAssociato() {
-		return permessoAssociato;
-	}
-
-	public void setPermessoAssociato(Permesso permessoAssociato) {
-		this.permessoAssociato = permessoAssociato;
-	}
-
-	public byte[] getData() {
-		return data;
-	}
-
-	public void setData(byte[] data) {
-		this.data = data;
-	}
-	
-	
-
-	public Long getIdPermessoAssociato() {
-		return idPermessoAssociato;
-	}
-
-	public void setIdPermessoAssociato(Long idPermessoAssociato) {
-		this.idPermessoAssociato = idPermessoAssociato;
-	}
-
-	@Override
-	public String toString() {
-		return "FileEntity [id=" + id + ", filename=" + filename + ", fileType=" + fileType + ", fileUrl=" + fileUrl
-				+ ", permessoAssociato=" + permessoAssociato + "]";
-	}
-
-
-
-	
 }

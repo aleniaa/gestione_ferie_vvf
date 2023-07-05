@@ -8,7 +8,7 @@ import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
 @Service
 public class LoginService {
-
+	/*
 	private final UtenteRepo utenteRepo;
 	private boolean loginSuccess= false;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -53,6 +53,8 @@ public class LoginService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	 */
 	
 
 }

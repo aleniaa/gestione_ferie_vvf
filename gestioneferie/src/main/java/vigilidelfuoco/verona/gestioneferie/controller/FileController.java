@@ -39,6 +39,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 @RestController
 @RequestMapping("/upload")
 public class FileController {
+	/*
 
 	  @Autowired
 	  private final FileStorageService storageService;
@@ -127,6 +128,8 @@ public class FileController {
 
     	
     }
+
+	 */
 	
 
 

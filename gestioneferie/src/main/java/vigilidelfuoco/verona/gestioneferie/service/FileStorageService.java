@@ -33,7 +33,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 @Service
 public class FileStorageService {
-
+	/*
 	private final  FileRepo fileRepo;
 	@Value("${app.directory.path}")
 	private String upload_dir;
@@ -152,6 +152,8 @@ public List<String> uploadfileToPermesso(List<MultipartFile> multipartFiles, Per
 		Files.delete(filePath);
 		fileRepo.deleteByIdPermessoAssociatoAndFilename(idPermessoAssociato, filename);
 	}
+
+	*/
 
 
 

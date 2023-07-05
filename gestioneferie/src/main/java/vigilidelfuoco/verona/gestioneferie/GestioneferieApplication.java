@@ -17,6 +17,7 @@ public class GestioneferieApplication {
 		SpringApplication.run(GestioneferieApplication.class, args);
 	}
 
+	/*
 	@Bean
 	public CorsFilter corsFilter() {
 	    CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -45,5 +46,7 @@ public class GestioneferieApplication {
 	    urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 	    return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
+
+	 */
 
 }

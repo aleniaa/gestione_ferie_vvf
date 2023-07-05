@@ -13,17 +13,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+
 @Entity 
 public class Qualifica {
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false, updatable = false)
@@ -34,57 +33,10 @@ public class Qualifica {
 	
 	@Column(nullable = false, unique = true)
 	private String descrizione;
-	
-//    @OneToOne(mappedBy = "qualifica")
-//    private Utente utente;
-    
+
 	@OneToMany(mappedBy = "qualifica",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Utente> elencoUtenti;
-	
-	public Qualifica() {
-		super();
-	}
-	
-	public Qualifica(Long id, String nome, String descrizione) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.descrizione = descrizione;
-	}
 
-	public Qualifica(String nome, String descrizione) {
-		super();
-		this.nome = nome;
-		this.descrizione = descrizione;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
-
-
-	
-	
 	
 }

@@ -12,7 +12,7 @@ import vigilidelfuoco.verona.gestioneferie.repo.QualificaRepo;
 
 @Service
 public class QualificaService {
-	
+	/*
 	private final QualificaRepo qualificaRepo;
 
 	public QualificaService(QualificaRepo qualificaRepo) {
@@ -44,5 +44,7 @@ public class QualificaService {
 	public List<Qualifica> getAllQualifiche(){
 		return qualificaRepo.findAll();
 	}
+
+	 */
 
 }

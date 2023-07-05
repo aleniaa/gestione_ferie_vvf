@@ -30,6 +30,7 @@ import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 
 @Service
 public class PermessoService {
+	/*
 	
 	private final PermessoRepo permessoRepo;
 	private final UtenteRepo utenteRepo;
@@ -392,5 +393,7 @@ public class PermessoService {
 		fileRepo.deleteByIdPermessoAssociato(id);
 		permessoRepo.deletePermessoById(id);
 	}
+
+	 */
 
 }

@@ -35,7 +35,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 @RestController
 @RequestMapping("/permesso")
 public class PermessoController {
-
+	/*
 	private final PermessoService permessoService;
 	
 	  @Autowired
@@ -174,6 +174,8 @@ public class PermessoController {
 		permessoService.deletePermessoById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	 */
 	
 
 	

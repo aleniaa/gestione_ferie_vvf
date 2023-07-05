@@ -47,7 +47,7 @@ public class WebSecurityConfiguration {
 				.anyRequest().authenticated() 
                 .and().httpBasic(withDefaults());
                 
-                */
+                //comment closing here*/
         
         
         
@@ -55,3 +55,4 @@ public class WebSecurityConfiguration {
 		}
 
 }
+
