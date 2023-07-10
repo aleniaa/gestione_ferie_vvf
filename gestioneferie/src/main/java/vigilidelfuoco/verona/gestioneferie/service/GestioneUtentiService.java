@@ -72,6 +72,11 @@ public class GestioneUtentiService {
 			utente.setPassword(encoded_password);
 			System.out.println("Password modificata");
 		}
+		if(utente.getId_qualifica()==null) {
+			utente.setId_qualifica(Long.valueOf(1));
+		}else {
+			utente.setId_qualifica(utente.getId_qualifica());
+		}
 		
 		
 		utente.setAccountDipvvf();
