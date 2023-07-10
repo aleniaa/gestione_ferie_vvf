@@ -34,13 +34,18 @@ public class GestioneUtentiService {
 	public void aggiungiUtente(Utente utente){
 		System.out.println("sono dentro agiungi utente");
 		//System.out.println("sono dentro agiungi utente e la qualifica è: "+utente.getQualifica().getNome());
-		utente.setId_qualifica(utente.getId_qualifica());
+		if(utente.getId_qualifica()==null) {
+			utente.setId_qualifica(Long.valueOf(1));
+		}else {
+			utente.setId_qualifica(utente.getId_qualifica());
+		}
+		
 		utente.setCodiceUtente(UUID.randomUUID().toString());
 		String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
 		utente.setPassword(encoded_password);
 		
 		//utente.setAccountDipvvf();
-		//return utenteRepo.save(utente);
+		utenteRepo.save(utente);
 		
 		
 	}
