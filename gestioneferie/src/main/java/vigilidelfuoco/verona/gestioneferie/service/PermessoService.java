@@ -246,7 +246,7 @@ public class PermessoService {
 			LocalDate dataRicercaAssenza = LocalDate.parse(dataAssenza, formatter);
 			System.out.println("sono dentro l'if e data assenza è:" + dataRicercaAssenza.toString() );
 			for(Permesso permessoUno : permessiTot) {
-				if(!(dataRicercaAssenza.isAfter(permessoUno.getDataInizio()) && dataRicercaAssenza.isBefore(permessoUno.getDataFine()))) {
+				if(!(dataRicercaAssenza.isAfter(permessoUno.getDataInizio().minusDays(1)) && dataRicercaAssenza.isBefore(permessoUno.getDataFine().plusDays(1)))) {
 					toRemove.add(permessoUno);
 					System.out.println("Questo permesso va rimosso");
 
@@ -275,26 +275,29 @@ public class PermessoService {
 		
 		if(permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("salvavita")) { // non deve essere approvato
 			permesso.setStatus(3);
+			LocalDate dataApprovazione = LocalDate.now();
+			permesso.setDataApprovazione(dataApprovazione);
 		}else {
 			permesso.setStatus(0);
+			System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
+			System.out.println("id utente approvazione DUE = "+ permesso.getIdUtenteApprovazioneDue());
+			System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
+			Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
+			Utente utenteApprovazioneDue = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazioneDue());
+			Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteRichiedente());
+//			Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
+			
+			System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
+			
+			
+			permesso.setUtenteRichiedente(utenteRichiedente);
+			permesso.setUtenteApprovazione(utenteApprovazione);
+			
+			permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
+			System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
+			
 		}
-		System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
-		System.out.println("id utente approvazione DUE = "+ permesso.getIdUtenteApprovazioneDue());
-		System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
-		Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
-		Utente utenteApprovazioneDue = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazioneDue());
-		Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteRichiedente());
-//		Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
-		
-		System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
-		
-		
-		permesso.setUtenteRichiedente(utenteRichiedente);
-		permesso.setUtenteApprovazione(utenteApprovazione);
-		
-		permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
-		System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
-		
+
 		
 		permessoRepo.save(permesso);
 		//return permessoRepo.save(permesso);
