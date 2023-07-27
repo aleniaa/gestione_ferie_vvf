@@ -169,7 +169,7 @@ public class PermessoService {
 			filtroPermesso.setTipoPermesso(null);
 			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-			permessiTot= permessoRepo.findAltriPermessi(permessoExample);
+			permessiTot= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
 			
 		}else { // se il permesso è congedo o recupero ore o permeso breve
 			if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")) {
@@ -212,7 +212,7 @@ public class PermessoService {
 				filtroPermesso.setTipoPermesso(null);
 				ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 				Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-				permessiAppDue= permessoRepo.findAltriPermessi(permessoExample);
+				permessiAppDue= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
 				
 			}else { // se il permesso è congedo o recupero ore o permeso breve
 				if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().equals("tutti i permessi") || permesso.getTipoPermesso().equals("Malattia") ) ) {
@@ -257,7 +257,7 @@ public class PermessoService {
 		}
 		
 		
-		
+		Collections.sort(permessiTot, Comparator.comparing(Permesso::getDataApprovazione).reversed());
 		
 		return permessiTot;
 	} 

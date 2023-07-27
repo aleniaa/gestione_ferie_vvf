@@ -30,7 +30,7 @@ public interface PermessoRepo  extends JpaRepository<Permesso, Long> {
 			+ "and permesso.tipo_permesso != \"permesso breve\""
 			+ "and permesso.status=3")
 	
-	List<Permesso> findAltriPermessi(Example<Permesso> permesso);
+	List<Permesso> findAltriPermessiByOrderByDataApprovazioneDesc(Example<Permesso> permesso);
 		
 	//List<Permesso> findByIdUtenteApprovazioneAndIdUtenteApprovazioneDueAnd... da vedere se funziona con i parametri anche null
 	
