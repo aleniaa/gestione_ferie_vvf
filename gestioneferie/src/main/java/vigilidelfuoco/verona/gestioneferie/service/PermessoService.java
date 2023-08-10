@@ -270,7 +270,7 @@ public class PermessoService {
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
 			System.out.println("sono dentro permesso service setTotGiorni");
 
-			permesso.setTotGiorni();
+			permesso.setTotGiorni(permesso.getTotGiorni());
 		}
 		
 		if(permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("salvavita")) { // non deve essere approvato
