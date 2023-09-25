@@ -363,7 +363,7 @@ public class Permesso {
 				+ idUtenteRichiedente + ", dalleOre=" + dalleOre + ", alleOre=" + alleOre + ", dataApprovazione="
 				+ dataApprovazione + ", totOre=" + totOre + ", status=" + status + ", note=" + note
 				+ ", utenteRichiedente=" + utenteRichiedente + ", utenteApprovazione=" + utenteApprovazione
-				+ ", utenteApprovazioneDue=" + utenteApprovazioneDue + ", elencoFile=" + elencoFile + "]";
+				+ ", utenteApprovazioneDue=" + utenteApprovazioneDue + "]";
 	}
 
 

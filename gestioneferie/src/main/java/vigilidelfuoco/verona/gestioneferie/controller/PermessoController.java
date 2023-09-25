@@ -141,13 +141,19 @@ public class PermessoController {
 	
 	@PostMapping("/add")
 	//public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
-		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso){
+		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso, @RequestParam("idUtenteLoggato") Long idUtenteLoggato ){
 		
 		ResponseEntity<String> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //		System.out.println("ID 1 è: " + permesso.getIdUtenteApprovazione().toString() );
 //		System.out.println("ID 2 è: " + permesso.getIdUtenteApprovazioneDue().toString() );
 		
-		
+//		Permesso permessoValido = permessoService.aggiungiPermesso(permesso);
+//		
+//		if(permessoValido != null) {
+//			response= ResponseEntity.status(HttpStatus.CREATED).body("Richiesta di permesso inviata correttamente!");
+//		}else {
+//			response= ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Qualcosa è andato storto");
+//		}
 		
 		if(permesso.getIdUtenteApprovazioneDue()!= null && permesso.getIdUtenteApprovazione().equals(permesso.getIdUtenteApprovazioneDue())) {
 				System.out.println("I DUE SONO UGUALI");
@@ -157,7 +163,7 @@ public class PermessoController {
 				//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 				System.out.println("I DUE non SONO UGUALI");
 
-				permessoService.aggiungiPermesso(permesso);
+				permessoService.aggiungiPermesso(permesso, idUtenteLoggato);
 
 				//return new ResponseEntity<>(newPermesso, HttpStatus.CREATED);
 		        response= ResponseEntity.status(HttpStatus.CREATED).body("Richiesta di permesso inviata correttamente!");

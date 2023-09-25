@@ -264,7 +264,7 @@ public class PermessoService {
 	
 
 	
-	public void aggiungiPermesso(Permesso permesso){
+	public Permesso aggiungiPermesso(Permesso permesso, Long idUtenteLoggato){
 		
 	
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
@@ -284,7 +284,7 @@ public class PermessoService {
 			System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
 			Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
 			Utente utenteApprovazioneDue = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazioneDue());
-			Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteRichiedente());
+			Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(idUtenteLoggato);
 //			Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
 			
 			System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
@@ -299,8 +299,8 @@ public class PermessoService {
 		}
 
 		
-		permessoRepo.save(permesso);
-		//return permessoRepo.save(permesso);
+		//permessoRepo.save(permesso);
+		return permessoRepo.save(permesso);
 	
 	}
 	
