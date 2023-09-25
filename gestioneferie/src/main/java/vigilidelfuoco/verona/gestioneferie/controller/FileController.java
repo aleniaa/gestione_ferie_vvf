@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +43,12 @@ public class FileController {
 
 	  @Autowired
 	  private final FileStorageService storageService;
+	  private final ResourceLoader resourceLoader;
 
-	public FileController(FileStorageService storageService) {
+	public FileController(FileStorageService storageService, ResourceLoader resourceLoader) {
 		super();
 		this.storageService = storageService;
+		this.resourceLoader = resourceLoader;
 	}
 	  
 	@PostMapping("/uploadFile")
@@ -105,6 +108,29 @@ public class FileController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
                 .headers(httpHeaders).body(resource);
     }
+    
+    @GetMapping("show/{filename}")
+    public ResponseEntity<Resource> showFiles(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
+        
+    	try {
+            Resource fileResource = resourceLoader.getResource("classpath:/uploadedFile/" + filename);
+
+            if (fileResource.exists() && fileResource.isReadable()) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                        .header("Content-Disposition", "inline; filename=\"" + filename + "\"")
+                        .body(fileResource);
+            } else {
+                // Handle the case when the file doesn't exist or is not readable.
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Handle any exceptions that may occur while loading the file.
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    
     
     @DeleteMapping("deleteAllFile/{filename}")
     public ResponseEntity<?> deleteAllFile(@PathVariable("filename") String filename, @RequestParam("idPermesso") Long idPermesso) throws IOException {
