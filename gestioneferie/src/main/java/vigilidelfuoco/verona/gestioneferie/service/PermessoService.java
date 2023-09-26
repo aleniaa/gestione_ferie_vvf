@@ -288,7 +288,7 @@ public class PermessoService {
 			permesso.setStatus(0);
 			System.out.println("id utente approvazione = "+ permesso.getIdUtenteApprovazione());
 			System.out.println("id utente approvazione DUE = "+ permesso.getIdUtenteApprovazioneDue());
-			System.out.println("id utente richiedente = "+ permesso.getIdUtenteRichiedente());
+			System.out.println("id utente richiedente = "+ idUtenteLoggato);
 			Utente utenteApprovazione = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazione());
 			Utente utenteApprovazioneDue = utenteRepo.findUtenteByIdsenzaoptional(permesso.getIdUtenteApprovazioneDue());
 			Utente utenteRichiedente = utenteRepo.findUtenteByIdsenzaoptional(idUtenteLoggato);
@@ -297,11 +297,13 @@ public class PermessoService {
 			System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
 			
 			
-			permesso.setUtenteRichiedente(utenteRichiedente);
+			//permesso.setUtenteRichiedente(utenteRichiedente);
+			permesso.setIdUtenteRichiedente(idUtenteLoggato);
 			permesso.setUtenteApprovazione(utenteApprovazione);
 			
 			permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
 			System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
+			System.out.println("utente richiedente è"+ permesso.getUtenteRichiedente());
 			
 		}
 

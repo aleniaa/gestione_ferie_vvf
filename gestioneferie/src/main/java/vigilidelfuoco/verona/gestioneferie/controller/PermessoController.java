@@ -162,7 +162,8 @@ public class PermessoController {
 		}else {
 				//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 				System.out.println("I DUE non SONO UGUALI");
-
+				System.out.println("Id dell'utente loggato= " +idUtenteLoggato.toString());
+				
 				permessoService.aggiungiPermesso(permesso, idUtenteLoggato);
 
 				//return new ResponseEntity<>(newPermesso, HttpStatus.CREATED);
