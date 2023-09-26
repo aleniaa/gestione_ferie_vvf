@@ -214,8 +214,15 @@ public class PermessoService {
 				Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
 				permessiAppDue= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
 				
+			}else if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("Terapia") ) ) {	
+				
+				filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
+				System.out.println("Il tipo permesso dentro malattia o terapia è " + permesso.getTipoPermesso());
+				
+				
 			}else { // se il permesso è congedo o recupero ore o permeso breve
-				if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().equals("tutti i permessi") || permesso.getTipoPermesso().equals("Malattia") ) ) {
+				if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")  ) {
+				//if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().equals("tutti i permessi") || permesso.getTipoPermesso().equals("Malattia") ) ) {	
 					filtroPermesso.setTipoPermesso(null);
 
 				}else {
