@@ -67,20 +67,44 @@ public class GestioneUtentiService {
 	public Utente aggiornaUtente(Utente utente) {
 		Utente utenteDaModificare =  utenteRepo.findUtenteByIdsenzaoptional(utente.getId());
 		String passUtenteDaModificare = utenteDaModificare.getPassword();
-		if(!utente.getPassword().equals(passUtenteDaModificare)) { //se la pass è stata modificata
+		
+		System.out.println("La password dal modal è :" + utente.getPassword());
+		System.out.println("La password dal database è :" + passUtenteDaModificare);
+		
+//		if(utenteDaModificare!=null) {
+//			
+//
+//			if(!bCryptPasswordEncoder.matches(utente.getPassword(), utenteDaModificare.getPassword())) {
+//				String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
+//				utenteDaModificare.setPassword(encoded_password);
+//				utenteDaModificare.setPasswordChanged(1);
+//				System.out.println("Sono dentro aggiorna utente e la password è stata modificata perchè non matchano");
+//
+//			}
+//		}
+		
+		if(utente.getPassword()!=null) {
+			System.out.println("La password non è null e la sto cambiando");
 			String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
-			utente.setPassword(encoded_password);
-			System.out.println("Password modificata");
+			utenteDaModificare.setPassword(encoded_password);
+			utenteDaModificare.setPasswordChanged(0);
 		}
+		
+//		if(!utente.getPassword().equals(passUtenteDaModificare)) { //se la pass è stata modificata
+//			String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
+//			utenteDaModificare.setPassword(encoded_password);
+//			System.out.println("Password modificata");
+//		}
+			
 		if(utente.getId_qualifica()==null) {
-			utente.setId_qualifica(Long.valueOf(1));
+			utenteDaModificare.setId_qualifica(Long.valueOf(1));
 		}else {
-			utente.setId_qualifica(utente.getId_qualifica());
+			utenteDaModificare.setId_qualifica(utente.getId_qualifica());
 		}
 		
 		
-		utente.setAccountDipvvf();
-		return utenteRepo.save(utente);
+		utenteDaModificare.setAccountDipvvf();
+		return utenteRepo.save(utenteDaModificare);
 	}
 	
 	public Utente findUtenteById(Long id) {
@@ -113,7 +137,7 @@ public class GestioneUtentiService {
 		if(utenteRepo.existsUtenteByemailVigilfuoco(utente.getEmailVigilfuoco()) || utenteRepo.existsUtenteByAccountDipvvf(utente.getAccountDipvvf())) {
 			return false;
 		}else {
-			 System.out.println("L'utente non esiste");
+			 System.out.println(" sono dentro checutenteifexists and L'utente non esiste");
 			 return true;
 		}
 		

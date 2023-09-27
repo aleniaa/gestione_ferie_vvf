@@ -119,7 +119,12 @@ public class UtenteController {
 			@RequestParam("newPass") String newPass 
 			)
 	{
+		System.out.println("idutenteloggato: " + idUtenteLoggato);
+		System.out.println("oldPass: " + oldPass);
 
+		System.out.println("newPass: " + newPass);
+
+		
 		boolean matchingPass = gestioneUtenti.changePass(oldPass, newPass, idUtenteLoggato);
 		if(matchingPass) {
 			System.out.println("sono dentro utentecontroller responsenetyty OK");
