@@ -33,9 +33,9 @@ public class GestioneUtentiService {
 	
 	public void aggiungiUtente(Utente utente){
 		System.out.println("sono dentro agiungi utente");
-		//System.out.println("sono dentro agiungi utente e la qualifica è: "+utente.getQualifica().getNome());
+		System.out.println("sono dentro agiungi utente e la qualifica è: "+utente.getId_qualifica());
 		if(utente.getId_qualifica()==null) {
-			utente.setId_qualifica(Long.valueOf(1));
+			utente.setId_qualifica(Long.valueOf(999));
 		}else {
 			utente.setId_qualifica(utente.getId_qualifica());
 		}
@@ -83,11 +83,17 @@ public class GestioneUtentiService {
 //			}
 //		}
 		
-		if(utente.getPassword()!=null) {
+		System.out.println("PASSWORD CHANGED: " + utente.getPasswordChanged());
+		
+		if(utente.getPassword()==null) {
+			utente.setPassword(passUtenteDaModificare);
+			utente.setPasswordChanged(1);
+		}else
+		{
 			System.out.println("La password non è null e la sto cambiando");
 			String encoded_password= bCryptPasswordEncoder.encode(utente.getPassword());
-			utenteDaModificare.setPassword(encoded_password);
-			utenteDaModificare.setPasswordChanged(0);
+			utente.setPassword(encoded_password);
+			utente.setPasswordChanged(0);
 		}
 		
 //		if(!utente.getPassword().equals(passUtenteDaModificare)) { //se la pass è stata modificata
@@ -97,14 +103,16 @@ public class GestioneUtentiService {
 //		}
 			
 		if(utente.getId_qualifica()==null) {
-			utenteDaModificare.setId_qualifica(Long.valueOf(1));
-		}else {
-			utenteDaModificare.setId_qualifica(utente.getId_qualifica());
+			utente.setId_qualifica(Long.valueOf(999));
 		}
+//			else {
+//			utenteDaModificare.setId_qualifica(utente.getId_qualifica());
+//		}
 		
 		
-		utenteDaModificare.setAccountDipvvf();
-		return utenteRepo.save(utenteDaModificare);
+			
+		utente.setAccountDipvvf();
+		return utenteRepo.save(utente);
 	}
 	
 	public Utente findUtenteById(Long id) {

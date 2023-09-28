@@ -56,7 +56,7 @@ public class Utente  {
 		private String telefono;
 		private String accountDipvvf; //username
 		private Long id_qualifica;
-		private int passwordChanged=0; //0 se la password non è stata cambiata, 1 altrimenti
+		private int passwordChanged; //0 se la password non è stata cambiata, 1 altrimenti
 
 		
 		@Column(unique = true) private String emailVigilfuoco;
