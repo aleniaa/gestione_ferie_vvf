@@ -300,9 +300,9 @@ public class PermessoService {
 			//permesso.setUtenteRichiedente(utenteRichiedente);
 			permesso.setIdUtenteRichiedente(idUtenteLoggato);
 			permesso.setUtenteApprovazione(utenteApprovazione);
-			
+			System.out.println(" Sono dentro aggiungi permesso service e idutenteloggato è"+ idUtenteLoggato);
 			permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
-			System.out.println("utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
+			System.out.println(" Sono dentro aggiungi permesso service utente approvazione DUE è"+ permesso.getUtenteApprovazioneDue());
 			System.out.println("utente richiedente è"+ permesso.getUtenteRichiedente());
 			
 		}
