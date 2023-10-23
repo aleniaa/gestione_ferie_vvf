@@ -246,6 +246,7 @@ public class Utente  {
 		String account= this.nome +"." + this.cognome;
 		String stringaSenzaSpazi = account.replace(" ", "");
 		this.accountDipvvf = stringaSenzaSpazi;
+		this.setEmailVigilfuoco();
 	}
 
 	
