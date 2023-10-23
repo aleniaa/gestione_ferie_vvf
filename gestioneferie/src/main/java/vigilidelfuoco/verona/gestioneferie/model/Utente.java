@@ -243,7 +243,9 @@ public class Utente  {
 	}
 
 	public void setAccountDipvvf() {
-		this.accountDipvvf = this.nome +"." + this.cognome;
+		String account= this.nome +"." + this.cognome;
+		String stringaSenzaSpazi = account.replace(" ", "");
+		this.accountDipvvf = stringaSenzaSpazi;
 	}
 
 	
