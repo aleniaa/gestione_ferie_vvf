@@ -68,6 +68,7 @@ public class ADAuthenticator {
 				        }
 					}
 					//return "" + 0;
+					System.out.println("Msono dentro asuthenticatoro e accountdipvvf: "+accountDipvvf);
 					return accountDipvvf;
 				}
 			}
@@ -93,8 +94,11 @@ public class ADAuthenticator {
 				 */
 
 				String errorCode = "-1";
+				System.out.println("errorcode -1");
 				try {
 					errorCode = eee.getMessage().substring(eee.getMessage().indexOf("error, data ") + 12,eee.getMessage().lastIndexOf(","));
+					System.out.println(errorCode);
+
 				} catch (Exception e2) {
 					return errorCode;
 				}

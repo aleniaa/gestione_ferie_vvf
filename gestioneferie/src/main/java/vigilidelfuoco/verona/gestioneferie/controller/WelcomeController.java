@@ -39,7 +39,7 @@ public class WelcomeController {
 	
 	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
-		System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
+		//System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
 		Utente utenteLoggato = loginService.validaLogin(username, password);
 		
 
@@ -69,18 +69,34 @@ public class WelcomeController {
 	}
 	
 	@PostMapping("/loginDipvvf")
-	public String loginDipvvf(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
+	public ResponseEntity<?> loginDipvvf(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
 	
 	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
-		//System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
+		System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
 		
-		String utente = aDAuthenticator.authenticateUser(username, password);
-		if(utente.equals("0")) {
+		String utente = aDAuthenticator.authenticateUser(username+"@dipvvf.it", password);
+		Utente utenteLoggato= null;
+		
+		System.out.println("stringa utente:" +utente);
+
+		
+		if(utente.contains("@dipvvf.it")) {
 			System.out.println("Mi sono loggato");
-			utente= "appo mi sono loggato";
+			utenteLoggato= loginService.validaLoginDipvvf(username);
+			if(utenteLoggato!=null) {
+				return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
+			}
+			
+		
+		}else {
+			System.out.println("NON mi sono loggato");
+			return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
 		}
-		return utente;
+		
+		
 		
 	}
 	
