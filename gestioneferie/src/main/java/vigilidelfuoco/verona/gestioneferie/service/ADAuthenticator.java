@@ -14,8 +14,11 @@ import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
+import org.springframework.stereotype.Service;
+import javax.naming.directory.Attribute;
 
 
+@Service
 public class ADAuthenticator {
 
 
@@ -38,7 +41,8 @@ public class ADAuthenticator {
 		environment.put(Context.SECURITY_CREDENTIALS, password);
 
 		try {
-
+			
+			String accountDipvvf="";
 			LdapContext ctx = new InitialLdapContext(environment, null);
 
 			NamingEnumeration<SearchResult> answer = ctx.search(searchBase,searchFilter, searchCtls);
@@ -48,7 +52,23 @@ public class ADAuthenticator {
 				SearchResult sr = (SearchResult) answer.next();
 				Attributes attrs = sr.getAttributes();
 				if (attrs != null) {
-					return "" + 0;
+					NamingEnumeration<? extends Attribute> attrEnum = attrs.getAll();
+					while (attrEnum.hasMore()) {
+				        Attribute attribute = attrEnum.next();
+				        String attributeName = attribute.getID(); // Get attribute name
+				        // Get all attribute values for the current attribute
+				        NamingEnumeration<?> attrValues = attribute.getAll();
+				        while (attrValues.hasMore()) {
+				            Object value = attrValues.next();
+				            //System.out.println(attributeName + ": " + value); // Print attribute name and value
+				            if(attributeName.equals("userPrincipalName")) {
+					            System.out.println(attributeName + ": " + value); // Print attribute name and value
+					            accountDipvvf= value.toString();
+				            }
+				        }
+					}
+					//return "" + 0;
+					return accountDipvvf;
 				}
 			}
 

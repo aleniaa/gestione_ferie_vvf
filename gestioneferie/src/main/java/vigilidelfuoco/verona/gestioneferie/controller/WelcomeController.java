@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
+import vigilidelfuoco.verona.gestioneferie.service.ADAuthenticator;
 import vigilidelfuoco.verona.gestioneferie.service.GestioneUtentiService;
 import vigilidelfuoco.verona.gestioneferie.service.LoginService;
 
@@ -22,12 +23,14 @@ public class WelcomeController {
 
 	private final LoginService loginService;
 	private final GestioneUtentiService utenteService;
+	private final ADAuthenticator aDAuthenticator ;
 
 	
-	public WelcomeController(LoginService loginService, GestioneUtentiService utenteService) {
+	public WelcomeController(LoginService loginService, GestioneUtentiService utenteService, ADAuthenticator aDAuthenticator ) {
 		super();
 		this.loginService = loginService;
 		this.utenteService = utenteService;
+		this.aDAuthenticator = aDAuthenticator;
 		
 	}
 	
@@ -62,6 +65,22 @@ public class WelcomeController {
 	}
 		
 		//return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/loginDipvvf")
+	public String loginDipvvf(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception {
+	
+	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
+		
+		//System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
+		
+		String utente = aDAuthenticator.authenticateUser(username, password);
+		if(utente.equals("0")) {
+			System.out.println("Mi sono loggato");
+			utente= "appo mi sono loggato";
+		}
+		return utente;
 		
 	}
 	
