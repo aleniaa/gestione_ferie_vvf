@@ -313,6 +313,18 @@ public class PermessoService {
 	
 	}
 	
+	public Permesso aggiornaPermessoPersonale(Permesso permesso, int statusPermesso ) {
+		
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		permessoDaAggiornare.setStatus(statusPermesso);
+		LocalDate dataApprovazione = LocalDate.now();
+		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+		
+
+		return permessoRepo.save(permessoDaAggiornare);
+	}
+	
+	
 	public Permesso aggiornaStatusPermesso(Permesso permesso, Long idApprovatore) {
 		
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
