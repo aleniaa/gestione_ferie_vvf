@@ -109,10 +109,25 @@ public class PermessoController {
 		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
-		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso, idApprovatore);
+		//Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso, idApprovatore);
+		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso2(permesso, idApprovatore);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
+	
+//	@PutMapping("/aggiornaPermesso")
+//	public ResponseEntity<Permesso> aggiornaPermesso(@RequestParam("idApprovatore") Long idApprovatore, @RequestParam("statusPermesso") int statusPermesso, @RequestBody Permesso permesso ){
+//		
+//		System.out.println("sono dentro aggiornaPermesso  controller e l'id dell'approvatore è : "+ idApprovatore);
+//		System.out.println("sono dentro aggiornaPermesso  controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
+//		System.out.println("sono dentro aggiornaPermesso  controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
+//		System.out.println("sono dentro aggiornaPermesso  controller  e statusPermesso è : "+ statusPermesso);
+//
+//		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso2(permesso, idApprovatore,statusPermesso);
+//
+//		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
+//	}
+//	
 	
 	@PutMapping("/aggiornaPermessoPersonale")
 	public ResponseEntity<Permesso> aggiornaPermessoPersonale(@RequestParam("statusPermesso") int statusPermesso, @RequestBody Permesso permesso ){
@@ -169,7 +184,7 @@ public class PermessoController {
 		if(permesso.getIdUtenteApprovazioneDue()!= null && permesso.getIdUtenteApprovazione().equals(permesso.getIdUtenteApprovazioneDue())) {
 				System.out.println("I DUE SONO UGUALI");
 
-				response= ResponseEntity.status(HttpStatus.BAD_REQUEST).body("I due funzionari/capiturno non possono essere uguali!");
+				response= ResponseEntity.status(HttpStatus.CONFLICT).body("I due funzionari/capiturno non possono essere uguali!");
 		}else {
 				//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 				System.out.println("I DUE non SONO UGUALI");

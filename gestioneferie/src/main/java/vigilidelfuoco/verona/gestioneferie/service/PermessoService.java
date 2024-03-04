@@ -324,7 +324,53 @@ public class PermessoService {
 		return permessoRepo.save(permessoDaAggiornare);
 	}
 	
+	// qua basta che uno solo approvi o rifiuti il permesso
+	public Permesso aggiornaStatusPermesso2(Permesso permesso, Long idApprovatore) {
+		
+//		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+//		
+//		permessoDaAggiornare.setStatus(statusPermesso);
+//
+//		LocalDate dataApprovazione = LocalDate.now();
+//		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+//		
+//
+//		return permessoRepo.save(permessoDaAggiornare);
+		
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		
+		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()==null) { // se c'è solo l'approvatore uno che deve approvare: 
+			permessoDaAggiornare.setStatus(1); // approvato definitivamente
+		}
+		
+		if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
+
+			if(idApprovatore.equals(permessoDaAggiornare.getIdUtenteApprovazioneDue())){ // se l'approvatore loggato è il 2:
+				permessoDaAggiornare.setStatus(2); //approvato da approvatore 2
+				System.out.println("sono dentro caso 0 e l'approvatore è il 2");
+			}else { //se è l'1
+				permessoDaAggiornare.setStatus(1); //approvato da approvatore 1
+				System.out.println("sono dentro caso 0 dentro l'else");
+			};
+
+		}
+		
+		
+		
+		LocalDate dataApprovazione = LocalDate.now();
+		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+		
+
+		return permessoRepo.save(permessoDaAggiornare);
+		
+	}
+		
+
+		
 	
+	
+	// vengono considerati entrambi gli approvatori e il permesso deve essere approvato da entrambi per risultare approvato definitivamente
 	public Permesso aggiornaStatusPermesso(Permesso permesso, Long idApprovatore) {
 		
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
