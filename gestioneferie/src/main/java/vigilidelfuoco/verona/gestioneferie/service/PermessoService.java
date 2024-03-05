@@ -137,7 +137,8 @@ public class PermessoService {
 //		return permessiTot;
 //	} 
 	
-	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza, int status){
+//	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza, int status){
+	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza){
 		
 		System.out.println("l'id dell'utente approvatore due è:" + permesso.getIdUtenteApprovazioneDue());
 		List<Permesso> permessiTot= new ArrayList<Permesso>();
@@ -150,7 +151,7 @@ public class PermessoService {
 		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
 		
 		filtroPermesso.setIdUtenteRichiedente(permesso.getIdUtenteRichiedente()); //per l'id del richiedente
-		filtroPermesso.setStatus(status);
+		filtroPermesso.setStatus(null);
  
 		
 		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
@@ -266,6 +267,11 @@ public class PermessoService {
 		
 		Collections.sort(permessiTot, Comparator.comparing(Permesso::getDataApprovazione).reversed());
 		
+		for (Permesso permessoprova : permessiTot) {
+		    System.out.println("Status: " + permessoprova.getStatus());
+		    System.out.println("Descrizione: " + permessoprova.getTipoPermesso());
+		    // Print other properties as needed
+		}
 		return permessiTot;
 	} 
 	

@@ -45,7 +45,7 @@ public class Permesso {
 	private String alleOre;
 	private LocalDate dataApprovazione;
 	private String totOre;
-	private int status; //con il vecchio aggiornaStatusPermesso vengono considerati entrambi gli approvatori e il permesso deve essere approvato da entrambi: 0 = in revisione, 1 = approvato da approvatore 1 , 2= approvato da app 2, 3= approvato definitivamente da entrambi, 4= respinto da approvatore 1; 5= respinto da approvatore 2;
+	private Integer status; //con il vecchio aggiornaStatusPermesso vengono considerati entrambi gli approvatori e il permesso deve essere approvato da entrambi: 0 = in revisione, 1 = approvato da approvatore 1 , 2= approvato da app 2, 3= approvato definitivamente da entrambi, 4= respinto da approvatore 1; 5= respinto da approvatore 2;
 						//con aggiornaStatusPermesso2: 0 = in revisione, 1 = approvato da approvatore 1, 2= approvato da approvatore 2,  4 = respinto da approvatore 1, 5= respinto da approvatore 2, 6 = approvato da personale, 7= respitno da personale 
 	private String note;
 	
@@ -293,7 +293,7 @@ public class Permesso {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

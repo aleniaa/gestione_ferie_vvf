@@ -160,8 +160,11 @@ public class PermessoController {
 	}
 	
 	@PostMapping("/search") 
-	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestParam("status") int status, @RequestBody Permesso permesso){
-		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza, status);
+	//public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestParam("status") int status, @RequestBody Permesso permesso){
+	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestBody Permesso permesso){
+		//List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza, status);
+		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza);
+
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
