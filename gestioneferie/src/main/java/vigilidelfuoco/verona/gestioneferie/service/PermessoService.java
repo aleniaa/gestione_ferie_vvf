@@ -137,7 +137,7 @@ public class PermessoService {
 //		return permessiTot;
 //	} 
 	
-	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza){
+	public List<Permesso> getFilteredPermessi(Permesso permesso, String dataAssenza, int status){
 		
 		System.out.println("l'id dell'utente approvatore due è:" + permesso.getIdUtenteApprovazioneDue());
 		List<Permesso> permessiTot= new ArrayList<Permesso>();
@@ -150,7 +150,7 @@ public class PermessoService {
 		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
 		
 		filtroPermesso.setIdUtenteRichiedente(permesso.getIdUtenteRichiedente()); //per l'id del richiedente
-		filtroPermesso.setStatus(3);
+		filtroPermesso.setStatus(status);
  
 		
 		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
@@ -281,7 +281,7 @@ public class PermessoService {
 		}
 		
 		if(permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("salvavita")) { // non deve essere approvato
-			permesso.setStatus(3);
+			permesso.setStatus(3); // va direttamente alla conferma dell'ufficio personale
 			LocalDate dataApprovazione = LocalDate.now();
 			permesso.setDataApprovazione(dataApprovazione);
 		}else {
@@ -313,10 +313,26 @@ public class PermessoService {
 	
 	}
 	
-	public Permesso aggiornaPermessoPersonale(Permesso permesso, int statusPermesso ) {
+	public Permesso aggiornaPermessoPersonale(Permesso permesso) {
 		
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
-		permessoDaAggiornare.setStatus(statusPermesso);
+		switch(permessoDaAggiornare.getStatus()) {
+			case 1:
+				permessoDaAggiornare.setStatus(6);
+			case 2:
+				permessoDaAggiornare.setStatus(8);
+				
+			default:
+				System.out.print("Errore nello switch");
+			
+		}
+//		if(permessoDaAggiornare.getStatus()==1) { // lo ha approvato l'approvatore 1
+//			permessoDaAggiornare.setStatus(6);
+//		}
+//		if(permessoDaAggiornare.getStatus()==2) { // lo ha approvato l'approvatore 1
+//			permessoDaAggiornare.setStatus(8);
+//		}
+		
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
 		

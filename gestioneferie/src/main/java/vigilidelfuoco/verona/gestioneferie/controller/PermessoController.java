@@ -129,13 +129,13 @@ public class PermessoController {
 //	}
 //	
 	
-	@PutMapping("/aggiornaPermessoPersonale")
-	public ResponseEntity<Permesso> aggiornaPermessoPersonale(@RequestParam("statusPermesso") int statusPermesso, @RequestBody Permesso permesso ){
+	@PutMapping("/confermaPermessoPersonale")
+	public ResponseEntity<Permesso> aggiornaPermessoPersonale(@RequestBody Permesso permesso ){
 		
 		System.out.println("sono dentro changestatus permesso controller e utente richiedente è : "+ permesso.getUtenteRichiedente());
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
-		Permesso permessoAggiornato = permessoService.aggiornaPermessoPersonale(permesso, statusPermesso);
+		Permesso permessoAggiornato = permessoService.aggiornaPermessoPersonale(permesso);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
@@ -160,8 +160,8 @@ public class PermessoController {
 	}
 	
 	@PostMapping("/search") 
-	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestBody Permesso permesso){
-		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza);
+	public ResponseEntity<List<Permesso>> getFilteredPermessi(@RequestParam("dataAssenza") String dataAssenza, @RequestParam("status") int status, @RequestBody Permesso permesso){
+		List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza, status);
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
