@@ -145,7 +145,8 @@ public class PermessoService {
 		List<Permesso> permessiAppDue= new ArrayList<Permesso>();
 		
 		Permesso filtroPermesso= new Permesso();
-		System.out.println("filtro permesso iniziale : "+filtroPermesso.toString());
+		//System.out.println("filtro permesso iniziale : "+filtroPermesso.toString());
+		System.out.println("tipo permesso : "+ permesso.getTipoPermesso());
 		
 		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
 		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
@@ -166,11 +167,19 @@ public class PermessoService {
 
 			
 		}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("altri permessi")) {
-			
+			System.out.println("tipo permesso è ALTRI PERMESSI");
 			filtroPermesso.setTipoPermesso(null);
 			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
 			permessiTot= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
+			for (Permesso permessoprova : permessiTot) {
+			    System.out.println("Status: " + permessoprova.getStatus());
+			    System.out.println("Descrizione: " + permessoprova.getTipoPermesso());
+			    //System.out.println("Utente approvazione 1: " + permessoprova.getUtenteApprovazione().getAccountDipvvf().toString());
+			    //System.out.println("Utente approvazione 2: " + permessoprova.getUtenteApprovazioneDue().getAccountDipvvf().toString());
+
+			    // Print other properties as needed
+			}
 			
 		}else { // se il permesso è congedo o recupero ore o permeso breve
 			if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")) {
@@ -268,7 +277,7 @@ public class PermessoService {
 		Collections.sort(permessiTot, Comparator.comparing(Permesso::getDataApprovazione).reversed());
 		
 		for (Permesso permessoprova : permessiTot) {
-		    System.out.println("Status: " + permessoprova.getStatus());
+		    System.out.println("Sono il print finale Status: " + permessoprova.getStatus());
 		    System.out.println("Descrizione: " + permessoprova.getTipoPermesso());
 		    // Print other properties as needed
 		}
@@ -323,11 +332,12 @@ public class PermessoService {
 		
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		switch(permessoDaAggiornare.getStatus()) {
-			case 1:
+			case 1: // peremsso approvato da approvatore 1
 				permessoDaAggiornare.setStatus(6);
-			case 2:
+			case 2:  // peremsso approvato da approvatore 2
 				permessoDaAggiornare.setStatus(8);
-				
+			case 3:  // malattia
+				permessoDaAggiornare.setStatus(6);				
 			default:
 				System.out.print("Errore nello switch");
 			

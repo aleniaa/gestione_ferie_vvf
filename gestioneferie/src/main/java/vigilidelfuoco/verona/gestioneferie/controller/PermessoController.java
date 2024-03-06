@@ -190,8 +190,8 @@ public class PermessoController {
 				response= ResponseEntity.status(HttpStatus.CONFLICT).body("I due funzionari/capiturno non possono essere uguali!");
 		}else {
 				//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
-				System.out.println("I DUE non SONO UGUALI");
-				System.out.println("Id dell'utente loggato= " +idUtenteLoggato.toString());
+//				System.out.println("I DUE non SONO UGUALI");
+//				System.out.println("Id dell'utente loggato= " +idUtenteLoggato.toString());
 				
 				permessoService.aggiungiPermesso(permesso, idUtenteLoggato);
 
