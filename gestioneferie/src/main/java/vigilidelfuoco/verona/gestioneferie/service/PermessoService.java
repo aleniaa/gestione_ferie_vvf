@@ -256,9 +256,10 @@ public class PermessoService {
 			permessiTot.addAll(permessiAppDue);
 		}
 
+		List<Permesso> toRemove = new ArrayList<>();
 		//System.out.println(filtroPermesso.toString());
 		if(!dataAssenza.equals("") && dataAssenza!=null) {
-			List<Permesso> toRemove = new ArrayList<>();
+			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate dataRicercaAssenza = LocalDate.parse(dataAssenza, formatter);
 			System.out.println("sono dentro l'if e data assenza è:" + dataRicercaAssenza.toString() );
@@ -272,7 +273,16 @@ public class PermessoService {
 			
 			permessiTot.removeAll(toRemove);
 		}
+		toRemove.clear();
 		
+		
+		for (Permesso permessoDaRimuovere : permessiTot) { //rimuovere i permessi con status 0 che non sono ancora approvati
+			if(permessoDaRimuovere.getStatus()==0) {
+				toRemove.add(permessoDaRimuovere);
+			}
+		}
+		
+		permessiTot.removeAll(toRemove);
 		
 		Collections.sort(permessiTot, Comparator.comparing(Permesso::getDataApprovazione).reversed());
 		
@@ -477,22 +487,40 @@ public class PermessoService {
 	
 	
 	@Transactional //con i delete si deve mettere altrimenti da errore
-	public void deletePermessoById(Long id) throws IOException {
+	public boolean deletePermessoById(Long id) throws IOException {
 		
 		List<FileEntity> filePermesso= new ArrayList<FileEntity>();
 		
-		
-		filePermesso= fileRepo.findByIdPermessoAssociato(id);
-		
-		if(!filePermesso.isEmpty()) {
-			for (FileEntity file : filePermesso) {
-				fileService.deleteFile(id, file.getFilename());
-			}	
+		Permesso permessoDaCancellare= permessoRepo.findPermessoByIdsenzaoptional(id);
+		boolean siPuoCancellare= false;
+		switch(permessoDaCancellare.getStatus()) {
+			case 0:
+				siPuoCancellare= true;
+			case 1:
+				siPuoCancellare= true;
+			case 2:
+				siPuoCancellare= true;
+			case 3:
+				siPuoCancellare= true;				
 		}
-
 		
-		fileRepo.deleteByIdPermessoAssociato(id);
-		permessoRepo.deletePermessoById(id);
+		if(siPuoCancellare) {
+			filePermesso= fileRepo.findByIdPermessoAssociato(id);
+			
+			
+			
+			if(!filePermesso.isEmpty()) {
+				for (FileEntity file : filePermesso) {
+					fileService.deleteFile(id, file.getFilename());
+				}	
+			}
+
+			
+			fileRepo.deleteByIdPermessoAssociato(id);
+			permessoRepo.deletePermessoById(id);
+		}
+		
+		return siPuoCancellare;
 	}
 
 }

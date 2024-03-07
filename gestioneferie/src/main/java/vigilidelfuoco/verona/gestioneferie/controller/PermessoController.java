@@ -208,9 +208,14 @@ public class PermessoController {
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> cancellaPermesso(@PathVariable("id") Long id) throws IOException{
-		permessoService.deletePermessoById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<String> cancellaPermesso(@PathVariable("id") Long id) throws IOException{
+		boolean ok= permessoService.deletePermessoById(id);
+		if(ok) {
+			//return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Permesso eliminato correttamente!");
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: permesso già confermato o non trovato!");
+		}
 	}
 	
 
