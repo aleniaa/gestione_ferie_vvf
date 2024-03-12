@@ -170,17 +170,20 @@ public class PermessoController {
 	
 	
 	@PostMapping("/searchNew") 
-	public ResponseEntity<List<Permesso>> getFilteredPermessiNew(@RequestParam("dataAssenza") String dataAssenza, @RequestParam("tipoPermesso") String tipoPermesso,
-			@RequestParam("utenteRichiedente") Integer utenteRichiedente, @RequestParam("dataApprovazione") String dataApprovazione, @RequestParam("utenteApprovatore") Integer utenteApprovatore){
+	public ResponseEntity<List<Permesso>> getFilteredPermessiNew(@RequestParam("dataAssenza") String dataAssenza, @RequestParam("tipoPermesso") String tipoPermesso, @RequestParam("utenteRichiedente") Long utenteRichiedente, @RequestParam("dataApprovazione") String dataApprovazione, @RequestParam("utenteApprovatore") Long utenteApprovatore){
 		//List<Permesso> permessi = permessoService.getFilteredPermessi(permesso,dataAssenza, status);
+		//System.out.println(utenteRichiedente.toString() + " is of type " + ((Object)utenteRichiedente).getClass().getSimpleName());  
+		
 		List<Permesso> permessi = permessoService.getFilteredPermessiNew(dataAssenza, tipoPermesso, utenteRichiedente, dataApprovazione, utenteApprovatore  );
-
+		
+		   
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
 	//public ResponseEntity<Permesso> aggiungiPermesso(@RequestBody Permesso permesso){
 		public ResponseEntity<String> aggiungiPermesso(@RequestBody Permesso permesso, @RequestParam("idUtenteLoggato") Long idUtenteLoggato ){
+		
 		
 		ResponseEntity<String> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //		System.out.println("ID 1 è: " + permesso.getIdUtenteApprovazione().toString() );

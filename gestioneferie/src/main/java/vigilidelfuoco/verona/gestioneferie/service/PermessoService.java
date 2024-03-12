@@ -524,8 +524,9 @@ public class PermessoService {
 	}
 
 	
-	public List<Permesso> getFilteredPermessiNew(String dataAssenza, String tipoPermesso, Integer utenteRichiedente, String dataApprovazione, Integer utenteApprovatore){
+	public List<Permesso> getFilteredPermessiNew(String dataAssenza, String tipoPermesso, Long utenteRichiedente, String dataApprovazione, Long utenteApprovatore){
 		
+
 		System.out.println("l'id dell'utente approvatore è:" + utenteApprovatore);
 		System.out.println("dataAssenza è:" + dataAssenza);
 		System.out.println("tipoPermesso è:" + tipoPermesso);
@@ -535,152 +536,76 @@ public class PermessoService {
 		List<Permesso> permessiAppDue= new ArrayList<Permesso>();
 		
 		Permesso filtroPermesso= new Permesso();
-		//System.out.println("filtro permesso iniziale : "+filtroPermesso.toString());
-//		System.out.println("tipo permesso : "+ permesso.getTipoPermesso());
-//		
-//		filtroPermesso.setDataApprovazione(permesso.getDataApprovazione());
-//		filtroPermesso.setIdUtenteApprovazione(permesso.getIdUtenteApprovazione());
-//		
-//		filtroPermesso.setIdUtenteRichiedente(permesso.getIdUtenteRichiedente()); //per l'id del richiedente
-//		filtroPermesso.setStatus(null);
-// 
-//		
-//		if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
-//			System.out.println("tipo permesso uguale stringa vuota");
-//			filtroPermesso.setTipoPermesso(null);
-//			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//			permessiTot= permessoRepo.findAll(permessoExample);
-//			System.out.println("filtro permesso dentro stringa vuota : "+permessoExample.toString());
-//			System.out.println("permessi totali id 1: "+permessiTot);
-//			//permessiTot= permessoRepo.findAllByOrderByDataApprovazioneDesc();
-//
-//			
-//		}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("altri permessi")) {
-//			System.out.println("tipo permesso è ALTRI PERMESSI");
-//			filtroPermesso.setTipoPermesso(null);
-//			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//			permessiTot= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
-//			for (Permesso permessoprova : permessiTot) {
-//			    System.out.println("Status: " + permessoprova.getStatus());
-//			    System.out.println("Descrizione: " + permessoprova.getTipoPermesso());
-//			    //System.out.println("Utente approvazione 1: " + permessoprova.getUtenteApprovazione().getAccountDipvvf().toString());
-//			    //System.out.println("Utente approvazione 2: " + permessoprova.getUtenteApprovazioneDue().getAccountDipvvf().toString());
-//
-//			    // Print other properties as needed
-//			}
-//			
-//		}else { // se il permesso è congedo o recupero ore o permeso breve
-//			if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")) {
-//				filtroPermesso.setTipoPermesso(null);
-//
-//			}else {
-//				filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
-//
-//			}
-//			
-//			ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//			Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//			
-//			
-//			permessiTot = permessoRepo.findAll(permessoExample);
-//
-//		}
-//		
-//		if(permesso.getIdUtenteApprovazioneDue()!=null) {
-//			filtroPermesso.setIdUtenteApprovazione(null);
-//			filtroPermesso.setIdUtenteApprovazioneDue(permesso.getIdUtenteApprovazioneDue());
-//
-//			System.out.println("Sono dentro il secondo if l'id dell'utente approvatore due è:" + permesso.getIdUtenteApprovazioneDue());
-//			
-//			if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("")) {
-//				System.out.println("tipo permesso uguale stringa vuota");
-//				filtroPermesso.setTipoPermesso(null);
-//				ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//				Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//				
-//				System.out.println("dentro stringa vuota secondo id: "+filtroPermesso.toString());
-//				permessiAppDue= permessoRepo.findAll(permessoExample);
-//				
-//				
-//				//permessiTot= permessoRepo.findAllByOrderByDataApprovazioneDesc();
-//
-//				
-//			}else if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("altri permessi")) {
-//				
-//				filtroPermesso.setTipoPermesso(null);
-//				ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//				Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//				permessiAppDue= permessoRepo.findAltriPermessiByOrderByDataApprovazioneDesc(permessoExample);
-//				
-//			}else if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("Terapia") ) ) {	
-//				
-//				filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
-//				System.out.println("Il tipo permesso dentro malattia o terapia è " + permesso.getTipoPermesso());
-//				
-//				
-//			}else { // se il permesso è congedo o recupero ore o permeso breve
-//				if(permesso.getTipoPermesso()!=null && permesso.getTipoPermesso().equals("tutti i permessi")  ) {
-//				//if(permesso.getTipoPermesso()!=null && (permesso.getTipoPermesso().equals("tutti i permessi") || permesso.getTipoPermesso().equals("Malattia") ) ) {	
-//					filtroPermesso.setTipoPermesso(null);
-//
-//				}else {
-//					filtroPermesso.setTipoPermesso(permesso.getTipoPermesso());
-//
-//				}
-//				
-//				ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
-//				Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
-//				
-//				
-//				permessiAppDue= permessoRepo.findAll(permessoExample);
-//				
-//				
-//			}
-//		}
-//		
-//		if(!permessiAppDue.isEmpty()) {
-//			System.out.println("PermessiDue non è vuoto");
-//
-//			permessiTot.addAll(permessiAppDue);
-//		}
-//
-//		List<Permesso> toRemove = new ArrayList<>();
-//		//System.out.println(filtroPermesso.toString());
-//		if(!dataAssenza.equals("") && dataAssenza!=null) {
-//			
-//			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//			LocalDate dataRicercaAssenza = LocalDate.parse(dataAssenza, formatter);
-//			System.out.println("sono dentro l'if e data assenza è:" + dataRicercaAssenza.toString() );
-//			for(Permesso permessoUno : permessiTot) {
-//				if(!(dataRicercaAssenza.isAfter(permessoUno.getDataInizio().minusDays(1)) && dataRicercaAssenza.isBefore(permessoUno.getDataFine().plusDays(1)))) {
-//					toRemove.add(permessoUno);
-//					System.out.println("Questo permesso va rimosso");
-//
-//				}
-//			}
-//			
-//			permessiTot.removeAll(toRemove);
-//		}
-//		toRemove.clear();
-//		
-//		
-//		for (Permesso permessoDaRimuovere : permessiTot) { //rimuovere i permessi con status 0 che non sono ancora approvati
-//			if(permessoDaRimuovere.getStatus()==0) {
-//				toRemove.add(permessoDaRimuovere);
-//			}
-//		}
-//		
-//		permessiTot.removeAll(toRemove);
-//		
-//		Collections.sort(permessiTot, Comparator.comparing(Permesso::getDataApprovazione).reversed());
-//		
-//		for (Permesso permessoprova : permessiTot) {
-//		    System.out.println("Sono il print finale Status: " + permessoprova.getStatus());
-//		    System.out.println("Descrizione: " + permessoprova.getTipoPermesso());
-//		    // Print other properties as needed
-//		}
+		
+		// UTENTE APPROVATORE E RICHIEDENTE 
+		
+		if(utenteRichiedente==-1) {
+			filtroPermesso.setIdUtenteRichiedente(null);
+		}else {
+			filtroPermesso.setIdUtenteRichiedente(utenteRichiedente);
+		}
+		
+		if(utenteApprovatore==-1) {
+			filtroPermesso.setIdUtenteApprovazione(null);
+		}else {
+			filtroPermesso.setIdUtenteApprovazione(utenteApprovatore);
+		}
+		
+		// STATUS
+		
+		filtroPermesso.setStatus(null);
+		
+		// TIPO PERMESSO
+		
+		if(tipoPermesso.equals("tutti i permessi"))
+			filtroPermesso.setTipoPermesso(null);
+		else {
+			filtroPermesso.setTipoPermesso(tipoPermesso);
+		}
+		
+		//DATA APPROVAZIONE
+		
+		if(dataApprovazione.equals("")) {
+			filtroPermesso.setDataApprovazione(null);
+		}else {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate dataRicercaApprovazione = LocalDate.parse(dataApprovazione, formatter);
+			filtroPermesso.setDataApprovazione(dataRicercaApprovazione);
+		}
+		
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+		Example<Permesso> permessoExample = Example.of(filtroPermesso, matcher);
+		permessiTot= permessoRepo.findAll(permessoExample);
+		
+		//DATA ASSENZA
+		
+		List<Permesso> toRemove = new ArrayList<>();
+		
+		System.out.println("data assenza è " + dataAssenza);
+		
+		if(!dataAssenza.equals("") && dataAssenza!=null) {
+			System.out.println(" SONO DENTRO L'IF DATAA ASSENZA data assenza è " + dataAssenza);
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate dataRicercaAssenza = LocalDate.parse(dataAssenza, formatter);
+			System.out.println("sono dentro l'if e data assenza è:" + dataRicercaAssenza.toString() );
+			for(Permesso permessoUno : permessiTot) {
+				if(!(dataRicercaAssenza.isAfter(permessoUno.getDataInizio().minusDays(1)) && dataRicercaAssenza.isBefore(permessoUno.getDataFine().plusDays(1)))) {
+					toRemove.add(permessoUno);
+					System.out.println("Questo permesso va rimosso");
+
+				}
+			}
+			
+			permessiTot.removeAll(toRemove);
+		}
+		
+		toRemove.clear();
+		
+		
+		for(Permesso permessoUno : permessiTot) {
+			System.out.println(permessoUno.toString());
+		}
 		return permessiTot;
 	} 
 }
