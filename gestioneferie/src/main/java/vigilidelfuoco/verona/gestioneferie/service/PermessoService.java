@@ -341,23 +341,33 @@ public class PermessoService {
 	public Permesso aggiornaPermessoPersonale(Permesso permesso) {
 		
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
-		switch(permessoDaAggiornare.getStatus()) {
-			case 1: // peremsso approvato da approvatore 1
-				permessoDaAggiornare.setStatus(6);
-			case 2:  // peremsso approvato da approvatore 2
-				permessoDaAggiornare.setStatus(8);
-			case 3:  // malattia
-				permessoDaAggiornare.setStatus(6);				
-			default:
-				System.out.print("Errore nello switch");
-			
+		System.out.println("IL PERMESSO DA AGGIORNARE HA STATUS: "+permessoDaAggiornare.getStatus().toString());
+//		switch(permessoDaAggiornare.getStatus()) {  LO SWITCH NON GLI PIACE, A MENO CHE NON SI DEBBANO FARE TUTTI I CASI POSSIBILI
+//			case 1: // peremsso approvato da approvatore 1
+//				permessoDaAggiornare.setStatus(6);
+//			case 2:  // peremsso approvato da approvatore 2
+//				permessoDaAggiornare.setStatus(8);
+//			case 3:  // malattia
+//				permessoDaAggiornare.setStatus(6);				
+//			default:
+//				System.out.print("Errore nello switch");
+//			
+//		}
+		
+		
+		if(permessoDaAggiornare.getStatus()==1) { // lo ha approvato l'approvatore 1
+			permessoDaAggiornare.setStatus(6);
+			System.out.print("STATUS 1");
 		}
-//		if(permessoDaAggiornare.getStatus()==1) { // lo ha approvato l'approvatore 1
-//			permessoDaAggiornare.setStatus(6);
-//		}
-//		if(permessoDaAggiornare.getStatus()==2) { // lo ha approvato l'approvatore 1
-//			permessoDaAggiornare.setStatus(8);
-//		}
+		else if(permessoDaAggiornare.getStatus()==2) { // lo ha approvato l'approvatore 1
+			permessoDaAggiornare.setStatus(8);
+			System.out.print("STATUS 2");
+
+		}else if(permessoDaAggiornare.getStatus()==3) { // lo ha approvato l'approvatore 1
+			permessoDaAggiornare.setStatus(6);
+			System.out.print("STATUS 3");
+
+		}		
 		
 		LocalDate dataApprovazione = LocalDate.now();
 		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
@@ -474,6 +484,22 @@ public class PermessoService {
 				permessoDaAggiornare.setStatus(4); //respinto da approvatore 1
 			}
 		}
+		
+		Utente utenteCheHaRespinto= utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
+		LocalDate dataApprovazione = LocalDate.now();
+		permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+		permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
+				utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
+				+ ".<br>Motivo: "+note);
+		return permessoRepo.save(permessoDaAggiornare);
+	}
+	
+	public Permesso respingiPermessoPersonale(String note, Permesso permesso, Long idApprovatore) {
+		
+		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ note);
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		
+		permessoDaAggiornare.setStatus(7);
 		
 		Utente utenteCheHaRespinto= utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
 		LocalDate dataApprovazione = LocalDate.now();
