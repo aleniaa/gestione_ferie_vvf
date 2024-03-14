@@ -359,12 +359,12 @@ public class PermessoService {
 			permessoDaAggiornare.setStatus(6);
 			System.out.print("STATUS 1");
 		}
-		else if(permessoDaAggiornare.getStatus()==2) { // lo ha approvato l'approvatore 1
+		else if(permessoDaAggiornare.getStatus()==2) { // lo ha approvato l'approvatore 2
 			permessoDaAggiornare.setStatus(8);
 			System.out.print("STATUS 2");
 
-		}else if(permessoDaAggiornare.getStatus()==3) { // lo ha approvato l'approvatore 1
-			permessoDaAggiornare.setStatus(6);
+		}else if(permessoDaAggiornare.getStatus()==3) { 
+			permessoDaAggiornare.setStatus(31); // malattia approvata da personale
 			System.out.print("STATUS 3");
 
 		}		
@@ -499,7 +499,17 @@ public class PermessoService {
 		System.out.println("sono dentro aggiornastatuspermesso service e le note sono : "+ note);
 		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
 		
-		permessoDaAggiornare.setStatus(7);
+		if(permessoDaAggiornare.getStatus()==1) {
+			permessoDaAggiornare.setStatus(7); //permsso approvato da approvatore 1 ma respinto da personale
+
+		}else if(permessoDaAggiornare.getStatus()==2){ //permsso approvato da approvatore 2 ma respinto da personale
+			permessoDaAggiornare.setStatus(9);
+			
+		}else if(permessoDaAggiornare.getStatus()==3){ //malattia
+			permessoDaAggiornare.setStatus(30); //malattia respinta da personale
+			
+		}
+		
 		
 		Utente utenteCheHaRespinto= utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
 		LocalDate dataApprovazione = LocalDate.now();

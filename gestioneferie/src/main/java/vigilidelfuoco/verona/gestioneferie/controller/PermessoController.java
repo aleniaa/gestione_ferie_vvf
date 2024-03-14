@@ -93,6 +93,8 @@ public class PermessoController {
 		return new ResponseEntity<>(permessi, HttpStatus.OK);
 	}
 	
+	
+	// USATO ATTUALMENTE
 	@GetMapping("/permessiApprovatore") //restituisce i permessi relativi all'approvatore
 	public ResponseEntity<List<Permesso>> getPermessiApprovatore(@RequestParam("idApprovatore") Long idApprovatore ){
 		System.out.println("l'id del richiedente dentro permesso controller è "+ idApprovatore);
