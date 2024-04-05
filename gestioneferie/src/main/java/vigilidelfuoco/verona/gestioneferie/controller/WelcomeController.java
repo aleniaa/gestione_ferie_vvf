@@ -83,6 +83,7 @@ public class WelcomeController {
 		
 		if(utente.contains("@dipvvf.it")) {
 			System.out.println("Mi sono loggato");
+			//questo controlla semplicemente che l'utente sia nel database locale, se non è presente bisogna aggiungerlo
 			utenteLoggato= loginService.validaLoginDipvvf(username);
 			if(utenteLoggato!=null) {
 				return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
@@ -92,6 +93,22 @@ public class WelcomeController {
 			
 		
 		}else {
+			
+			System.out.println("Si sta provando a loggare personale.verona e username: "+ username);
+			if(username.contentEquals("personale.verona") || username.contentEquals("admin.admin") || username.contentEquals("ferie.ferie") ) {
+				System.out.println("Sono dentro l'if");
+
+				utenteLoggato= loginService.validaLogin(username, password);
+				if(utenteLoggato!=null) {
+					System.out.println("Si è loggato personale.verona");
+					return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
+				}else {
+					return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
+				}
+				
+				
+			}
+			
 			System.out.println("NON mi sono loggato");
 			return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
 		}

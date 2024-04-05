@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import vigilidelfuoco.verona.gestioneferie.exception.UserNotFoundException;
-import vigilidelfuoco.verona.gestioneferie.exception.UserAlreadyExistsException;
+//import vigilidelfuoco.verona.gestioneferie.exception.UserAlreadyExistsException;
 import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
