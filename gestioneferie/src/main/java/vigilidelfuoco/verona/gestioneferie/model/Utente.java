@@ -50,6 +50,7 @@ public class Utente  {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false, updatable = false)
 		private Long id;
+	@Column(nullable = false, updatable = true)
 		private String nome;
 		private String cognome;
 		private String codiceFiscale;
