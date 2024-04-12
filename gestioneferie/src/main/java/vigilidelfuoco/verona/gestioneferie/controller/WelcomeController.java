@@ -75,7 +75,17 @@ public class WelcomeController {
 		
 		System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
 		
-		String utente = aDAuthenticator.authenticateUser(username+"@dipvvf.it", password);
+		String usernameSenzaDip=username;
+		
+		if(username.contains("@dipvvf.it")) {
+			usernameSenzaDip= username.replace("@dipvvf.it", "");
+			System.out.println("ho sostituito username e adesso è "+usernameSenzaDip);
+		}
+		
+		String usernameCompleto= usernameSenzaDip+"@dipvvf.it";
+		System.out.println("Username completo è"+usernameCompleto);
+
+		String utente = aDAuthenticator.authenticateUser(usernameSenzaDip+"@dipvvf.it", password);
 		Utente utenteLoggato= null;
 		
 		System.out.println("stringa utente:" +utente);
@@ -84,7 +94,7 @@ public class WelcomeController {
 		if(utente.contains("@dipvvf.it")) {
 			System.out.println("Mi sono loggato");
 			//questo controlla semplicemente che l'utente sia nel database locale, se non è presente bisogna aggiungerlo
-			utenteLoggato= loginService.validaLoginDipvvf(username);
+			utenteLoggato= loginService.validaLoginDipvvf(usernameSenzaDip);
 			if(utenteLoggato!=null) {
 				return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
 			}else {
@@ -94,13 +104,13 @@ public class WelcomeController {
 		
 		}else {
 			
-			System.out.println("Si sta provando a loggare personale.verona e username: "+ username);
+			System.out.println("Si sta provando a loggare account non ldap e username: "+ username);
 			if(username.contentEquals("personale.verona") || username.contentEquals("admin.admin") || username.contentEquals("ferie.ferie") ) {
 				System.out.println("Sono dentro l'if");
 
 				utenteLoggato= loginService.validaLogin(username, password);
 				if(utenteLoggato!=null) {
-					System.out.println("Si è loggato personale.verona");
+					System.out.println("Si è loggato un account non in LDAP");
 					return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
 				}else {
 					return new ResponseEntity<>("LOGIN FALLITO", HttpStatus.NOT_FOUND);
