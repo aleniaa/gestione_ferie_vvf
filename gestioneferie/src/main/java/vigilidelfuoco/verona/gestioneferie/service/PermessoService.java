@@ -393,6 +393,14 @@ public class PermessoService {
 			
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+			
+	        CompletableFuture.runAsync(() -> {
+	            try {
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            } catch (Exception e) {
+	                System.err.println("Failed to send email: " + e.getMessage());
+	            }
+	        });
 		}
 		
 
@@ -409,8 +417,8 @@ public class PermessoService {
         // Sender's password
         String password = "Ict-Nas2024";
         // Receiver's email address
-        String to = "ilenia.mannino@vigilfuoco.it";
-        //String to = permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco();
+        //String to = "ilenia.mannino@vigilfuoco.it";
+        String to = permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco();
 
         // Setup mail server properties
         Properties props = System.getProperties();
@@ -625,6 +633,14 @@ public class PermessoService {
 			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
 					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
 					+ ".<br>Motivo: "+note);
+			
+	        CompletableFuture.runAsync(() -> {
+	            try {
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            } catch (Exception e) {
+	                System.err.println("Failed to send email: " + e.getMessage());
+	            }
+	        });
 		}
 
 		return permessoRepo.save(permessoDaAggiornare);
@@ -657,6 +673,14 @@ public class PermessoService {
 			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
 					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
 					+ ".<br>Motivo: "+note);
+			
+	        CompletableFuture.runAsync(() -> {
+	            try {
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            } catch (Exception e) {
+	                System.err.println("Failed to send email: " + e.getMessage());
+	            }
+	        });
 		}
 		
 
