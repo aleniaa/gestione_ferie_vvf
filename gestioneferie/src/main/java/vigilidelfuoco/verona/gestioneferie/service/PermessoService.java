@@ -26,6 +26,8 @@ import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 
@@ -400,45 +402,62 @@ public class PermessoService {
 	}
 	
 	
-	public void sendEmailPermessoModificato() {
+	public void sendEmailPermessoModificato(Permesso permessoDaAggiornare) {
+		System.out.println("Sono dentro send email");
 		// Sender's email address
         String from = "informatica.verona@vigilfuoco.it";
         // Sender's password
         String password = "Ict-Nas2024";
         // Receiver's email address
         String to = "ilenia.mannino@vigilfuoco.it";
+        //String to = permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco();
 
         // Setup mail server properties
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp-s.vigilfuoco.it");
-        props.put("mail.smtp.port", "465");
+        Properties props = System.getProperties();
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.ssl.enable", "true");
+        props.setProperty("mail.smtp.host", "smtp-s.vigilfuoco.it");
+        props.setProperty("mail.smtp.port", "465");
+//        props.setProperty("mail.user", "ilenia.mannino@vigilfuoco.it");
+//        props.setProperty("mail.password", "Grazie12345?");
+        
+//        props.setProperty("mail.smtp.proxy.host", "proxy.vr.dipvvf.it");
+//        props.setProperty("mail.smtp.proxy.port", "465");
+//        props.setProperty("mail.smtp.proxy.user", "ilenia.mannino@dipvvf.it");
+//        props.setProperty("mail.smtp.proxy.password", "Grazie12345?");
 
-        // Get the Session object
-        Session session = Session.getInstance(props,
-            new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(from, password);
-                }
-            });
+
 
         try {
+        	
+            // Get the Session object
+            Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, password);
+                    }
+                });
+            
             // Create a default MimeMessage object
             Message message = new MimeMessage(session);
 
             // Set From: header field of the header
-            message.setFrom(new InternetAddress("Gestione Ferie"));
+            message.setFrom(new InternetAddress("no-reply@vigilfuoco.it"));
+            
+
 
             // Set To: header field of the header
             message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(to));
 
             // Set Subject: header field
-            message.setSubject("Testing Email from Java");
+            String oggetto= "GestioneFerie - Richiesta "+ permessoDaAggiornare.getTipoPermesso() ;
+            message.setSubject(oggetto);
 
             // Set the actual message
-            message.setText("Hello, this is a test email from Java!");
+            String messaggio = "La tua richiesta di "+ permessoDaAggiornare.getTipoPermesso() + " è stata aggiornata, controlla su GestioneFerie!";
+            message.setText(messaggio);
+
 
             // Send message
             Transport.send(message);
@@ -507,9 +526,18 @@ public class PermessoService {
 			}
 			
 			
-			this.sendEmailPermessoModificato();
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+	        CompletableFuture.runAsync(() -> {
+	            try {
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            } catch (Exception e) {
+	                System.err.println("Failed to send email: " + e.getMessage());
+	            }
+	        });
+	        
+			//this.sendEmailPermessoModificato(permessoDaAggiornare);
+
 		}
 		
 
