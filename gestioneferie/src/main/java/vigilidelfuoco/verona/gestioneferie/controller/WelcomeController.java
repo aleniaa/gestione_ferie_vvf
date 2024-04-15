@@ -73,7 +73,7 @@ public class WelcomeController {
 	
 	//public ResponseEntity<Utente> login(@RequestBody Utente utente) {
 		
-		System.out.println("si sta provamdo a loggare "+ username + " con password:  " + password);
+		System.out.println("si sta provamdo a loggare "+ username );
 		
 		String usernameSenzaDip=username;
 		

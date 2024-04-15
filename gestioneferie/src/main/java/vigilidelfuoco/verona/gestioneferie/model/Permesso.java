@@ -35,6 +35,7 @@ public class Permesso {
 	private Long id;
 	private LocalDate dataInizio;
 	private LocalDate dataFine;
+	private LocalDate dataRichiestaPermesso;
 	private Integer totGiorni; // settato a Integer perchè integer può essere null
 	private String tipoPermesso;
 	private Long idUtenteApprovazione;
@@ -355,6 +356,16 @@ public class Permesso {
 
 	public void setUtenteApprovazioneDue(Utente utenteApprovazioneDue) {
 		this.utenteApprovazioneDue = utenteApprovazioneDue;
+	}
+	
+	
+
+	public LocalDate getDataRichiestaPermesso() {
+		return dataRichiestaPermesso;
+	}
+
+	public void setDataRichiestaPermesso(LocalDate dataRichiestaPermesso) {
+		this.dataRichiestaPermesso = dataRichiestaPermesso;
 	}
 
 	@Override

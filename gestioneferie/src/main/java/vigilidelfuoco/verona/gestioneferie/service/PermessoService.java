@@ -2,12 +2,10 @@ package vigilidelfuoco.verona.gestioneferie.service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -27,6 +25,9 @@ import vigilidelfuoco.verona.gestioneferie.model.Utente;
 import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 import vigilidelfuoco.verona.gestioneferie.model.FileEntity;
 
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 @Service
 public class PermessoService {
@@ -298,7 +299,9 @@ public class PermessoService {
 	
 	public Permesso aggiungiPermesso(Permesso permesso, Long idUtenteLoggato){
 		
-	
+		LocalDate dataRichiesta = LocalDate.now();
+		permesso.setDataRichiestaPermesso(dataRichiesta);
+		
 		if(permesso.getDataInizio()!=null && permesso.getDataFine()!=null){
 			System.out.println("sono dentro permesso service setTotGiorni");
 
@@ -320,6 +323,8 @@ public class PermessoService {
 //			Utente utenteApprovazione = permessoRepo.findUtenteByIdUtenteApprovazione();
 			
 			System.out.println("utente richiedente trovato: = "+ utenteRichiedente.toString());
+			System.out.println("utente approvatore 2 trovato: = "+ utenteApprovazioneDue);
+			System.out.println("utente utenteApprovazione trovato: = "+ utenteApprovazione.toString());
 			
 			
 			//permesso.setUtenteRichiedente(utenteRichiedente);
@@ -395,6 +400,57 @@ public class PermessoService {
 	}
 	
 	
+	public void sendEmailPermessoModificato() {
+		// Sender's email address
+        String from = "informatica.verona@vigilfuoco.it";
+        // Sender's password
+        String password = "Ict-Nas2024";
+        // Receiver's email address
+        String to = "ilenia.mannino@vigilfuoco.it";
+
+        // Setup mail server properties
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp-s.vigilfuoco.it");
+        props.put("mail.smtp.port", "465");
+
+        // Get the Session object
+        Session session = Session.getInstance(props,
+            new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(from, password);
+                }
+            });
+
+        try {
+            // Create a default MimeMessage object
+            Message message = new MimeMessage(session);
+
+            // Set From: header field of the header
+            message.setFrom(new InternetAddress("Gestione Ferie"));
+
+            // Set To: header field of the header
+            message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(to));
+
+            // Set Subject: header field
+            message.setSubject("Testing Email from Java");
+
+            // Set the actual message
+            message.setText("Hello, this is a test email from Java!");
+
+            // Send message
+            Transport.send(message);
+
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    
+	}
+	
 	public boolean checkStatusPermessoApprovatoreFerie(int status) {
 		boolean aggiornare= true;
 		System.out.println("DENTRO CHECKSTATUS	 LO STATUS è :" + status);
@@ -451,7 +507,7 @@ public class PermessoService {
 			}
 			
 			
-			
+			this.sendEmailPermessoModificato();
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
 		}

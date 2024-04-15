@@ -215,7 +215,13 @@ public class PermessoController {
 				System.out.println("I DUE SONO UGUALI");
 
 				response= ResponseEntity.status(HttpStatus.CONFLICT).body("I due funzionari/capiturno non possono essere uguali!");
-		}else {
+		} 
+		
+		else if(permesso.getIdUtenteApprovazione()==null && !(permesso.getTipoPermesso().contains("Malattia") || permesso.getTipoPermesso().contains("salvavita"))){
+				response= ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Devi selezionare almeno un approvatore!");
+		} 
+		
+		else {
 				//Permesso newPermesso= permessoService.aggiungiPermesso(permesso);
 //				System.out.println("I DUE non SONO UGUALI");
 //				System.out.println("Id dell'utente loggato= " +idUtenteLoggato.toString());
