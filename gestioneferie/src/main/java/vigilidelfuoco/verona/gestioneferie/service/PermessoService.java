@@ -390,6 +390,7 @@ public class PermessoService {
 	        CompletableFuture.runAsync(() -> {
 	            try {
 	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            	System.out.println("Email mandata da personale a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
 	            }
@@ -463,8 +464,6 @@ public class PermessoService {
             // Send message
             Transport.send(message);
 
-            System.out.println("Email sent successfully!");
-
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -532,6 +531,8 @@ public class PermessoService {
 	        CompletableFuture.runAsync(() -> {
 	            try {
 	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            	System.out.println("Email mandata da approvatore a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
+
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
 	            }

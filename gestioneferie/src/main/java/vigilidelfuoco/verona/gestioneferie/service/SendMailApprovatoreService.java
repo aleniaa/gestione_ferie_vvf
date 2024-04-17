@@ -19,23 +19,58 @@ import org.springframework.stereotype.Service;
 
 import vigilidelfuoco.verona.gestioneferie.model.Permesso;
 import vigilidelfuoco.verona.gestioneferie.repo.PermessoRepo;
+import vigilidelfuoco.verona.gestioneferie.repo.UtenteRepo;
 
 @Service
 public class SendMailApprovatoreService {
 
 	private final PermessoRepo permessoRepo;
+	private final UtenteRepo utenteRepo;
+
 	
-	public SendMailApprovatoreService(PermessoRepo permessoRepo) {
+	public SendMailApprovatoreService(PermessoRepo permessoRepo, UtenteRepo utenteRepo) {
 		super();
 		this.permessoRepo = permessoRepo;
+		this.utenteRepo= utenteRepo;
 	}
 
-	@Scheduled(cron = "0 30 10 * * ?") // primo numero: secondi, secondo numero: minuti; terzo numero: ora; *: giorno del mese; *: mese; ? : giorno della settimana
+	@Scheduled(cron = "0 0 8 * * ?") // primo numero: secondi, secondo numero: minuti; terzo numero: ora; *: giorno del mese; *: mese; ? : giorno della settimana
 	//@Scheduled(fixedRate = 10000) // 10 secondi
 	public void performTasksPeriodically() {
         System.out.println("TASK SCHEDULED");
         
-        List<Permesso> permessiInAttesa = permessoRepo.findPermessoByStatus(0);
+        //this.sendEmailApprovatori();
+        this.sendEmailUffPersonale();
+        
+        
+	}
+	
+	public void sendEmailUffPersonale() {
+		boolean esistePermessoStatus1= permessoRepo.existsByStatus(1);
+		boolean esistePermessoStatus2= permessoRepo.existsByStatus(2);
+		boolean esistePermessoStatus3= permessoRepo.existsByStatus(3);
+		
+		if(esistePermessoStatus1 || esistePermessoStatus2 || esistePermessoStatus3) {
+			System.out.println("emailPersonale trovata: ");
+
+			List<String> emailUffPersonale = utenteRepo.findEmailVigilfuocoByRuolo("PERSONALE");
+			for(String emailPersonale : emailUffPersonale) {
+				System.out.println("emailPersonale trovata: " + emailPersonale);
+		        CompletableFuture.runAsync(() -> {
+		            try {
+		            	this.sendEmailPermessiDaApprovare(emailPersonale);
+		            } catch (Exception e) {
+		                System.err.println("Failed to send email: " + e.getMessage());
+		            }
+		        });
+
+			}
+		}
+
+	}
+	
+	public void sendEmailApprovatori() {
+		List<Permesso> permessiInAttesa = permessoRepo.findPermessoByStatus(0);
         ArrayList<String> emailApprovatoriTrovate = new ArrayList<>();
         
         for (Permesso permesso : permessiInAttesa) {
@@ -75,9 +110,7 @@ public class SendMailApprovatoreService {
 	        
         	System.out.println("Email trovata : "+emailApprovatore);
         }
-        
-        //ogni mattina alle 7 controlla database tabella permessi. se ci sono permessi con status 0, prende gli approvatori da ciascuno e manda email. stessa cosa per l'ufficio personale
-    }
+	}
 	
     public static boolean contains(ArrayList<String> emailApprovatori, String emailTarget) {
         for (String email : emailApprovatori) {

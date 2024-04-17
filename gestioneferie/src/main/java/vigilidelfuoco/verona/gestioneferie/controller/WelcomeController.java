@@ -86,13 +86,14 @@ public class WelcomeController {
 		String utente = aDAuthenticator.authenticateUser(usernameSenzaDip+"@dipvvf.it", password);
 		Utente utenteLoggato= null;
 		
-		System.out.println("stringa utente:" +utente);
+		//System.out.println("stringa utente:" +utente);
 
 		
 		if(utente.contains("@dipvvf.it")) {
-			System.out.println("Mi sono loggato");
+			
 			//questo controlla semplicemente che l'utente sia nel database locale, se non è presente bisogna aggiungerlo
 			utenteLoggato= loginService.validaLoginDipvvf(usernameSenzaDip);
+			System.out.println("Login riuscito");
 			if(utenteLoggato!=null) {
 				return new ResponseEntity<>(utenteLoggato, HttpStatus.OK);
 			}else {
@@ -104,7 +105,7 @@ public class WelcomeController {
 			
 			System.out.println("Si sta provando a loggare account non ldap e username: "+ username);
 			if(username.contentEquals("personale.verona") || username.contentEquals("admin.admin") || username.contentEquals("ferie.ferie") ) {
-				System.out.println("Sono dentro l'if");
+				//System.out.println("Sono dentro l'if");
 
 				utenteLoggato= loginService.validaLogin(username, password);
 				if(utenteLoggato!=null) {

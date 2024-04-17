@@ -26,6 +26,10 @@ public interface UtenteRepo extends JpaRepository<Utente, Long>{
 
 	Optional<List<Utente>> findUtenteByRuolo(String ruolo);
 	
+	@Query(nativeQuery = true, value = "SELECT email_vigilfuoco FROM utente WHERE ruolo = ?1")
+	List<String> findEmailVigilfuocoByRuolo(String ruolo);
+
+	
 //	@Query("SELECT utente.nome, utente.cognome FROM gestioneferie.permesso "
 //			+ "INNER JOIN gestioneferie.utente "
 //			+ "ON gestioneferie.permesso.id_utente_approvazione = gestioneferie.utente.id "

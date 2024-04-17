@@ -25,9 +25,9 @@ public class LoginService {
 		
 		Utente utenteInRepo = utenteRepo.findByaccountDipvvf(username);
 		if(utenteInRepo!= null) {
-			System.out.println("La password in chiaro è: "+password );
-			System.out.println("La password codificata è: "+ bCryptPasswordEncoder.encode(password ));
-			System.out.println("La password codificata nel database è: "+ utenteInRepo.getPassword());
+			//System.out.println("La password in chiaro è: "+password );
+//			System.out.println("La password codificata è: "+ bCryptPasswordEncoder.encode(password ));
+//			System.out.println("La password codificata nel database è: "+ utenteInRepo.getPassword());
 			
 			if(bCryptPasswordEncoder.matches(password, utenteInRepo.getPassword())) {
 				loginSuccess=true;
