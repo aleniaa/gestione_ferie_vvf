@@ -387,9 +387,12 @@ public class PermessoService {
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
 			
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata dall'ufficio personale, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata";
+        	
 	        CompletableFuture.runAsync(() -> {
 	            try {
-	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
 	            	System.out.println("Email mandata da personale a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
@@ -404,7 +407,7 @@ public class PermessoService {
 	}
 	
 	
-	public void sendEmailPermessoModificato(Permesso permessoDaAggiornare) {
+	public void sendEmailPermessoModificato(Permesso permessoDaAggiornare, String messaggioEmail, String oggettoEmail) {
 		System.out.println("Sono dentro send email");
 		// Sender's email address
         String from = "informatica.verona@vigilfuoco.it";
@@ -453,11 +456,11 @@ public class PermessoService {
                 InternetAddress.parse(to));
 
             // Set Subject: header field
-            String oggetto= "GestioneFerie - Richiesta "+ permessoDaAggiornare.getTipoPermesso() ;
+            String oggetto= oggettoEmail;
             message.setSubject(oggetto);
 
             // Set the actual message
-            String messaggio = "La tua richiesta di "+ permessoDaAggiornare.getTipoPermesso() + " è stata aggiornata, controlla su GestioneFerie!";
+            String messaggio =  messaggioEmail;
             message.setText(messaggio);
 
 
@@ -528,9 +531,13 @@ public class PermessoService {
 			
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata";
+
 	        CompletableFuture.runAsync(() -> {
 	            try {
-	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            			
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
 	            	System.out.println("Email mandata da approvatore a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
 
 	            } catch (Exception e) {
@@ -628,9 +635,11 @@ public class PermessoService {
 					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
 					+ ".<br>Motivo: "+note);
 			
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata respinta, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA";
 	        CompletableFuture.runAsync(() -> {
 	            try {
-	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
 	            }
@@ -667,10 +676,12 @@ public class PermessoService {
 			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
 					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
 					+ ".<br>Motivo: "+note);
-			
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata RESPINTA dall'ufficio personale, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA";
+        	
 	        CompletableFuture.runAsync(() -> {
 	            try {
-	            	this.sendEmailPermessoModificato(permessoDaAggiornare);
+	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
 	            }

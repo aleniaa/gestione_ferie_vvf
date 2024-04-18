@@ -34,12 +34,12 @@ public class SendMailApprovatoreService {
 		this.utenteRepo= utenteRepo;
 	}
 
-	@Scheduled(cron = "0 0 8 * * ?") // primo numero: secondi, secondo numero: minuti; terzo numero: ora; *: giorno del mese; *: mese; ? : giorno della settimana
+	@Scheduled(cron = "0 30 8 * * ?") // primo numero: secondi, secondo numero: minuti; terzo numero: ora; *: giorno del mese; *: mese; ? : giorno della settimana
 	//@Scheduled(fixedRate = 10000) // 10 secondi
 	public void performTasksPeriodically() {
         System.out.println("TASK SCHEDULED");
         
-        //this.sendEmailApprovatori();
+        this.sendEmailApprovatori();
         this.sendEmailUffPersonale();
         
         
