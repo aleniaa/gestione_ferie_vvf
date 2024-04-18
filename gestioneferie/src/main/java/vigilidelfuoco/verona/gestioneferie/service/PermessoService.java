@@ -324,6 +324,7 @@ public class PermessoService {
 			
 			//permesso.setUtenteRichiedente(utenteRichiedente);
 			permesso.setIdUtenteRichiedente(idUtenteLoggato);
+			permesso.setUtenteRichiedente(utenteRichiedente);
 			permesso.setUtenteApprovazione(utenteApprovazione);
 			System.out.println(" Sono dentro aggiungi permesso service e idutenteloggato è"+ idUtenteLoggato);
 			permesso.setUtenteApprovazioneDue(utenteApprovazioneDue);
@@ -387,8 +388,8 @@ public class PermessoService {
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
 			
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata dall'ufficio personale, controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata";
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata confermata dall'ufficio personale!";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "confermata dall'Ufficio personale";
         	
 	        CompletableFuture.runAsync(() -> {
 	            try {
@@ -511,9 +512,12 @@ public class PermessoService {
 		aggiornare = checkStatusPermessoApprovatoreFerie(permessoDaAggiornare.getStatus());
 		
 		if(aggiornare) {
-			
+			Utente utenteApprovatore = utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
+
+			String approvatoreNomeCognome= utenteApprovatore.getNome() +" "+ utenteApprovatore.getCognome(); 
 			if(permessoDaAggiornare.getUtenteApprovazioneDue()==null) { // se c'è solo l'approvatore uno che deve approvare: 
-				permessoDaAggiornare.setStatus(1); // approvato definitivamente
+				permessoDaAggiornare.setStatus(1); // in approvazione al personale
+				
 			}
 			
 			if(permessoDaAggiornare.getUtenteApprovazioneDue()!=null) {
@@ -531,8 +535,8 @@ public class PermessoService {
 			
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata, controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata";
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata da "+ approvatoreNomeCognome +" ma manca ancora la conferma dell'ufficio personale, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata da "+approvatoreNomeCognome;
 
 	        CompletableFuture.runAsync(() -> {
 	            try {
@@ -631,12 +635,13 @@ public class PermessoService {
 			Utente utenteCheHaRespinto= utenteRepo.findUtenteByIdsenzaoptional(idApprovatore);
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
-			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
-					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
+			String utenteCheHaRespintoNomeCognome= utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome();
+			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ utenteCheHaRespintoNomeCognome
+					
 					+ ".<br>Motivo: "+note);
 			
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata respinta, controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA";
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata respinta da "+utenteCheHaRespintoNomeCognome+", controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA da "+utenteCheHaRespintoNomeCognome;
 	        CompletableFuture.runAsync(() -> {
 	            try {
 	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
