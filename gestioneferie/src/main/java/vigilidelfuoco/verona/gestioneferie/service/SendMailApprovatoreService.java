@@ -53,18 +53,28 @@ public class SendMailApprovatoreService {
 		if(esistePermessoStatus1 || esistePermessoStatus2 || esistePermessoStatus3) {
 			System.out.println("emailPersonale trovata: ");
 
-			List<String> emailUffPersonale = utenteRepo.findEmailVigilfuocoByRuolo("PERSONALE");
-			for(String emailPersonale : emailUffPersonale) {
-				System.out.println("emailPersonale trovata: " + emailPersonale);
-		        CompletableFuture.runAsync(() -> {
-		            try {
-		            	this.sendEmailPermessiDaApprovare(emailPersonale);
-		            } catch (Exception e) {
-		                System.err.println("Failed to send email: " + e.getMessage());
-		            }
-		        });
-
-			}
+//			List<String> emailUffPersonale = utenteRepo.findEmailVigilfuocoByRuolo("PERSONALE");
+//			for(String emailPersonale : emailUffPersonale) {
+//				System.out.println("emailPersonale trovata: " + emailPersonale);
+//		        CompletableFuture.runAsync(() -> {
+//		            try {
+//		            	this.sendEmailPermessiDaApprovare(emailPersonale);
+//		            } catch (Exception e) {
+//		                System.err.println("Failed to send email: " + e.getMessage());
+//		            }
+//		        });
+//
+//			}
+			
+			String emailPersonale = "personale.verona@vigilfuoco.it";
+	        CompletableFuture.runAsync(() -> {
+            try {
+            	this.sendEmailPermessiDaApprovare(emailPersonale);
+            } catch (Exception e) {
+                System.err.println("Failed to send email: " + e.getMessage());
+            }
+        });
+			
 		}
 
 	}
