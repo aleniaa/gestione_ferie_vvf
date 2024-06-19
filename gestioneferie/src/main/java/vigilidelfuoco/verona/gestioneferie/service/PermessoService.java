@@ -388,8 +388,8 @@ public class PermessoService {
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
 			
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata confermata dall'ufficio personale!";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "confermata dall'Ufficio personale";
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ " è stata confermata dall'ufficio personale!";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ " confermata dall'Ufficio personale";
         	
 	        CompletableFuture.runAsync(() -> {
 	            try {
@@ -536,7 +536,7 @@ public class PermessoService {
 			LocalDate dataApprovazione = LocalDate.now();
 			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
         	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata da "+ approvatoreNomeCognome +" ma manca ancora la conferma dell'ufficio personale, controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "approvata da "+approvatoreNomeCognome;
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ " approvata da "+approvatoreNomeCognome;
 
 	        CompletableFuture.runAsync(() -> {
 	            try {
@@ -640,8 +640,8 @@ public class PermessoService {
 					
 					+ ".<br>Motivo: "+note);
 			
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata respinta da "+utenteCheHaRespintoNomeCognome+", controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA da "+utenteCheHaRespintoNomeCognome;
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ " è stata respinta da "+utenteCheHaRespintoNomeCognome+", controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ " RESPINTA da "+utenteCheHaRespintoNomeCognome;
 	        CompletableFuture.runAsync(() -> {
 	            try {
 	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
@@ -681,8 +681,8 @@ public class PermessoService {
 			permessoDaAggiornare.setNote("La richiesta di permesso è stata respinta da "+ 
 					utenteCheHaRespinto.getNome()+ " " + utenteCheHaRespinto.getCognome()
 					+ ".<br>Motivo: "+note);
-        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata RESPINTA dall'ufficio personale, controlla GestioneFerie";
-        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ "RESPINTA";
+        	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ " è stata RESPINTA dall'ufficio personale, controlla GestioneFerie";
+        	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ " RESPINTA";
         	
 	        CompletableFuture.runAsync(() -> {
 	            try {

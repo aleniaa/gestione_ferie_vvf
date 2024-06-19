@@ -173,11 +173,11 @@ public class SendMailApprovatoreService {
                 InternetAddress.parse(to));
 
             // Set Subject: header field
-            String oggetto= "GestioneFerie - hai permessi da approvare!" ;
+            String oggetto= "GestioneAssenze - hai permessi da approvare!" ;
             message.setSubject(oggetto);
 
             // Set the actual message
-            String messaggio = "Hai nuovi permessi da approvare, controlla su GestioneFerie!";
+            String messaggio = "Hai nuovi permessi da approvare, controlla su GestioneAssenze!";
             message.setText(messaggio);
 
 
