@@ -541,8 +541,8 @@ public class PermessoService {
 	        CompletableFuture.runAsync(() -> {
 	            try {
 	            			
-	            	this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
-	            	System.out.println("Email mandata da approvatore a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
+	            	//this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
+	            	//System.out.println("Email mandata da approvatore a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
 
 	            } catch (Exception e) {
 	                System.err.println("Failed to send email: " + e.getMessage());
@@ -561,7 +561,71 @@ public class PermessoService {
 	}
 		
 
+	// qua l'approvatore 1 può inoltrare ad un altro approvatore o all'ufficio personale
+	public Permesso aggiornaStatusPermesso3(Permesso permesso, Long idApprovatore2) {
 		
+		// l'id è del secondo approvatore a cui si inoltra il permesso che può essere un utente o l'ufficio personale (in quest'ultimo caso cambia lo status)
+		
+		Permesso permessoDaAggiornare = permessoRepo.findPermessoByIdsenzaoptional(permesso.getId());
+		
+		int statusPermesso= permessoDaAggiornare.getStatus();
+
+		Utente utenteApprovatore= null;
+		
+		if(statusPermesso==0) {
+			utenteApprovatore = utenteRepo.findUtenteByIdsenzaoptional(permessoDaAggiornare.getIdUtenteApprovazione());
+
+			if(idApprovatore2==1) { // se è da mandare all'ufficio personale
+				permessoDaAggiornare.setStatus(1); //approvato da approvatore uno e da mandare all'ufficio personale
+			}else {
+				
+				permessoDaAggiornare.setIdUtenteApprovazioneDue(idApprovatore2);
+				permessoDaAggiornare.setStatus(12); //approvato da approvatore 1 e da mandare al secondo approvatore
+
+				
+			}
+		}
+		
+		if(statusPermesso==12) { // permesso da confermare per il secondo approvatore
+			utenteApprovatore = utenteRepo.findUtenteByIdsenzaoptional(permessoDaAggiornare.getIdUtenteApprovazioneDue());
+
+			permessoDaAggiornare.setStatus(2); //approvato da approvatore 1 e da approvatore 2 e da mandare a ufficio personale per ultima approvazione
+
+		}
+		
+
+			
+			
+			LocalDate dataApprovazione = LocalDate.now();
+			permessoDaAggiornare.setDataApprovazione(dataApprovazione);
+			
+			
+
+		String approvatoreNomeCognome= utenteApprovatore.getNome() +" "+ utenteApprovatore.getCognome(); 
+    	String messaggioEmail= "La tua richiesta di "+permesso.getTipoPermesso()+ "è stata approvata da "+ approvatoreNomeCognome +" ma manca ancora la conferma dell'ufficio personale, controlla GestioneFerie";
+    	String oggettoEmail= "Richiesta di "+permesso.getTipoPermesso()+ " approvata da "+approvatoreNomeCognome;
+
+        CompletableFuture.runAsync(() -> {
+            try {
+            			
+            	//this.sendEmailPermessoModificato(permessoDaAggiornare, messaggioEmail, oggettoEmail);
+            	//System.out.println("Email mandata da approvatore a "+ permessoDaAggiornare.getUtenteRichiedente().getEmailVigilfuoco());
+
+            } catch (Exception e) {
+                System.err.println("Failed to send email: " + e.getMessage());
+            }
+        });
+        
+		//this.sendEmailPermessoModificato(permessoDaAggiornare);
+
+	
+		
+
+		
+
+		return permessoRepo.save(permessoDaAggiornare);
+		
+	}		
 	
 	
 	// vengono considerati entrambi gli approvatori e il permesso deve essere approvato da entrambi per risultare approvato definitivamente
@@ -666,8 +730,8 @@ public class PermessoService {
 			if(permessoDaAggiornare.getStatus()==1) {
 				permessoDaAggiornare.setStatus(7); //permsso approvato da approvatore 1 ma respinto da personale
 
-			}else if(permessoDaAggiornare.getStatus()==2){ //permsso approvato da approvatore 2 ma respinto da personale
-				permessoDaAggiornare.setStatus(9);
+			}else if(permessoDaAggiornare.getStatus()==2){ //permsso approvato da approvatore 2 e 1 
+				permessoDaAggiornare.setStatus(9); // ma respinto da personale
 				
 			}else if(permessoDaAggiornare.getStatus()==3){ //malattia
 				permessoDaAggiornare.setStatus(30); //malattia respinta da personale
@@ -716,7 +780,9 @@ public class PermessoService {
 			case 2:
 				siPuoCancellare= true;
 			case 3:
-				siPuoCancellare= true;				
+				siPuoCancellare= true;
+			case 12:
+				siPuoCancellare= true;
 		}
 		
 		if(siPuoCancellare) {

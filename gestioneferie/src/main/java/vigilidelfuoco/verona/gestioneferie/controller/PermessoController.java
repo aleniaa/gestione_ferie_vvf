@@ -99,7 +99,8 @@ public class PermessoController {
 		System.out.println("sono dentro changestatus permesso controller  e utente approvatore è : "+ permesso.getUtenteApprovazione());
 
 		//Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso(permesso, idApprovatore);
-		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso2(permesso, idApprovatore);
+		//Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso2(permesso, idApprovatore);
+		Permesso permessoAggiornato = permessoService.aggiornaStatusPermesso3(permesso, idApprovatore);
 
 		return new ResponseEntity<>(permessoAggiornato, HttpStatus.OK);
 	}
